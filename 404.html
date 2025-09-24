@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        terminal: '#0d1117',
+                        terminalText: '#c9d1d9',
+                        terminalGreen: '#3fb950',
+                        terminalBlue: '#58a6ff',
+                        terminalYellow: '#f9c513',
+                        terminalRed: '#f85149',
+                        terminalPurple: '#bc8cff',
+                    },
+                    fontFamily: {
+                        mono: ['Consolas', 'Monaco', 'Courier New', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .terminal-shadow {
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            }
+            .text-glow {
+                text-shadow: 0 0 5px rgba(58, 185, 80, 0.5);
+            }
+            .cursor-blink {
+                animation: blink 1s step-end infinite;
+            }
+            @keyframes blink {
+                from, to { opacity: 1; }
+                50% { opacity: 0; }
+            }
+            .scanline {
+                background: linear-gradient(
+                    to bottom,
+                    transparent 50%,
+                    rgba(58, 185, 80, 0.05) 51%,
+                    transparent 51%
+                );
+                background-size: 100% 4px;
+                pointer-events: none;
+            }
+        }
+    </style>
+    
+    <style>
+        body {
+            background-color: #000;
+            background-image: 
+                radial-gradient(circle at 100% 150%, #0d1117 24%, #161b22 25%, #161b22 28%, #0d1117 29%, #0d1117 36%, #161b22 36%, #161b22 40%, transparent 40%, transparent),
+                radial-gradient(circle at 0 150%, #0d1117 24%, #161b22 25%, #161b22 28%, #0d1117 29%, #0d1117 36%, #161b22 36%, #161b22 40%, transparent 40%, transparent),
+                radial-gradient(circle at 50% 100%, #161b22 10%, #0d1117 11%, #0d1117 23%, #161b22 24%, #161b22 30%, #0d1117 31%, #0d1117 43%, #161b22 44%, #161b22 50%, #0d1117 51%, #0d1117 63%, #161b22 64%, #161b22 71%, transparent 71%, transparent),
+                radial-gradient(circle at 100% 50%, #161b22 5%, #0d1117 6%, #0d1117 15%, #161b22 16%, #161b22 20%, #0d1117 21%, #0d1117 30%, #161b22 31%, #161b22 35%, #0d1117 36%, #0d1117 45%, #161b22 46%, #161b22 49%, transparent 50%, transparent),
+                radial-gradient(circle at 0 50%, #161b22 5%, #0d1117 6%, #0d1117 15%, #161b22 16%, #161b22 20%, #0d1117 21%, #0d1117 30%, #161b22 31%, #161b22 35%, #0d1117 36%, #0d1117 45%, #161b22 46%, #161b22 49%, transparent 50%, transparent);
+            background-size: 100px 50px;
+            overflow-x: hidden;
+        }
+        
+        .terminal-output {
+            line-height: 1.5;
+        }
+        
+        .command-history {
+            max-height: calc(100% - 2rem);
+            overflow-y: auto;
+        }
+        
+        /* Custom scrollbar */
+        .command-history::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .command-history::-webkit-scrollbar-track {
+            background: #161b22;
+        }
+        
+        .command-history::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+        
+        .command-history::-webkit-scrollbar-thumb:hover {
+            background: #484f58;
+        }
+        
+        /* Typewriter effect */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        .typing-effect {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 1.5s steps(40, end);
+        }
+    </style>
+</head>
+<body class="font-mono text-terminalText min-h-screen flex items-center justify-center p-4">
+    <!-- Scanline effect overlay -->
+    <div class="scanline fixed top-0 left-0 w-full h-full z-10 pointer-events-none"></div>
+    
+    <!-- Terminal window -->
+    <div class="w-full max-w-4xl bg-terminal rounded-md terminal-shadow relative z-20 overflow-hidden border border-gray-700">
+        <!-- Terminal header -->
+        <div class="bg-gray-800 px-4 py-2 flex items-center border-b border-gray-700">
+            <div class="flex space-x-2">
+                <div class="w-3 h-3 rounded-full bg-terminalRed"></div>
+                <div class="w-3 h-3 rounded-full bg-terminalYellow"></div>
+                <div class="w-3 h-3 rounded-full bg-terminalGreen"></div>
+            </div>
+            <div class="ml-4 text-sm text-gray-400">
+                root@host.91net.top: ~
+                <span class="text-gray-500 ml-2">xterm-256color</span>
+            </div>
+            <div class="ml-auto flex items-center text-xs text-gray-500">
+                <i class="fa fa-keyboard-o mr-1"></i> 00:00:00
+            </div>
+        </div>
+        
+        <!-- Terminal content -->
+        <div class="p-4 h-[70vh] max-h-[600px] flex flex-col">
+            <div class="command-history" id="commandHistory">
+                <!-- Welcome message -->
+                <div class="mb-4">
+                    <div class="text-terminalGreen">Welcome to host.91net.top</div>
+                    <div class="text-gray-500 text-sm">
+                        Linux version 5.15.0-78-generic (buildd@lcy02-amd64-072) 
+                        (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) 
+                        #85-Ubuntu SMP Fri Jul 14 14:25:10 UTC 2023
+                    </div>
+                </div>
+                
+                <!-- Login process simulation -->
+                <div class="mb-2">
+                    <div>Last login: Wed Sep 24 12:34:56 2025 from 192.168.1.1</div>
+                </div>
+                
+                <!-- Initial command prompt -->
+                <div class="flex">
+                    <span class="text-terminalGreen font-bold">root@host.91net.top</span>
+                    <span class="text-terminalText">:</span>
+                    <span class="text-terminalBlue">~</span>
+                    <span class="text-terminalText">#</span>
+                    <span class="ml-1 typing-effect">cd /var/www/html/page-you-requested</span>
+                </div>
+                
+                <!-- Error message -->
+                <div class="mt-2 text-terminalRed">
+                    bash: cd: /var/www/html/page-you-requested: No such file or directory
+                </div>
+                
+                <!-- Second command -->
+                <div class="flex mt-3">
+                    <span class="text-terminalGreen font-bold">root@host.91net.top</span>
+                    <span class="text-terminalText">:</span>
+                    <span class="text-terminalBlue">~</span>
+                    <span class="text-terminalText">#</span>
+                    <span class="ml-1 typing-effect">ls -la /var/www/html/page-you-requested</span>
+                </div>
+                
+                <!-- Error message -->
+                <div class="mt-2 text-terminalRed">
+                    ls: cannot access '/var/www/html/page-you-requested': No such file or directory
+                </div>
+                
+                <!-- System info -->
+                <div class="flex mt-3">
+                    <span class="text-terminalGreen font-bold">root@host.91net.top</span>
+                    <span class="text-terminalText">:</span>
+                    <span class="text-terminalBlue">~</span>
+                    <span class="text-terminalText">#</span>
+                    <span class="ml-1 typing-effect">echo $?</span>
+                </div>
+                
+                <div class="mt-2 text-terminalYellow">2</div>
+                
+                <!-- 404 explanation -->
+                <div class="mt-4 text-gray-400">
+                    <div><span class="text-terminalPurple">Error code:</span> 404</div>
+                    <div><span class="text-terminalPurple">Message:</span> Page not found</div>
+                    <div><span class="text-terminalPurple">Description:</span> The requested resource could not be found on this server.</div>
+                </div>
+                
+                <!-- Helpful commands -->
+                <div class="mt-4">
+                    <div class="text-terminalGreen">Possible actions:</div>
+                    <div class="ml-4 mt-1">
+                        <div><span class="text-terminalBlue">cd /</span> - Return to root directory</div>
+                        <div><span class="text-terminalBlue">ls</span> - List contents of current directory</div>
+                        <div><span class="text-terminalBlue">help</span> - Show available commands</div>
+                        <div><span class="text-terminalBlue">clear</span> - Clear the screen</div>
+                        <div><span class="text-terminalBlue">exit</span> - Return to homepage</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Command input area -->
+            <div class="mt-auto flex items-center">
+                <span class="text-terminalGreen font-bold">root@host.91net.top</span>
+                <span class="text-terminalText">:</span>
+                <span class="text-terminalBlue">~</span>
+                <span class="text-terminalText">#</span>
+                <input type="text" id="commandInput" 
+                       class="bg-transparent border-none outline-none ml-1 flex-grow text-terminalText"
+                       placeholder=" " autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                <span class="cursor-blink ml-1">_</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const commandInput = document.getElementById('commandInput');
+        const commandHistory = document.getElementById('commandHistory');
+        
+        // Focus on command input when page loads
+        window.addEventListener('load', () => {
+            commandInput.focus();
+        });
+        
+        // Command history array
+        const history = [];
+        let historyIndex = -1;
+        
+        // Available commands and their handlers
+        const commands = {
+            'help': () => {
+                return `
+                    <div class="text-terminalGreen">Available commands:</div>
+                    <div class="ml-4 mt-1 space-y-1">
+                        <div><span class="text-terminalBlue">ls [directory]</span> - List directory contents</div>
+                        <div><span class="text-terminalBlue">cd [directory]</span> - Change directory</div>
+                        <div><span class="text-terminalBlue">pwd</span> - Print working directory</div>
+                        <div><span class="text-terminalBlue">clear</span> - Clear the screen</div>
+                        <div><span class="text-terminalBlue">date</span> - Show current date and time</div>
+                        <div><span class="text-terminalBlue">uname</span> - Print system information</div>
+                        <div><span class="text-terminalBlue">exit</span> - Return to homepage</div>
+                        <div><span class="text-terminalBlue">help</span> - Show this help message</div>
+                    </div>
+                `;
+            },
+            
+            'clear': () => {
+                commandHistory.innerHTML = '';
+                return '';
+            },
+            
+            'ls': (args) => {
+                const dir = args[0] || '.';
+                
+                if (dir === '/var/www/html') {
+                    return `
+                        <div>index.html  about.html  contact.html  assets/  api/  docs/</div>
+                        <div class="text-gray-500 text-sm">total 40</div>
+                        <div class="text-gray-500 text-sm">-rw-r--r-- 1 root root  1245 Sep 20 10:30 index.html</div>
+                        <div class="text-gray-500 text-sm">-rw-r--r-- 1 root root  2356 Sep 20 11:15 about.html</div>
+                        <div class="text-gray-500 text-sm">-rw-r--r-- 1 root root  1890 Sep 21 09:45 contact.html</div>
+                        <div class="text-gray-500 text-sm">drwxr-xr-x 2 root root  4096 Sep 20 08:20 assets/</div>
+                        <div class="text-gray-500 text-sm">drwxr-xr-x 2 root root  4096 Sep 20 08:20 api/</div>
+                        <div class="text-gray-500 text-sm">drwxr-xr-x 2 root root  4096 Sep 20 08:20 docs/</div>
+                    `;
+                } else if (dir === '/') {
+                    return `
+                        <div>bin/  boot/  dev/  etc/  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/</div>
+                    `;
+                } else if (dir === 'assets') {
+                    return `
+                        <div>css/  js/  images/  fonts/</div>
+                    `;
+                } else if (dir === '..' || dir === '../..') {
+                    return `
+                        <div>index.html  about.html  contact.html  assets/  api/  docs/</div>
+                    `;
+                } else {
+                    return `<div class="text-terminalRed">ls: cannot access '${dir}': No such file or directory</div>`;
+                }
+            },
+            
+            'cd': (args) => {
+                const dir = args[0] || '~';
+                
+                if (dir === '..' || dir === '/' || dir === '~' || dir === '~/html' || dir === '/var/www/html') {
+                    return `<div class="text-gray-500 text-sm">Changed directory to ${dir}</div>`;
+                } else {
+                    return `<div class="text-terminalRed">bash: cd: ${dir}: No such file or directory</div>`;
+                }
+            },
+            
+            'pwd': () => {
+                return `<div>/root</div>`;
+            },
+            
+            'date': () => {
+                return `<div>${new Date().toString()}</div>`;
+            },
+            
+            'uname': (args) => {
+                if (args.includes('-a')) {
+                    return `<div>Linux host.91net.top 5.15.0-78-generic #85-Ubuntu SMP Fri Jul 14 14:25:10 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux</div>`;
+                }
+                return `<div>Linux</div>`;
+            },
+            
+            'exit': () => {
+                // Redirect to homepage after a short delay
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 500);
+                return `<div class="text-terminalGreen">Logging out... Redirecting to homepage</div>`;
+            },
+            
+            'default': (cmd) => {
+                return `<div class="text-terminalRed">bash: ${cmd}: command not found</div>`;
+            }
+        };
+        
+        // Handle command submission
+        commandInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const command = commandInput.value.trim();
+                
+                if (command) {
+                    // Add to history
+                    history.push(command);
+                    historyIndex = history.length;
+                    
+                    // Display the command
+                    const commandLine = document.createElement('div');
+                    commandLine.className = 'flex mt-3';
+                    commandLine.innerHTML = `
+                        <span class="text-terminalGreen font-bold">root@host.91net.top</span>
+                        <span class="text-terminalText">:</span>
+                        <span class="text-terminalBlue">~</span>
+                        <span class="text-terminalText">#</span>
+                        <span class="ml-1">${command}</span>
+                    `;
+                    commandHistory.appendChild(commandLine);
+                    
+                    // Process the command
+                    const output = document.createElement('div');
+                    const [cmd, ...args] = command.split(' ');
+                    
+                    if (commands[cmd]) {
+                        output.innerHTML = commands[cmd](args);
+                    } else {
+                        output.innerHTML = commands.default(cmd);
+                    }
+                    
+                    commandHistory.appendChild(output);
+                    
+                    // Scroll to bottom
+                    commandHistory.scrollTop = commandHistory.scrollHeight;
+                }
+                
+                // Clear input
+                commandInput.value = '';
+            } 
+            // Handle up/down arrows for history navigation
+            else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    commandInput.value = history[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex < history.length - 1) {
+                    historyIndex++;
+                    commandInput.value = history[historyIndex];
+                } else {
+                    historyIndex = history.length;
+                    commandInput.value = '';
+                }
+            }
+        });
+        
+        // Simulate terminal noise
+        function addTerminalNoise() {
+            if (Math.random() > 0.97) {
+                const noise = document.createElement('div');
+                noise.className = 'text-gray-800 text-xs absolute';
+                noise.style.left = `${Math.random() * 100}%`;
+                noise.style.top = `${Math.random() * 100}%`;
+                noise.style.pointerEvents = 'none';
+                noise.style.zIndex = '15';
+                noise.textContent = String.fromCharCode(Math.floor(Math.random() * 93) + 33);
+                
+                document.body.appendChild(noise);
+                
+                setTimeout(() => {
+                    noise.remove();
+                }, Math.random() * 1000 + 500);
+            }
+        }
+        
+        // Add noise occasionally
+        setInterval(addTerminalNoise, 100);
+    </script>
+</body>
+</html>
