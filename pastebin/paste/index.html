@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="/img/icon.ico" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="/img/icon2.ico" media="(prefers-color-scheme: light)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastebin - Chloride Technology</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="logo">
+                    <span class="logo-text">Pastebin</span>
+                    <span class="logo-subtext">Chloride Technology</span>
+                </a>
+                <nav class="nav-links">
+                    <a href="/" class="nav-link" data-route="/">Home</a>
+                    <a href="/create/" class="nav-link" data-route="/create/">Create</a>
+                    <a href="/admin" class="nav-link" data-route="/admin">Admin</a>
+                    <a href="https://91net.top" class="nav-link" target="_blank">Chloride Tech</a>
+                </nav>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div id="routeContainer" class="route-container">
+            </div>
+        </div>
+    </main>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; Copyright (c) Chloride Technology, All rights reserved.</p>
+                <p><a href="https://91net.top" target="_blank">https://91net.top</a></p>
+            </div>
+        </div>
+    </footer>
+
+
+    <template id="homeTemplate">
+        <section class="page home-page">
+            <div class="page-header">
+                <h1>Recent Pastes</h1>
+                <p>Discover and share code snippets and text</p>
+                <a href="/create/" class="btn primary-btn create-btn">
+                    <i class="fas fa-plus"></i> Create New Paste
+                </a>
+            </div>
+            
+            <div class="paste-filters">
+                <div class="filter-group">
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="visibility">Visibility:</label>
+                    <select id="visibility">
+                        <option value="all">All</option>
+                        <option value="public">Public</option>
+                    </select>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search pastes..." id="searchPastes">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <div class="paste-list" id="pasteList">
+                <div class="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>Loading recent pastes...</p>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="createTemplate">
+        <section class="page create-page">
+            <div class="page-header">
+                <h1>Create New Paste</h1>
+                <p>Share your code snippets and text with others</p>
+            </div>
+            
+            <form id="createPasteForm" class="paste-form">
+                <div class="form-group">
+                    <label for="pasteContent">Content <span class="required">*</span></label>
+                    <textarea id="pasteContent" placeholder="Enter your text or code here..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="pasteTitle">Title (optional)</label>
+                    <input type="text" id="pasteTitle" placeholder="Give your paste a title">
+                </div>
+                
+                <div class="form-group">
+                    <label for="pasteSyntax">Syntax Highlighting</label>
+                    <select id="pasteSyntax">
+                        <option value="text">Plain Text</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="java">Java</option>
+                        <option value="c">C</option>
+                        <option value="cpp">C++</option>
+                        <option value="php">PHP</option>
+                        <option value="ruby">Ruby</option>
+                    </select>
+                </div>
+                
+                <div class="form-options">
+                    <div class="form-group option-group">
+                        <label for="expiryTime">Expiry Time</label>
+                        <select id="expiryTime">
+                            <option value="never">Never</option>
+                            <option value="1h">1 Hour</option>
+                            <option value="24h">24 Hours</option>
+                            <option value="7d">7 Days</option>
+                            <option value="30d">30 Days</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group option-group">
+                        <label for="selfDestruct">Self-Destruct</label>
+                        <select id="selfDestruct">
+                            <option value="no">No</option>
+                            <option value="yes">Yes (After View)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group option-group">
+                        <label for="visibility">Visibility</label>
+                        <select id="visibility">
+                            <option value="public">Public</option>
+                            <option value="private">Private (Requires Key)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="private-key-group" id="privateKeyGroup" style="display: none;">
+                    <div class="form-group">
+                        <label for="privateKey">Private Key <span class="required">*</span></label>
+                        <input type="text" id="privateKey" placeholder="Set a key to protect your paste">
+                        <p class="form-hint">Users will need this key to view your private paste</p>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn primary-btn submit-btn">
+                        <i class="fas fa-paper-plane"></i> Create Paste
+                    </button>
+                    <button type="reset" class="btn secondary-btn reset-btn">
+                        <i class="fas fa-eraser"></i> Reset
+                    </button>
+                </div>
+            </form>
+        </section>
+    </template>
+
+    <template id="pasteTemplate">
+        <section class="page paste-page">
+            <div class="paste-header">
+                <div class="paste-title" id="pasteTitle">
+
+                </div>
+                <div class="paste-meta" id="pasteMeta">
+                
+                </div>
+                <div class="paste-actions">
+                    <button class="btn secondary-btn copy-btn" id="copyBtn">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                    <button class="btn secondary-btn download-btn" id="downloadBtn">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+            </div>
+            
+            <div class="paste-content-container">
+                <div class="paste-language" id="pasteLanguage">
+                   
+                </div>
+                <div class="paste-content" id="pasteContent">
+
+                </div>
+            </div>
+            
+            <div class="private-paste-auth" id="privatePasteAuth" style="display: none;">
+                <h3>This is a private paste</h3>
+                <p>Please enter the private key to view the content:</p>
+                <div class="form-group">
+                    <input type="text" id="privateKeyInput" placeholder="Enter private key">
+                    <button class="btn primary-btn" id="unlockBtn">Unlock</button>
+                </div>
+            </div>
+            
+            <div class="paste-footer">
+                <a href="/" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to list
+                </a>
+                <div class="paste-id" id="pasteId">
+
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="adminTemplate">
+        <section class="page admin-page">
+            <div class="page-header">
+                <h1>Admin Panel</h1>
+                <p>Manage all pastes and system settings</p>
+            </div>
+            
+            <div class="admin-login" id="adminLogin">
+                <div class="form-group">
+                    <label for="adminPassword">Admin Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter admin password">
+                </div>
+                <button class="btn primary-btn" id="adminLoginBtn">Login</button>
+            </div>
+            
+            <div class="admin-content" id="adminContent" style="display: none;">
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalPastes">0</div>
+                        <div class="stat-label">Total Pastes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="publicPastes">0</div>
+                        <div class="stat-label">Public Pastes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="privatePastes">0</div>
+                        <div class="stat-label">Private Pastes</div>
+                    </div>
+                </div>
+                
+                <div class="admin-filters">
+                    <div class="filter-group">
+                        <label for="adminSortBy">Sort by:</label>
+                        <select id="adminSortBy">
+                            <option value="newest">Newest</option>
+                            <option value="oldest">Oldest</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="Search all pastes..." id="adminSearch">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                
+                <div class="admin-paste-list" id="adminPasteList">
+                    <!-- 管理员粘贴列表将通过JavaScript动态加载 -->
+                    <div class="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>Loading pastes...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="notFoundTemplate">
+        <section class="page not-found-page">
+            <div class="not-found-content">
+                <div class="error-code">404</div>
+                <h1>Page Not Found</h1>
+                <p>The page you're looking for doesn't exist or has been moved.</p>
+                <a href="/" class="btn primary-btn">
+                    <i class="fas fa-home"></i> Return to Home
+                </a>
+            </div>
+        </section>
+    </template>
+
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/create.js"></script>
+    <script src="js/paste.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
+    
