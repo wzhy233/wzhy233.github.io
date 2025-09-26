@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- 图标路径调整：基于pastebin目录的相对路径 -->
-    <link rel="icon" href="./img/icon.ico" media="(prefers-color-scheme: dark)">
-    <link rel="icon" href="./img/icon2.ico" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="/img/icon.ico" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="/img/icon2.ico" media="(prefers-color-scheme: light)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pastebin - Chloride Technology</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS路径：当前目录下的css文件夹 -->
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="/pastebin/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -26,8 +25,8 @@
                 <nav class="nav-links">
                     <!-- 所有导航链接基于pastebin目录 -->
                     <a href="./" class="nav-link" data-route="/">Home</a>
-                    <a href="./create/" class="nav-link" data-route="/create/">Create</a>
-                    <a href="./admin" class="nav-link" data-route="/admin">Admin</a>
+                    <a href="/pastebin/create/" class="nav-link" data-route="/create/">Create</a>
+                    <a href="/pastebin/admin/" class="nav-link" data-route="/admin">Admin</a>
                     <a href="https://91net.top" class="nav-link" target="_blank">Chloride Tech</a>
                 </nav>
                 <button class="theme-toggle" id="themeToggle">
@@ -60,7 +59,7 @@
                 <h1>Recent Pastes</h1>
                 <p>Discover and share code snippets and text</p>
                 <!-- 创建页链接：当前目录下的create/ -->
-                <a href="./create/" class="btn primary-btn create-btn">
+                <a href="/pastebin/create/" class="btn primary-btn create-btn">
                     <i class="fas fa-plus"></i> Create New Paste
                 </a>
             </div>
@@ -138,13 +137,13 @@
     </template>
 
     <!-- JS路径：当前目录下的js文件夹 -->
-    <script src="./js/main.js"></script>
-    <script src="./js/api.js"></script>
-    <script src="./js/routes.js"></script>
-    <script src="./js/home.js"></script>
-    <script src="./js/create.js"></script>
-    <script src="./js/paste.js"></script>
-    <script src="./js/admin.js"></script>
+    <script src="/pastebin/js/main.js"></script>
+    <script src="/pastebin/js/api.js"></script>
+    <script src="/pastebin/js/routes.js"></script>
+    <script src="/pastebin/js/home.js"></script>
+    <script src="/pastebin/js/create.js"></script>
+    <script src="/pastebin/js/paste.js"></script>
+    <script src="/pastebin/js/admin.js"></script>
 </body>
 </html>
     
