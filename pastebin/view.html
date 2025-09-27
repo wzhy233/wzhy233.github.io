@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pastebin - Chloride Technology</title>
+    <title>View Paste - Chloride Technology</title>
     <link rel="icon" href="/img/icon.ico" media="(prefers-color-scheme: dark)">
     <link rel="icon" href="/img/icon2.ico" media="(prefers-color-scheme: light)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -18,7 +18,7 @@
             </a>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="create.html">Create Paste</a></li>
                     <li><a href="admin.html">Admin</a></li>
                 </ul>
@@ -27,33 +27,31 @@
     </header>
 
     <div class="container">
-        <div class="card">
+        <div id="password-form" class="card" style="display: none; max-width: 500px; margin: 20px auto;">
             <div class="card-header">
-                <h2>Recent Public Pastes</h2>
+                <h2>Private Paste</h2>
             </div>
             <div class="card-body">
-                <ul class="pastes-list" id="pastes-list">
-                    <!-- Pastes will be loaded here -->
-                </ul>
+                <p>This is a private paste. Please enter the password to view it.</p>
+                <form>
+                    <div class="form-group">
+                        <label for="paste-password">Password</label>
+                        <input type="password" id="paste-password" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn">Unlock Paste</button>
+                        <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">Cancel</a>
+                    </div>
+                </form>
             </div>
         </div>
         
-        <div class="card">
-            <div class="card-body">
-                <h3>About Chloride Pastebin</h3>
-                <p>A simple, secure pastebin service built with static web technologies and GitHub Gist for storage.</p>
-                <p>Features:</p>
-                <ul>
-                    <li>Markdown support</li>
-                    <li>Expiration dates for pastes</li>
-                    <li>Burn after reading option</li>
-                    <li>Public and private pastes</li>
-                </ul>
-                <a href="create.html" class="btn" style="margin-top: 10px;">Create a new paste</a>
-            </div>
+        <div id="paste-container">
+            <!-- Paste content will be loaded here -->
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/main.js"></script>
 </body>

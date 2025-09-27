@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Paste - Chloride Technology</title>
+    <link rel="icon" href="/img/icon.ico" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="/img/icon2.ico" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-clipboard" style="font-size: 1.5rem; color: var(--primary);"></i>
+                <span class="logo-text">Pastebin - Chloride Technology</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="create.html" class="active">Create Paste</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Create New Paste</h2>
+            </div>
+            <div class="card-body">
+                <form id="create-form">
+                    <div class="form-group">
+                        <label for="title">Title (optional)</label>
+                        <input type="text" id="title" placeholder="Enter title for your paste">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="language">Language/Syntax</label>
+                        <select id="language">
+                            <option value="text">Plain Text</option>
+                            <option value="markdown">Markdown</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="python">Python</option>
+                            <option value="php">PHP</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="java">Java</option>
+                            <option value="c">C</option>
+                            <option value="cpp">C++</option>
+                            <option value="ruby">Ruby</option>
+                            <option value="go">Go</option>
+                            <option value="bash">Bash</option>
+                        </select>
+                    </div>
+                    
+                    <div class="preview-toggle">
+                        <button type="button" data-mode="edit" class="active">Edit</button>
+                        <button type="button" data-mode="preview">Preview</button>
+                    </div>
+                    
+                    <div class="editor-toolbar">
+                        <button type="button" data-command="bold" title="Bold"><i class="fas fa-bold"></i></button>
+                        <button type="button" data-command="italic" title="Italic"><i class="fas fa-italic"></i></button>
+                        <button type="button" data-command="heading" title="Heading"><i class="fas fa-heading"></i></button>
+                        <div class="divider"></div>
+                        <button type="button" data-command="code" title="Inline Code"><i class="fas fa-code"></i></button>
+                        <button type="button" data-command="codeblock" title="Code Block"><i class="fas fa-file-code"></i></button>
+                        <div class="divider"></div>
+                        <button type="button" data-command="link" title="Link"><i class="fas fa-link"></i></button>
+                        <button type="button" data-command="image" title="Image"><i class="fas fa-image"></i></button>
+                        <div class="divider"></div>
+                        <button type="button" data-command="list" title="List"><i class="fas fa-list"></i></button>
+                        <button type="button" data-command="quote" title="Quote"><i class="fas fa-quote-right"></i></button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="content">Content</label>
+                        <textarea id="content" placeholder="Enter your paste content here..." required></textarea>
+                        <div id="preview-content" class="paste-content" style="display: none;"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expiration">Expiration</label>
+                        <select id="expiration">
+                            <option value="10min">10 Minutes</option>
+                            <option value="1hour">1 Hour</option>
+                            <option value="1day">1 Day</option>
+                            <option value="1week">1 Week</option>
+                            <option value="1month">1 Month</option>
+                            <option value="never">Never</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="burn-after-reading">
+                            <label for="burn-after-reading">Burn after reading</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="private">
+                            <label for="private">Private paste (requires password)</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="password-group" style="display: none;">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter password to protect this paste">
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn">Create Paste</button>
+                        <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
