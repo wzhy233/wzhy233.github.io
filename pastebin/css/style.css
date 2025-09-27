@@ -468,48 +468,74 @@ textarea#paste-content {
     margin: 20px 0;
 }
 
-/* 代码高亮样式 */
+/* 代码容器整体样式 */
 .code-container {
-    position: relative;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    overflow: hidden;
+    width: 100%;
+    border: 1px solid #444;
+    border-radius: 4px;
+    overflow: hidden; /* 防止内部元素溢出 */
+    background-color: #2d2d2d; /* 与PHP风格深色背景协调 */
 }
 
+/* 代码头部（语言标识） */
 .code-header {
-    background-color: #f5f5f5;
-    padding: 8px 15px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 8px 12px;
+    background-color: #3a3a3a;
+    border-bottom: 1px solid #444;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* 行号+代码 容器：用Flex分离两列 */
+.code-content {
+    display: flex; /* 关键：横向排列行号和代码 */
+    width: 100%;
+}
+
+/* 行号列：固定宽度，不挤压代码 */
+.line-numbers {
+    width: 40px; /* 固定宽度，足够显示3位数行号 */
+    padding: 12px 0;
+    background-color: #333;
+    color: #888;
+    text-align: right; /* 行号右对齐 */
+    font-size: 0.9rem;
+    line-height: 1.5; /* 与代码行高一致，确保垂直对齐 */
+    white-space: nowrap; /* 禁止行号换行 */
+}
+
+/* 行号单个样式 */
+.line-numbers span {
+    display: block;
+    padding-right: 8px; /* 行号与代码之间留间隙 */
+}
+
+/* 代码列：自适应剩余宽度，支持横向滚动 */
+.code-block {
+    flex: 1; /* 关键：占满剩余宽度 */
+    margin: 0; /* 清除默认margin */
+    padding: 0; /* 清除默认padding */
+    overflow-x: auto; /* 代码过长时横向滚动，不挤压 */
+}
+
+/* 代码内容样式：确保内边距正常 */
+.code-block code {
+    display: block;
+    padding: 12px;
+    line-height: 1.5; /* 与行号行高一致 */
+    color: #ddd;
+}
+
+/* 修复pre标签默认样式干扰 */
+pre {
+    margin: 0;
+    background-color: transparent; /* 继承父容器背景 */
 }
 
 .code-language {
     font-weight: bold;
 }
 
-.line-numbers {
-    display: inline-block;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-right: 1px solid #ddd;
-    text-align: right;
-    user-select: none;
-    color: #999;
-}
-
-.code-content {
-    display: flex;
-}
-
-.code-block {
-    flex: 1;
-    padding: 15px;
-    overflow-x: auto;
-    font-family: 'Courier New', Courier, monospace;
-    white-space: pre;
-}
 
 /* 加载指示器 */
 .loading-indicator {
