@@ -7,54 +7,76 @@
     <link rel="icon" href="/img/icon.ico" media="(prefers-color-scheme: dark)">
     <link rel="icon" href="/img/icon2.ico" media="(prefers-color-scheme: light)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <div class="container header-content">
             <a href="index.html" class="logo">
-                <i class="fas fa-clipboard" style="font-size: 1.5rem; color: var(--primary);"></i>
+                <i class="fas fa-clipboard"></i>
                 <span class="logo-text">Pastebin - Chloride Technology</span>
             </a>
             <nav>
                 <ul>
                     <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="create.html">Create Paste</a></li>
+                    <li><a href="create.html" class="btn create-btn">Create Paste</a></li>
                     <li><a href="admin.html">Admin</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h2>Recent Public Pastes</h2>
+    <div class="container main-content">
+        <section class="paste-filters">
+            <div class="filter-group">
+                <label for="language-filter">Language:</label>
+                <select id="language-filter" class="form-control">
+                    <option value="all">All Languages</option>
+                    <!-- 语言选项将通过JavaScript动态填充 -->
+                </select>
             </div>
-            <div class="card-body">
-                <ul class="pastes-list" id="pastes-list">
-                    <!-- Pastes will be loaded here -->
-                </ul>
+            <div class="filter-group">
+                <label for="sort-filter">Sort by:</label>
+                <select id="sort-filter" class="form-control">
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="most_views">Most Views</option>
+                </select>
             </div>
-        </div>
-        
-        <div class="card">
-            <div class="card-body">
-                <h3>About Chloride Pastebin</h3>
-                <p>A simple, secure pastebin service built with static web technologies and GitHub Gist for storage.</p>
-                <p>Features:</p>
-                <ul>
-                    <li>Markdown support</li>
-                    <li>Expiration dates for pastes</li>
-                    <li>Burn after reading option</li>
-                    <li>Public and private pastes</li>
-                </ul>
-                <a href="create.html" class="btn" style="margin-top: 10px;">Create a new paste</a>
+            <div class="search-box">
+                <input type="text" id="search-pastes" placeholder="Search pastes..." class="form-control">
+                <button id="search-btn" class="btn"><i class="fas fa-search"></i></button>
             </div>
-        </div>
+        </section>
+
+        <section class="paste-list">
+            <h2>Recent Public Pastes</h2>
+            <div id="pastes-container" class="pastes-grid">
+                <!-- Paste cards will be loaded here -->
+                <div class="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>Loading pastes...</p>
+                </div>
+            </div>
+            <div class="load-more-container">
+                <button id="load-more" class="btn">Load More</button>
+            </div>
+        </section>
     </div>
 
+    <footer>
+        <div class="container">
+            <p>&copy; Chloride Technology, All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/encryption.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

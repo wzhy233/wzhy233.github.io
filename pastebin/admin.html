@@ -7,13 +7,14 @@
     <link rel="icon" href="/img/icon.ico" media="(prefers-color-scheme: dark)">
     <link rel="icon" href="/img/icon2.ico" media="(prefers-color-scheme: light)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <div class="container header-content">
             <a href="../index.html" class="logo">
-                <i class="fas fa-clipboard" style="font-size: 1.5rem; color: var(--primary);"></i>
+                <i class="fas fa-clipboard"></i>
                 <span class="logo-text">Pastebin - Chloride Technology</span>
             </a>
             <nav>
@@ -26,14 +27,70 @@
         </div>
     </header>
 
-    <div class="container">
-        <div id="admin-container">
-            <!-- Admin content will be loaded here -->
+    <div class="container main-content">
+        <!-- 管理员登录 -->
+        <div id="admin-login" class="admin-login">
+            <h2>Admin Panel</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Please authenticate with GitHub to access the admin panel.</p>
+            <div style="text-align: center;">
+                <button id="github-login-btn" class="btn btn-primary">
+                    <i class="fab fa-github"></i> Login with GitHub
+                </button>
+            </div>
+            <div id="login-error" class="alert alert-danger" style="margin-top: 15px; display: none;"></div>
         </div>
-    </div>
-
-    <script src="js/config.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/admin.js"></script>
-</body>
-</html>
+        
+        <!-- 管理员面板 -->
+        <div id="admin-panel" class="admin-panel" style="display: none;">
+            <div class="admin-header">
+                <h2>Admin Panel</h2>
+                <div>
+                    <span id="admin-username-display" style="margin-right: 15px;"></span>
+                    <button id="logout-btn" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+            
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h3>Total Pastes</h3>
+                    <div class="stat-value" id="total-pastes">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Public Pastes</h3>
+                    <div class="stat-value" id="public-pastes">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Private Pastes</h3>
+                    <div class="stat-value" id="private-pastes">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Expired Pastes</h3>
+                    <div class="stat-value" id="expired-pastes">0</div>
+                </div>
+            </div>
+            
+            <div class="admin-nav">
+                <div class="admin-nav-item active" data-section="pastes">Pastes</div>
+                <div class="admin-nav-item" data-section="settings">Settings</div>
+            </div>
+            
+            <!-- 粘贴管理部分 -->
+            <div id="pastes-section" class="admin-section active">
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; align-items: center;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <input type="text" id="admin-search" class="form-control" placeholder="Search pastes...">
+                    </div>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <div style="min-width: 150px;">
+                            <select id="filter-visibility" class="form-control">
+                                <option value="all">All Visibility</option>
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                            </select>
+                        </div>
+                        <div style="min-width: 150px;">
+                            <select id="filter-status" class="form-control">
+                                <option value="all">All Status</option>
+                                <option value="active">Active</option>
