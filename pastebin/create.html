@@ -6,6 +6,11 @@
     <title>Create Paste - Chloride Technology</title>
     <link rel="icon" href="/img/icon.ico" media="(prefers-color-scheme: dark)">
     <link rel="icon" href="/img/icon2.ico" media="(prefers-color-scheme: light)">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- 数学公式渲染库 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -111,27 +116,33 @@
     </div>
     
     <!-- API Key Modal -->
-    <div id="api-key-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Your Paste API Key</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>This is your API key for managing this paste. Save it, as it will only be shown once.</p>
-                <div class="api-key-display" id="api-key-display"></div>
-                <p>You will need this key to edit or delete your paste later.</p>
-                <p id="access-key-display" style="margin-top: 15px; display: none;">
-                    <strong>Access Key:</strong> <span id="access-key-value"></span><br>
-                    Share this key with others to allow them to view your private paste.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" id="copy-api-key-btn">Copy API Key</button>
-                <button class="btn" id="close-api-key-modal">OK</button>
+<div id="api-key-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Your Paste API Key</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>This is your API key for managing this paste. Save it, as it will only be shown once.</p>
+            <div class="api-key-display" id="api-key-display"></div>
+            <p>You will need this key to edit or delete your paste later.</p>
+            <p id="access-key-display" style="margin-top: 15px; display: none;">
+                <strong>Access Key:</strong> <span id="access-key-value"></span><br>
+                Share this key with others to allow them to view your private paste.
+            </p>
+            <!-- 新增：粘贴链接显示区域 -->
+            <div style="margin-top: 15px;">
+                <p><strong>Paste Link:</strong></p>
+                <div class="api-key-display" id="paste-link-display"></div>
+                <button class="btn btn-primary" id="copy-link-btn" style="margin-top: 10px;">Copy Paste Link</button>
             </div>
         </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="copy-api-key-btn">Copy API Key</button>
+            <button class="btn" id="close-api-key-modal">OK</button>
+        </div>
     </div>
+</div>
 
     <footer>
         <div class="container">
