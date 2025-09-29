@@ -286,13 +286,67 @@ label {
     margin-right: 10px;
 }
 
+/* 元信息容器：使用flex布局，确保内部元素垂直居中且间距一致 */
+.paste-meta {
+    display: flex;
+    flex-wrap: wrap; /* 支持换行，避免溢出 */
+    gap: 12px; /* 元素之间的间距 */
+    margin: 8px 0; /* 与上下元素的间距（控制与标题和预览区的距离） */
+    align-items: center; /* 垂直居中，确保徽章和其他信息对齐 */
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* 元信息项：统一样式，确保徽章和文本对齐 */
+.meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px; /* 图标与文字的间距 */
+}
+
+/* 阅后即焚徽章：与元信息项保持一致的高度和对齐 */
+.burn-badge {
+    color: #d9534f;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: #f8d7da;
+    /* 强制与其他元信息项对齐 */
+    height: 22px;
+    line-height: 18px;
+}
+
+/* 预览不可用提示：与元信息区域左对齐，间距匹配 */
+.burn-preview-placeholder {
+    margin: 8px 0; /* 与上方元信息区域的间距（和元信息的margin-bottom保持一致） */
+    padding: 10px;
+    background-color: #fff3cd;
+    border: 1px dashed #ffeeba;
+    border-radius: 3px;
+    color: #856404;
+    font-size: 0.85rem; /* 与元信息字体大小一致 */
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* 左对齐，与元信息区域的左侧对齐 */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 正常预览区域：保持与提示区域一致的间距和左对齐 */
 .paste-preview {
-    color: #555;
+    margin: 8px 0; /* 与元信息区域的间距和提示区域一致 */
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 3px;
+    color: #333;
+    font-size: 0.85rem; /* 字体大小统一 */
+    line-height: 1.4;
+    white-space: nowrap;
     overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .paste-language {
@@ -465,16 +519,17 @@ textarea#paste-content {
 }
 
 .paste-content {
+    background-color: #2d2d2d; /* 深色背景（与代码块协调） */
+    color: #ddd; /* 浅色文字，确保可读性 */
+    padding: 20px;
+    border-radius: 4px;
     margin: 20px 0;
 }
 
-/* 代码容器整体样式 */
 .code-container {
-    width: 100%;
-    border: 1px solid #444;
+    background-color: #2d2d2d !important; /* 与内容区背景一致 */
     border-radius: 4px;
-    overflow: hidden; /* 防止内部元素溢出 */
-    background-color: #2d2d2d; /* 与PHP风格深色背景协调 */
+    overflow: hidden;
 }
 
 /* 代码头部（语言标识） */
@@ -486,11 +541,13 @@ textarea#paste-content {
     font-size: 0.9rem;
 }
 
-/* 行号+代码 容器：用Flex分离两列 */
+
 .code-content {
-    display: flex; /* 关键：横向排列行号和代码 */
+    display: flex;
     width: 100%;
+    background-color: #2d2d2d !important; /* 代码内容区深色背景 */
 }
+
 
 /* 行号列：固定宽度，不挤压代码 */
 .line-numbers {
@@ -510,12 +567,19 @@ textarea#paste-content {
     padding-right: 8px; /* 行号与代码之间留间隙 */
 }
 
-/* 代码列：自适应剩余宽度，支持横向滚动 */
 .code-block {
-    flex: 1; /* 关键：占满剩余宽度 */
-    margin: 0; /* 清除默认margin */
-    padding: 0; /* 清除默认padding */
-    overflow-x: auto; /* 代码过长时横向滚动，不挤压 */
+    background-color: #2d2d2d !important; /* 强制代码块深色背景（覆盖highlight.js默认样式） */
+    color: #ddd !important;
+    border: none !important;
+    padding: 15px !important;
+    margin: 0 !important;
+    flex: 1;
+    overflow-x: auto;
+}
+
+/* 示例：调整注释颜色（根据主题微调） */
+.hljs-comment {
+    color: #65b341 !important; /* 加深注释颜色，确保在深色背景可见 */
 }
 
 /* 代码内容样式：确保内边距正常 */
@@ -626,19 +690,19 @@ pre {
 }
 
 .alert-success {
-    color: #3c763d;
+    color: #01ff05;
     background-color: #dff0d8;
     border-color: #d6e9c6;
 }
 
 .alert-danger {
-    color: #a94442;
+    color: #ff0400;
     background-color: #f2dede;
     border-color: #ebccd1;
 }
 
 .alert-warning {
-    color: #8a6d3b;
+    color: #ffa200;
     background-color: #fcf8e3;
     border-color: #faebcc;
 }
@@ -849,17 +913,6 @@ footer .container {
     text-decoration: line-through;
 }
 
-/* API密钥显示样式 */
-.api-key-display {
-    background-color: #f9f9f9;
-    padding: 10px;
-    border: 1px dashed #ddd;
-    border-radius: 3px;
-    font-family: monospace;
-    margin: 10px 0;
-    word-break: break-all;
-}
-
 /* 提示信息样式 */
 .toast {
     position: fixed;
@@ -1014,26 +1067,72 @@ footer .container {
     text-decoration: underline;
 }
 
-/* 引用块样式增强 */
-.preview-content blockquote, .paste-content blockquote {
-    border-left: 4px solid #9c27b0;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    margin: 1rem 0;
+.paste-content blockquote {
+    background-color: #3a3a3a; /* 引用块深色背景 */
+    border-left: 3px solid #9c27b0; /* 主题色边框 */
+    padding: 10px 15px;
+    margin: 15px 0;
+    color: #ccc;
 }
 
 /* 代码块样式统一 */
-.preview-content pre, .paste-content pre {
-    background-color: #2d2d2d;
-    color: #ddd;
+/* 1. 统一预览/粘贴区域的pre和code样式（强化优先级） */
+.preview-content pre, 
+.paste-content pre,
+/* 新增：覆盖highlight.js动态添加的类 */
+.preview-content pre.hljs, 
+.paste-content pre.hljs {
+    background-color: #2d2d2d !important; /* 强制深色，对抗highlight.js默认样式 */
+    color: #ddd !important;
     padding: 1rem;
     border-radius: 4px;
     overflow-x: auto;
     margin: 1rem 0;
+    border: none !important; /* 移除默认边框 */
+    box-shadow: none !important; /* 移除默认阴影 */
 }
 
-.preview-content code, .paste-content code {
+/* 2. 关键：给code标签明确设置深色背景（之前缺失） */
+.preview-content code, 
+.paste-content code,
+.preview-content pre code, 
+.paste-content pre code,
+/* 覆盖highlight.js的code标签样式 */
+.preview-content code.hljs, 
+.paste-content code.hljs {
     font-family: 'Courier New', Courier, monospace;
+    background-color: #2d2d2d !important; /* 与pre背景统一 */
+    color: #ddd !important; /* 文字颜色统一 */
+    padding: 0 !important; /* 清除code标签默认内边距（避免嵌套留白） */
+    border: none !important;
+}
+
+/* 3. 统一代码容器相关样式（非Markdown专用） */
+.code-container {
+    background-color: #2d2d2d !important;
+    border: 1px solid #444 !important; /* 深色边框，避免白色边框 */
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.code-header {
+    background-color: #3a3a3a !important; /* 代码头部深色，与内容区区分 */
+    color: #ccc !important;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #444 !important;
+}
+
+.code-content {
+    display: flex;
+    background-color: #2d2d2d !important;
+}
+
+.line-numbers {
+    background-color: #2d2d2d !important; /* 行号区深色，避免白色 */
+    color: #888 !important;
+    padding: 1rem 0.5rem;
+    text-align: right;
+    border-right: 1px solid #444 !important; /* 行号区右侧深色边框 */
 }
 
 /* 标题锚点样式（可选） */
@@ -1054,3 +1153,57 @@ footer .container {
     opacity: 1;
 }
 
+
+/* 统一所有密钥/链接显示框的样式 */
+.api-key-display {
+    background-color: #f5f5f5; /* 与Paste Link的背景一致 */
+    padding: 8px 12px;
+    border-radius: 3px;
+    word-break: break-all; /* 长内容自动换行 */
+    margin-bottom: 5px; /* 与下方按钮的间距一致 */
+    font-family: monospace; /* 保持字体一致 */
+}
+
+/* 行号容器与代码容器的公共样式（强制统一） */
+.line-numbers, 
+.code-block code {
+    /* 关键：统一字体和大小（确保字符宽度一致） */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px; /* 固定字体大小，避免缩放导致错位 */
+    
+    /* 关键：统一行高（确保每行高度一致） */
+    line-height: 1.5; /* 行高需匹配，建议1.5~1.6 */
+    
+    /* 统一内边距（避免整体偏移） */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin: 0 !important;
+}
+
+/* 行号容器单独样式（微调对齐） */
+.line-numbers {
+    /* 行号右对齐，与代码左对齐呼应 */
+    text-align: right;
+    padding-right: 12px !important; /* 行号右侧距离代码的间距 */
+    padding-left: 12px !important;
+    color: #888; /* 行号颜色 */
+    user-select: none; /* 禁止选中行号 */
+}
+
+/* 代码块容器单独样式 */
+.code-block {
+    padding: 0 !important; /* 清除代码块外层多余内边距 */
+}
+
+.code-block code {
+    display: block; /* 确保代码块占满容器 */
+    padding-left: 12px !important; /* 代码左侧距离行号的间距（与行号右侧间距呼应） */
+    padding-right: 12px !important;
+    white-space: pre !important; /* 强制按原格式换行，避免自动折行导致错位 */
+}
+
+/* 父容器样式（确保行号与代码并排且高度一致） */
+.code-content {
+    display: flex; /* 行号与代码横向排列 */
+    align-items: flex-start; /* 顶部对齐 */
+}
