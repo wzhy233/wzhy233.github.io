@@ -12,8 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
 </head>
 <body>
     <header>
@@ -126,11 +125,12 @@
             <p>This is your API key for managing this paste. Save it, as it will only be shown once.</p>
             <div class="api-key-display" id="api-key-display"></div>
             <p>You will need this key to edit or delete your paste later.</p>
-            <p id="access-key-display" style="margin-top: 15px; display: none;">
-                <strong>Access Key:</strong> <span id="access-key-value"></span><br>
-                Share this key with others to allow them to view your private paste.
-            </p>
-            <!-- 新增：粘贴链接显示区域 -->
+
+<div id="access-key-container" style="margin-top: 15px; display: none;">
+    <p><strong>Access Key:</strong></p>
+    <div class="api-key-display" id="access-key-value"></div>
+    <button class="btn btn-primary" id="copy-access-key-btn" style="margin-top: 10px;">Copy Access Key</button>
+</div>
             <div style="margin-top: 15px;">
                 <p><strong>Paste Link:</strong></p>
                 <div class="api-key-display" id="paste-link-display"></div>
