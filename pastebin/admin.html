@@ -94,3 +94,126 @@
                             <select id="filter-status" class="form-control">
                                 <option value="all">All Status</option>
                                 <option value="active">Active</option>
+                                <option value="expired">Expired</option>
+                            </select>
+                        </div>
+                        <button id="clear-filters" class="btn">Clear Filters</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Language</th>
+                                <th>Visibility</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Views</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pastes-table-body">
+                            <!-- 粘贴数据将通过JS动态填充 -->
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 20px;">
+                                    <div class="loading-indicator">
+                                        <div class="spinner"></div>
+                                        <p>Loading pastes...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination" style="display: flex; justify-content: center; margin-top: 20px; gap: 10px;">
+                    <button id="prev-page" class="btn" disabled>Previous</button>
+                    <span id="page-info">Page 1</span>
+                    <button id="next-page" class="btn">Next</button>
+                </div>
+            </div>
+            
+            <!-- 设置部分 -->
+            <div id="settings-section" class="admin-section">
+                <h3>System Settings</h3>
+                <form id="settings-form" class="create-paste-container" style="margin-top: 15px;">
+                    <div class="form-group">
+                        <label for="site-title">Site Title</label>
+                        <input type="text" id="site-title" class="form-control" placeholder="Pastebin - Chloride Technology">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="default-expiration">Default Expiration</label>
+                        <select id="default-expiration" class="form-control">
+                            <option value="1h">1 Hour</option>
+                            <option value="1d">1 Day</option>
+                            <option value="1w">1 Week</option>
+                            <option value="1m">1 Month</option>
+                            <option value="never">Never</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="allow-private">
+                            Allow Private Pastes
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="allow-burn-after-reading">
+                            Allow Burn-after-reading
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="max-paste-size">Max Paste Size (KB)</label>
+                        <input type="number" id="max-paste-size" class="form-control" min="10" max="10240" value="1024">
+                    </div>
+                    
+                    <div class="form-actions" style="margin-top: 20px;">
+                        <button type="button" class="btn" id="reset-settings">Reset to Defaults</button>
+                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                    </div>
+                </form>
+                
+                <div id="settings-message" class="alert" style="margin-top: 15px; display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认删除模态框 -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Delete</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this paste? This action cannot be undone.</p>
+                <p><strong>Paste ID:</strong> <span id="delete-paste-id"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="cancel-delete">Cancel</button>
+                <button class="btn btn-danger" id="confirm-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; Chloride Technology, All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
