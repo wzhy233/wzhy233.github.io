@@ -1207,3 +1207,69 @@ footer .container {
     display: flex; /* 行号与代码横向排列 */
     align-items: flex-start; /* 顶部对齐 */
 }
+
+
+/* 文件上传样式 */
+.uploaded-file-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+
+.file-name {
+    flex: 1;
+    margin: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-size {
+    color: #666;
+    font-size: 0.8rem;
+    margin-right: 10px;
+}
+
+.remove-file-btn {
+    background: none;
+    border: none;
+    color: #d9534f;
+    cursor: pointer;
+    padding: 2px 5px;
+}
+
+/* 查看页面文件样式 */
+.paste-files {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.paste-files ul {
+    list-style: none;
+    padding: 0;
+}
+
+.paste-files li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.download-file-btn {
+    margin-left: auto;
+    padding: 5px 10px;
+    background-color: #9c27b0;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.download-file-btn:hover {
+    background-color: #7b1fa2;
+}
