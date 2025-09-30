@@ -8,12 +8,12 @@
     <link rel="icon" href="/img/icon2.ico" media="(prefers-color-scheme: light)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css"> 
 </head>
 <body>
     <header>
         <div class="container header-content">
-            <a href="../index.html" class="logo">
+            <a href="index.html" class="logo">
                 <i class="fas fa-clipboard"></i>
                 <span class="logo-text">Pastebin - Chloride Technology</span>
             </a>
@@ -28,24 +28,26 @@
     </header>
 
     <div class="container main-content">
-        <!-- 管理员登录 -->
         <div id="admin-login" class="admin-login">
             <h2>Admin Panel</h2>
-            <p style="text-align: center; margin-bottom: 20px;">Please authenticate with GitHub to access the admin panel.</p>
-            <div style="text-align: center;">
-                <button id="github-login-btn" class="btn btn-primary">
-                    <i class="fab fa-github"></i> Login with GitHub
+            <p style="text-align: center; margin-bottom: 20px;">Please enter admin key to access</p>
+            <div style="max-width: 400px; margin: 0 auto;">
+                <div class="form-group">
+                    <label for="admin-key">Admin Key</label>
+                    <input type="password" id="admin-key" class="form-control" placeholder="Enter admin secret key" required>
+                </div>
+                <button id="key-login-btn" class="btn btn-primary" style="width: 100%;">
+                    Login
                 </button>
             </div>
             <div id="login-error" class="alert alert-danger" style="margin-top: 15px; display: none;"></div>
         </div>
         
-        <!-- 管理员面板 -->
         <div id="admin-panel" class="admin-panel" style="display: none;">
             <div class="admin-header">
                 <h2>Admin Panel</h2>
                 <div>
-                    <span id="admin-username-display" style="margin-right: 15px;"></span>
+                    <span id="admin-username-display" style="margin-right: 15px;">Admin</span> <!-- 固定显示Admin -->
                     <button id="logout-btn" class="btn btn-danger">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
@@ -73,11 +75,10 @@
             
             <div class="admin-nav">
                 <div class="admin-nav-item active" data-section="pastes">Pastes</div>
-                <div class="admin-nav-item" data-section="settings">Settings</div>
             </div>
             
-            <!-- 粘贴管理部分 -->
             <div id="pastes-section" class="admin-section active">
+
                 <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; align-items: center;">
                     <div style="flex: 1; min-width: 200px;">
                         <input type="text" id="admin-search" class="form-control" placeholder="Search pastes...">
@@ -116,7 +117,6 @@
                             </tr>
                         </thead>
                         <tbody id="pastes-table-body">
-                            <!-- 粘贴数据将通过JS动态填充 -->
                             <tr>
                                 <td colspan="8" style="text-align: center; padding: 20px;">
                                     <div class="loading-indicator">
@@ -129,64 +129,16 @@
                     </table>
                 </div>
 
+    
                 <div class="pagination" style="display: flex; justify-content: center; margin-top: 20px; gap: 10px;">
                     <button id="prev-page" class="btn" disabled>Previous</button>
                     <span id="page-info">Page 1</span>
                     <button id="next-page" class="btn">Next</button>
                 </div>
             </div>
-            
-            <!-- 设置部分 -->
-            <div id="settings-section" class="admin-section">
-                <h3>System Settings</h3>
-                <form id="settings-form" class="create-paste-container" style="margin-top: 15px;">
-                    <div class="form-group">
-                        <label for="site-title">Site Title</label>
-                        <input type="text" id="site-title" class="form-control" placeholder="Pastebin - Chloride Technology">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="default-expiration">Default Expiration</label>
-                        <select id="default-expiration" class="form-control">
-                            <option value="1h">1 Hour</option>
-                            <option value="1d">1 Day</option>
-                            <option value="1w">1 Week</option>
-                            <option value="1m">1 Month</option>
-                            <option value="never">Never</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="allow-private">
-                            Allow Private Pastes
-                        </label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="allow-burn-after-reading">
-                            Allow Burn-after-reading
-                        </label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="max-paste-size">Max Paste Size (KB)</label>
-                        <input type="number" id="max-paste-size" class="form-control" min="10" max="10240" value="1024">
-                    </div>
-                    
-                    <div class="form-actions" style="margin-top: 20px;">
-                        <button type="button" class="btn" id="reset-settings">Reset to Defaults</button>
-                        <button type="submit" class="btn btn-primary">Save Settings</button>
-                    </div>
-                </form>
-                
-                <div id="settings-message" class="alert" style="margin-top: 15px; display: none;"></div>
-            </div>
         </div>
     </div>
 
-    <!-- 确认删除模态框 -->
     <div id="delete-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -210,9 +162,11 @@
         </div>
     </footer>
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="js/config.js"></script>
+    <script src="js/config.js"></script> 
+    <script src="js/encryption.js"></script>
     <script src="js/main.js"></script>
     <script src="js/admin.js"></script>
 </body>

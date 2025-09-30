@@ -78,10 +78,18 @@
                 <div class="options-container">
                     <h3>Paste Options</h3>
                     <div class="options-grid">
+<div class="form-group">
+    <label for="file-upload">Attach Files</label>
+    <input type="file" id="file-upload" class="form-control" multiple>
+    <p class="help-text" style="font-size: 0.8rem; color: #666; margin-top: 5px;">
+        Supports multiple files. Maximum total size: 5MB
+    </p>
+    <div id="uploaded-files" style="margin-top: 10px;"></div>
+</div>
                         <div class="form-group">
                             <label for="paste-expiration">Expiration</label>
                             <select id="paste-expiration" class="form-control">
-                                <!-- 过期时间选项将通过JavaScript动态填充 -->
+                        
                             </select>
                         </div>
                         
@@ -115,23 +123,25 @@
         </div>
     </div>
     
-    <!-- API Key Modal -->
+<!-- API Key Modal -->
 <div id="api-key-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Your Paste API Key</h3>
+            <h3><strong>Your paste successfully created!</strong></h3>
             <button class="modal-close">&times;</button>
         </div>
         <div class="modal-body">
             <p><strong>API Key:</strong><p></p>
-            <div class="api-key-display" id="api-key-display"></div>
-            <p>This is your API key for managing this paste. Save it, as it will only be shown once.</p>
+            <div class="api-key-display" id="api-key-display">***************************</div>
+            <button class="btn btn-primary" id="copy-api-key-btn" style="margin-top: 10px;">Copy API Key</button>
+            <p style="margin-top: 8px; font-size: 0.85rem; color: #666;">This is your API key for managing this paste. Save it, as it will only be shown once.</p>
 
-<div id="access-key-container" style="margin-top: 15px; display: none;">
-    <p><strong>Access Key:</strong></p>
-    <div class="api-key-display" id="access-key-value"></div>
-    <button class="btn btn-primary" id="copy-access-key-btn" style="margin-top: 10px;">Copy Access Key</button>
-</div>
+            <div id="access-key-container" style="margin-top: 15px; display: none;">
+                <p><strong>Access Key:</strong></p>
+                <div class="api-key-display" id="access-key-value">***</div>
+                <button class="btn btn-primary" id="copy-access-key-btn" style="margin-top: 10px;">Copy Access Key</button>
+            </div>
+            
             <div style="margin-top: 15px;">
                 <p><strong>Paste Link:</strong></p>
                 <div class="api-key-display" id="paste-link-display"></div>
@@ -139,8 +149,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" id="copy-api-key-btn">Copy API Key</button>
-            <button class="btn" id="close-api-key-modal">OK</button>
+            <button class="btn" id="return-home-btn">Return to Home</button>
+            <button class="btn btn-primary" id="view-paste-btn">View Paste</button>
         </div>
     </div>
 </div>
