@@ -1283,3 +1283,58 @@ nav a, .logo-text, .paste-card h3, .preview-content h1, .preview-content h2 {
 .download-file-btn:hover {
     background-color: #7b1fa2;
 }
+
+/* 文件选择按钮样式 */
+.file-upload-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* 隐藏原生文件输入框 */
+#file-upload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* 自定义文件选择按钮 */
+.file-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 6px 12px;
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #666;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    height: 32px;
+}
+
+.file-upload-btn:hover {
+    background-color: #555;
+}
+
+/* 选中状态样式（与原生按钮交互保持一致） */
+#file-upload:focus + .file-upload-btn {
+    border-color: #9c27b0;
+    box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.2);
+    outline: none;
+}
+
+/* 上传图标颜色与按钮文字协调 */
+.file-upload-btn i {
+    font-size: 14px;
+}
