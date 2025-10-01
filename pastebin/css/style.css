@@ -6,7 +6,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Segoe UI", sans-serif;
     background-color: #f0f0f0;
     color: #333;
     line-height: 1.6;
@@ -34,9 +34,9 @@ header {
 .header-content {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* 确保垂直居中对齐 */
+    align-items: center;
     padding: 10px 0;
-    height: 60px; /* 固定高度确保对齐 */
+    height: 60px;
 }
 
 .logo {
@@ -52,23 +52,22 @@ nav ul {
     margin: 0;
     padding: 0;
     gap: 20px;
-    align-items: center; /* 与logo垂直对齐 */
+    align-items: center;
 }
 
 .logo-text {
-    color: #bb86fc; /* 调整为更明亮的紫色，保持PHP风格同时提升可读性 */
+    color: #bb86fc;
     font-size: 1.2rem;
     font-weight: 600;
 }
 
-/* 确保导航链接颜色也保持协调 */
 nav a {
-    color: #ddd; /* 稍亮的灰色，提升可读性 */
+    color: #ddd;
 }
 
 nav a.active,
 nav a:hover {
-    color: #bb86fc; /* 与logo文字颜色呼应 */
+    color: #bb86fc;
     background-color: #333;
 }
 
@@ -76,8 +75,6 @@ nav a:hover {
     margin-right: 10px;
     color: #9c27b0;
 }
-
-
 
 nav ul li {
     margin-left: 20px;
@@ -111,7 +108,7 @@ nav ul li a.active {
     border: 1px solid #666;
     border-radius: 3px;
     text-decoration: none;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Segoe UI", sans-serif;
     font-size: 14px;
     cursor: pointer;
     text-align: center;
@@ -145,7 +142,7 @@ nav ul li a.active {
     background-color: #c9302c;
 }
 
-/* 表单样式 - PHP风格 */
+/* 表单样式 */
 .form-control {
     display: block;
     width: 100%;
@@ -158,7 +155,7 @@ nav ul li a.active {
     border-radius: 3px;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Segoe UI", sans-serif;
 }
 
 .form-control:focus {
@@ -177,7 +174,8 @@ select.form-control {
     appearance: none;
 }
 
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
     width: 16px;
     height: 16px;
     border: 1px solid #ccc;
@@ -188,13 +186,7 @@ input[type="checkbox"] {
 }
 
 input[type="radio"] {
-    width: 16px;
-    height: 16px;
-    border: 1px solid #ccc;
     border-radius: 50%;
-    background-color: #fff;
-    vertical-align: middle;
-    cursor: pointer;
 }
 
 .form-group {
@@ -278,72 +270,55 @@ label {
     text-overflow: ellipsis;
 }
 
-.paste-meta {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-.paste-meta span {
-    display: inline-block;
-    margin-right: 10px;
-}
-
-/* 元信息容器：使用flex布局，确保内部元素垂直居中且间距一致 */
+/* 元信息样式 */
 .paste-meta {
     display: flex;
-    flex-wrap: wrap; /* 支持换行，避免溢出 */
-    gap: 12px; /* 元素之间的间距 */
-    margin: 8px 0; /* 与上下元素的间距（控制与标题和预览区的距离） */
-    align-items: center; /* 垂直居中，确保徽章和其他信息对齐 */
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 8px 0;
+    align-items: center;
     font-size: 0.85rem;
     color: #666;
 }
 
-/* 元信息项：统一样式，确保徽章和文本对齐 */
 .meta-item {
     display: inline-flex;
     align-items: center;
-    gap: 4px; /* 图标与文字的间距 */
+    gap: 4px;
 }
 
-/* 阅后即焚徽章：与元信息项保持一致的高度和对齐 */
 .burn-badge {
     color: #d9534f;
     padding: 2px 6px;
     border-radius: 4px;
     background-color: #f8d7da;
-    /* 强制与其他元信息项对齐 */
     height: 22px;
     line-height: 18px;
 }
 
-/* 预览不可用提示：与元信息区域左对齐，间距匹配 */
 .burn-preview-placeholder {
-    margin: 8px 0; /* 与上方元信息区域的间距（和元信息的margin-bottom保持一致） */
+    margin: 8px 0;
     padding: 10px;
     background-color: #fff3cd;
     border: 1px dashed #ffeeba;
     border-radius: 3px;
     color: #856404;
-    font-size: 0.85rem; /* 与元信息字体大小一致 */
+    font-size: 0.85rem;
     line-height: 1.4;
     display: flex;
     align-items: center;
     gap: 8px;
-    /* 左对齐，与元信息区域的左侧对齐 */
     width: 100%;
     box-sizing: border-box;
 }
 
-/* 正常预览区域：保持与提示区域一致的间距和左对齐 */
 .paste-preview {
-    margin: 8px 0; /* 与元信息区域的间距和提示区域一致 */
+    margin: 8px 0;
     padding: 10px;
-    background-color: #f5f5f5;
+    background-color: #f9f9f9;
     border-radius: 3px;
     color: #333;
-    font-size: 0.85rem; /* 字体大小统一 */
+    font-size: 0.85rem;
     line-height: 1.4;
     white-space: nowrap;
     overflow: hidden;
@@ -378,6 +353,7 @@ label {
 
 .editor-container {
     display: flex;
+    background-color: #fff;
     flex-direction: column;
     gap: 15px;
 }
@@ -392,8 +368,14 @@ label {
     border-radius: 3px;
 }
 
-.editor-toolbar button {
+.editor-toolbar .btn {
     background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.editor-toolbar .btn:hover {
+    background-color: #f0f0f0;
 }
 
 .editor-tabs {
@@ -424,17 +406,13 @@ textarea#paste-content {
     width: 100%;
     min-height: 300px;
     resize: vertical;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; /* 苹果系统等宽字体 */
-    -webkit-font-smoothing: antialiased;
-}
-
-.preview-content {
-    display: none;
-    min-height: 300px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
     background-color: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    font-family: Consolas, Monaco, "Segoe UI Mono", monospace;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    font-size: 14px;
 }
 
 .options-container {
@@ -522,88 +500,251 @@ textarea#paste-content {
     background-color: #f5f5f5;
 }
 
-.paste-content {
-    background-color: #2d2d2d; /* 深色背景（与代码块协调） */
-    color: #ddd; /* 浅色文字，确保可读性 */
+/* 统一内容区域样式 */
+.paste-content,
+.preview-content {
+    background-color: #fff;
+    color: #333;
     padding: 20px;
     border-radius: 4px;
     margin: 20px 0;
+    border: 1px solid #ddd;
+    line-height: 1.8;
+    font-size: 1rem;
 }
 
+/* 代码容器统一样式 - 核心对齐优化 */
 .code-container {
-    background-color: #2d2d2d !important; /* 与内容区背景一致 */
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
     border-radius: 4px;
     overflow: hidden;
 }
 
-/* 代码头部（语言标识） */
 .code-header {
     padding: 8px 12px;
-    background-color: #3a3a3a;
-    border-bottom: 1px solid #444;
-    color: #ccc;
+    background-color: #f5f5f5 !important;
+    border-bottom: 1px solid #ddd !important;
+    color: #666 !important;
     font-size: 0.9rem;
 }
-
 
 .code-content {
     display: flex;
-    width: 100%;
-    background-color: #2d2d2d !important; /* 代码内容区深色背景 */
+    background-color: #fff !important;
+    align-items: flex-start; /* 确保顶部对齐 */
 }
 
-
-/* 行号列：固定宽度，不挤压代码 */
+/* 行号样式 - 强制与代码对齐 */
 .line-numbers {
-    width: 40px; /* 固定宽度，足够显示3位数行号 */
-    padding: 12px 0;
-    background-color: #333;
-    color: #888;
-    text-align: right; /* 行号右对齐 */
-    font-size: 0.9rem;
-    line-height: 1.5; /* 与代码行高一致，确保垂直对齐 */
-    white-space: nowrap; /* 禁止行号换行 */
+    background-color: #f9f9f9 !important;
+    color: #999 !important;
+    padding: 12px 8px;
+    text-align: right;
+    border-right: 1px solid #ddd !important;
+    /* 统一字体 */
+    font-family: Consolas, Monaco, "Segoe UI Mono", monospace;
+    font-size: 14px;
+    /* 强制行高与代码一致 */
+    line-height: 1.5;
+    user-select: none;
+    flex-shrink: 0;
 }
 
-/* 行号单个样式 */
 .line-numbers span {
     display: block;
-    padding-right: 8px; /* 行号与代码之间留间隙 */
+    padding-right: 8px;
+    /* 移除固定高度，使用行高自然控制 */
+    line-height: inherit;
 }
 
+/* 代码块样式 - 强制与行号对齐 */
 .code-block {
-    background-color: #2d2d2d !important; /* 强制代码块深色背景（覆盖highlight.js默认样式） */
-    color: #ddd !important;
+    background-color: #fff !important;
+    color: #333 !important;
     border: none !important;
-    padding: 15px !important;
+    padding: 12px 0 !important;
     margin: 0 !important;
     flex: 1;
     overflow-x: auto;
 }
 
-/* 示例：调整注释颜色（根据主题微调） */
-.hljs-comment {
-    color: #65b341 !important; /* 加深注释颜色，确保在深色背景可见 */
-}
-
-/* 代码内容样式：确保内边距正常 */
 .code-block code {
+    color: #333 !important;
+    background-color: transparent !important;
     display: block;
-    padding: 12px;
-    line-height: 1.5; /* 与行号行高一致 */
-    color: #ddd;
-}
-
-/* 修复pre标签默认样式干扰 */
-pre {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    white-space: pre !important;
+    /* 统一字体 */
+    font-family: Consolas, Monaco, "Segoe UI Mono", monospace;
+    font-size: 14px;
+    /* 强制行高与行号一致 */
+    line-height: 1.5;
+    /* 确保无额外间距 */
     margin: 0;
-    background-color: transparent; /* 继承父容器背景 */
+    border: 0;
 }
 
-.code-language {
+/* 代码语法高亮 - 适配浅色主题 */
+.hljs-comment {
+    color: #6a737d !important;
+}
+
+.hljs-keyword { 
+    color: #d73a49 !important;
+}
+
+.hljs-string { 
+    color: #032f62 !important;
+}
+
+.hljs-number { 
+    color: #005cc5 !important;
+}
+
+.hljs-function { 
+    color: #6f42c1 !important;
+}
+
+/* Markdown 统一样式 */
+.preview-content img,
+.paste-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.preview-content table,
+.paste-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.preview-content th,
+.paste-content th,
+.preview-content td,
+.paste-content td {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.preview-content th,
+.paste-content th {
+    background-color: #f5f5f5;
     font-weight: bold;
 }
 
+.preview-content tr:nth-child(even),
+.paste-content tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 链接样式 - 使用主题色 */
+.preview-content a,
+.paste-content a {
+    color: #9c27b0;
+    text-decoration: none;
+}
+
+.preview-content a:hover,
+.paste-content a:hover {
+    text-decoration: underline;
+    color: #7b1fa2;
+}
+
+/* 引用块样式 - 使用主题色 */
+.preview-content blockquote,
+.paste-content blockquote {
+    background-color: #f9f9f9;
+    border-left: 3px solid #9c27b0;
+    padding: 10px 15px;
+    margin: 15px 0;
+    color: #666;
+}
+
+/* 水平分割线 - 使用主题色 */
+.preview-content hr,
+.paste-content hr {
+    border: none;
+    border-top: 2px solid #9c27b0;
+    margin: 1.5rem 0;
+    opacity: 0.6;
+}
+
+/* 任务列表 */
+.preview-content ul.task-list,
+.paste-content ul.task-list {
+    list-style: none;
+    padding-left: 1.5rem;
+}
+
+.preview-content .task-list-item,
+.paste-content .task-list-item {
+    margin-bottom: 0.5rem;
+}
+
+.preview-content .task-list-item input[type="checkbox"],
+.paste-content .task-list-item input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* 标题样式 */
+.preview-content h1,
+.preview-content h2,
+.preview-content h3,
+.paste-content h1,
+.paste-content h2,
+.paste-content h3 {
+    color: #333;
+    margin: 1.5rem 0 1rem 0;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 0.5rem;
+}
+
+.preview-content h1,
+.paste-content h1 {
+    border-bottom: 2px solid #9c27b0;
+}
+
+/* 代码块样式统一 */
+.preview-content pre,
+.paste-content pre,
+.preview-content pre.hljs,
+.paste-content pre.hljs {
+    background-color: #f8f9fa !important;
+    color: #333 !important;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 1rem 0;
+    border: 1px solid #e9ecef !important;
+}
+
+.preview-content code,
+.paste-content code,
+.preview-content pre code,
+.paste-content pre code,
+.preview-content code.hljs,
+.paste-content code.hljs {
+    font-family: Consolas, Monaco, "Segoe UI Mono", monospace;
+    -webkit-font-smoothing: antialiased;
+    background-color: #f8f9fa !important;
+    color: #333 !important;
+    padding: 0.2em 0.4em !important;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.preview-content pre code,
+.paste-content pre code {
+    background-color: transparent !important;
+    padding: 0 !important;
+}
 
 /* 加载指示器 */
 .loading-indicator {
@@ -694,21 +835,21 @@ pre {
 }
 
 .alert-success {
-    color: #01ff05;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
 }
 
 .alert-danger {
-    color: #ff0400;
-    background-color: #f2dede;
-    border-color: #ebccd1;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
 
 .alert-warning {
-    color: #ffa200;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
 }
 
 /* 管理员页面 */
@@ -888,33 +1029,23 @@ footer .container {
     }
 }
 
-/* 隐藏元素 */
+/* 工具类 */
 .hidden {
     display: none;
 }
 
-/* 显示预览时的样式 */
-#preview-tab.active ~ #preview-content {
-    display: block;
-}
-
-#editor-tab.active ~ #editor-content {
-    display: none;
-}
-
-/* 加载更多按钮容器 */
-.load-more-container {
-    text-align: center;
-    margin: 20px 0;
-}
-
-/* 粘贴过期样式 */
 .expired {
     opacity: 0.7;
 }
 
 .expired td {
     text-decoration: line-through;
+}
+
+/* 加载更多按钮容器 */
+.load-more-container {
+    text-align: center;
+    margin: 20px 0;
 }
 
 /* 提示信息样式 */
@@ -972,252 +1103,6 @@ footer .container {
     justify-content: flex-end;
     gap: 10px;
 }
-
-/* 修复Markdown编辑器工具栏按钮样式 */
-.editor-toolbar {
-    background-color: #2d2d2d;
-    padding: 10px;
-    border: 1px solid #444;
-    border-bottom: none;
-    display: flex;
-    gap: 5px;
-}
-
-.editor-toolbar .btn {
-    /* 默认状态 - 未悬停时 */
-    background-color: #3a3a3a;
-    color: #ccc;
-    border: 1px solid #555;
-    padding: 6px 10px;
-    margin: 0;
-    min-width: auto;
-}
-
-.editor-toolbar .btn i {
-    /* 确保图标颜色与按钮文字一致 */
-    color: inherit;
-}
-
-/* 悬停状态 */
-.editor-toolbar .btn:hover {
-    background-color: #4a4a4a;
-    color: #fff;
-    border-color: #666;
-    transform: none; /* 无位移效果 */
-}
-
-/* Markdown 基础样式扩展 */
-.preview-content, .paste-content {
-    /* 确保内容区有足够内边距 */
-    padding: 20px;
-    line-height: 1.8;
-    font-size: 1rem;
-}
-
-/* 图片样式 */
-.preview-content img, .paste-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    margin: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* 表格样式 */
-.preview-content table, .paste-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1.5rem 0;
-}
-
-.preview-content th, .paste-content th,
-.preview-content td, .paste-content td {
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-.preview-content th, .paste-content th {
-    background-color: #f5f5f5;
-    font-weight: bold;
-}
-
-.preview-content tr:nth-child(even), .paste-content tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-/* 任务列表 */
-.preview-content ul.task-list, .paste-content ul.task-list {
-    list-style: none;
-    padding-left: 1.5rem;
-}
-
-.preview-content .task-list-item, .paste-content .task-list-item {
-    margin-bottom: 0.5rem;
-}
-
-.preview-content .task-list-item input[type="checkbox"], 
-.paste-content .task-list-item input[type="checkbox"] {
-    margin-right: 0.5rem;
-}
-
-/* 链接样式 */
-.preview-content a, .paste-content a {
-    color: #9c27b0;
-    text-decoration: none;
-}
-
-.preview-content a:hover, .paste-content a:hover {
-    text-decoration: underline;
-}
-
-.paste-content blockquote {
-    background-color: #3a3a3a; /* 引用块深色背景 */
-    border-left: 3px solid #9c27b0; /* 主题色边框 */
-    padding: 10px 15px;
-    margin: 15px 0;
-    color: #ccc;
-}
-
-/* 代码块样式统一 */
-/* 1. 统一预览/粘贴区域的pre和code样式（强化优先级） */
-.preview-content pre, 
-.paste-content pre,
-/* 新增：覆盖highlight.js动态添加的类 */
-.preview-content pre.hljs, 
-.paste-content pre.hljs {
-    background-color: #2d2d2d !important; /* 强制深色，对抗highlight.js默认样式 */
-    color: #ddd !important;
-    padding: 1rem;
-    border-radius: 4px;
-    overflow-x: auto;
-    margin: 1rem 0;
-    border: none !important; /* 移除默认边框 */
-    box-shadow: none !important; /* 移除默认阴影 */
-}
-
-/* 2. 关键：给code标签明确设置深色背景（之前缺失） */
-.preview-content code, 
-.paste-content code,
-.preview-content pre code, 
-.paste-content pre code,
-/* 覆盖highlight.js的code标签样式 */
-.preview-content code.hljs, 
-.paste-content code.hljs {
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; /* 苹果系统等宽字体 */
-    -webkit-font-smoothing: antialiased; /* 增强等宽字体平滑度 */
-    background-color: #2d2d2d !important; /* 与pre背景统一 */
-    color: #ddd !important; /* 文字颜色统一 */
-    padding: 0 !important; /* 清除code标签默认内边距（避免嵌套留白） */
-    border: none !important;
-}
-
-/* 3. 统一代码容器相关样式（非Markdown专用） */
-.code-container {
-    background-color: #2d2d2d !important;
-    border: 1px solid #444 !important; /* 深色边框，避免白色边框 */
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.code-header {
-    background-color: #3a3a3a !important; /* 代码头部深色，与内容区区分 */
-    color: #ccc !important;
-    padding: 0.5rem 1rem;
-    border-bottom: 1px solid #444 !important;
-}
-
-.code-content {
-    display: flex;
-    background-color: #2d2d2d !important;
-}
-/* 导航和标题 - 确保继承body字体 */
-nav a, .logo-text, .paste-card h3, .preview-content h1, .preview-content h2 {
-    font-family: inherit; /* 继承body的苹果风格字体 */
-}
-.line-numbers {
-    background-color: #2d2d2d !important; /* 行号区深色，避免白色 */
-    color: #888 !important;
-    padding: 1rem 0.5rem;
-    text-align: right;
-    border-right: 1px solid #444 !important; /* 行号区右侧深色边框 */
-}
-
-/* 标题锚点样式（可选） */
-.preview-content h1 a[href^="#"], 
-.paste-content h1 a[href^="#"],
-.preview-content h2 a[href^="#"], 
-.paste-content h2 a[href^="#"] {
-    color: inherit;
-    text-decoration: none;
-    margin-right: 0.5rem;
-    opacity: 0.6;
-}
-
-.preview-content h1:hover a[href^="#"], 
-.paste-content h1:hover a[href^="#"],
-.preview-content h2:hover a[href^="#"], 
-.paste-content h2:hover a[href^="#"] {
-    opacity: 1;
-}
-
-
-/* 统一所有密钥/链接显示框的样式 */
-.api-key-display {
-    background-color: #f5f5f5; /* 与Paste Link的背景一致 */
-    padding: 8px 12px;
-    border-radius: 3px;
-    word-break: break-all; /* 长内容自动换行 */
-    margin-bottom: 5px; /* 与下方按钮的间距一致 */
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; /* 苹果系统等宽字体 */
-    -webkit-font-smoothing: antialiased;
-}
-
-/* 行号容器与代码容器的公共样式（强制统一） */
-.line-numbers, 
-.code-block code {
-    /* 关键：统一字体和大小（确保字符宽度一致） */
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; /* 统一代码区域等宽字体 */
-    -webkit-font-smoothing: antialiased;
-    font-size: 14px; /* 固定字体大小，避免缩放导致错位 */
-    
-    /* 关键：统一行高（确保每行高度一致） */
-    line-height: 1.5; /* 行高需匹配，建议1.5~1.6 */
-    
-    /* 统一内边距（避免整体偏移） */
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin: 0 !important;
-}
-
-/* 行号容器单独样式（微调对齐） */
-.line-numbers {
-    /* 行号右对齐，与代码左对齐呼应 */
-    text-align: right;
-    padding-right: 12px !important; /* 行号右侧距离代码的间距 */
-    padding-left: 12px !important;
-    color: #888; /* 行号颜色 */
-    user-select: none; /* 禁止选中行号 */
-}
-
-/* 代码块容器单独样式 */
-.code-block {
-    padding: 0 !important; /* 清除代码块外层多余内边距 */
-}
-
-.code-block code {
-    display: block; /* 确保代码块占满容器 */
-    padding-left: 12px !important; /* 代码左侧距离行号的间距（与行号右侧间距呼应） */
-    padding-right: 12px !important;
-    white-space: pre !important; /* 强制按原格式换行，避免自动折行导致错位 */
-}
-
-/* 父容器样式（确保行号与代码并排且高度一致） */
-.code-content {
-    display: flex; /* 行号与代码横向排列 */
-    align-items: flex-start; /* 顶部对齐 */
-}
-
 
 /* 文件上传样式 */
 .uploaded-file-item {
@@ -1291,7 +1176,6 @@ nav a, .logo-text, .paste-card h3, .preview-content h1, .preview-content h2 {
     width: 100%;
 }
 
-/* 隐藏原生文件输入框 */
 #file-upload {
     position: absolute;
     top: 0;
@@ -1303,7 +1187,6 @@ nav a, .logo-text, .paste-card h3, .preview-content h1, .preview-content h2 {
     z-index: 1;
 }
 
-/* 自定义文件选择按钮 */
 .file-upload-btn {
     display: inline-flex;
     align-items: center;
@@ -1315,7 +1198,7 @@ nav a, .logo-text, .paste-card h3, .preview-content h1, .preview-content h2 {
     color: #fff;
     border: 1px solid #666;
     border-radius: 3px;
-    font-family: inherit;
+    font-family: "Segoe UI", sans-serif;
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -1327,14 +1210,120 @@ nav a, .logo-text, .paste-card h3, .preview-content h1, .preview-content h2 {
     background-color: #555;
 }
 
-/* 选中状态样式（与原生按钮交互保持一致） */
 #file-upload:focus + .file-upload-btn {
     border-color: #9c27b0;
     box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.2);
     outline: none;
 }
 
-/* 上传图标颜色与按钮文字协调 */
 .file-upload-btn i {
     font-size: 14px;
+}
+
+/* 统一密钥/链接显示框样式 */
+.api-key-display {
+    background-color: #f5f5f5;
+    padding: 8px 12px;
+    border-radius: 3px;
+    word-break: break-all;
+    margin-bottom: 5px;
+    font-family: "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 编辑器标签切换 */
+#preview-tab.active ~ #preview-content {
+    display: block;
+}
+
+#editor-tab.active ~ #editor-content {
+    display: none;
+}
+
+/* 核心对齐修复：仅保留关键样式，其他样式保持不变 */
+
+/* 1. 强制盒模型完全一致 */
+.code-content,
+.line-numbers,
+.code-block,
+.line-numbers span,
+.code-block code {
+    box-sizing: border-box !important; /* 确保内边距不影响总高度 */
+    -webkit-box-sizing: border-box !important;
+}
+
+/* 2. 容器级校准 */
+.code-content {
+    display: flex;
+    align-items: stretch; /* 强制子元素高度一致 */
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    /* 消除flex布局的间隙问题 */
+    gap: 0 !important;
+    overflow: hidden !important;
+}
+
+/* 3. 行号区域：补偿上移偏差 */
+.line-numbers {
+    background-color: #f9f9f9 !important;
+    color: #999 !important;
+    border-right: 1px solid #ddd !important;
+    font-family: "Consolas", "Monaco", monospace !important;
+    font-size: 14px !important;
+    line-height: 21px !important; /* 固定行高 */
+    padding: 0 !important; /* 先清零内边距 */
+    /* 关键：通过padding-top微调补偿上移（根据实际偏移量调整px值） */
+    padding: 1px 8px 0 12px !important; 
+    margin: 0 !important;
+    user-select: none;
+    flex-shrink: 0;
+    /* 强制文本渲染基线 */
+    vertical-align: bottom !important;
+    /* 修复字体渲染偏差 */
+    -webkit-font-smoothing: subpixel-antialiased !important;
+}
+
+/* 4. 单个行号：像素级对齐 */
+.line-numbers span {
+    display: block;
+    height: 21px !important; /* 与行高完全一致 */
+    line-height: 21px !important;
+    padding-right: 8px !important;
+    margin: 0 !important;
+    /* 关键：行号字符下沉1px，补偿上移 */
+    position: relative;
+    top: 1px;
+}
+
+/* 5. 代码区域：精确匹配 */
+.code-block {
+    background-color: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important; /* 先清零内边距 */
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.code-block code {
+    display: block;
+    font-family: "Consolas", "Monaco", monospace !important;
+    font-size: 14px !important;
+    line-height: 21px !important; /* 与行号严格一致 */
+    color: #333 !important;
+    background: none !important;
+    padding: 0 12px !important; /* 仅左右内边距 */
+    margin: 0 !important;
+    border: 0 !important;
+    /* 强制代码渲染基线与行号匹配 */
+    vertical-align: bottom !important;
+    -webkit-font-smoothing: subpixel-antialiased !important;
+}
+
+/* 6. 修复可能的继承样式干扰 */
+.code-container * {
+    font-variant-ligatures: none !important; /* 禁用连字 */
+    letter-spacing: 0 !important; /* 固定字间距 */
+    word-spacing: 0 !important; /* 固定词间距 */
 }
