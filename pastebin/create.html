@@ -98,6 +98,21 @@
                             <select id="paste-expiration" class="form-control">
                             </select>
                         </div>
+
+
+<div class="form-group">
+    <label for="paste-visibility">Visibility</label>
+    <select id="paste-visibility" class="form-control">
+        <option value="public">Public</option>
+        <option value="unlisted">Unlisted</option>
+        <option value="private">Private</option>
+    </select>
+    <small class="form-text text-muted">
+        Public: Visible to everyone<br>
+        Unlisted: Only accessible via direct link<br>
+        Private: Requires access key to view
+    </small>
+</div>
                         
                         <div class="form-group">
                             <label>
@@ -108,16 +123,7 @@
                                 Paste will be deleted after first view
                             </p>
                         </div>
-                        
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" id="paste-private">
-                                Private paste
-                            </label>
-                            <p class="help-text" style="font-size: 0.8rem; color: #666; margin-top: 5px;">
-                                Requires a key to view
-                            </p>
-                        </div>
+                    
                     </div>
                 </div>
                 
