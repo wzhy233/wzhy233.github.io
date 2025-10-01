@@ -541,6 +541,7 @@ textarea#paste-content {
     color: #999 !important;
     padding: 12px 8px;
     text-align: right;
+    white-space: nowrap; 
     border-right: 1px solid #ddd !important;
     /* 统一字体 */
     font-family: Consolas, Monaco, "Segoe UI Mono", monospace;
@@ -562,6 +563,7 @@ textarea#paste-content {
 .code-block {
     background-color: #fff !important;
     color: #333 !important;
+    white-space: nowrap; 
     border: none !important;
     padding: 12px 0 !important;
     margin: 0 !important;
@@ -1326,4 +1328,5 @@ footer .container {
     font-variant-ligatures: none !important; /* 禁用连字 */
     letter-spacing: 0 !important; /* 固定字间距 */
     word-spacing: 0 !important; /* 固定词间距 */
+
 }
