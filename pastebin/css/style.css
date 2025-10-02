@@ -362,6 +362,7 @@ label {
 
 .editor-toolbar {
     display: flex;
+    margin-bottom: 8px;
     flex-wrap: wrap;
     gap: 5px;
     padding: 10px;
@@ -381,6 +382,7 @@ label {
 }
 
 .editor-tabs {
+    margin-top: 2px;
     display: flex;
     border-bottom: 1px solid #ddd;
     margin-bottom: 10px;
