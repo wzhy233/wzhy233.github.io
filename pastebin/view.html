@@ -9,7 +9,7 @@
     <!-- Markdown渲染库 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
-<!-- 数学公式渲染库 -->
+    <!-- 数学公式渲染库 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
@@ -45,11 +45,11 @@
                     <input type="password" id="access-key" class="form-control" placeholder="Enter access key">
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="verify-btn">Submit</button>
                     <button type="button" class="btn" onclick="window.location.href='index.html'">Cancel</button>
                 </div>
             </form>
-            <div id="access-error" class="alert alert-danger" style="margin-top: 15px; display: none;">
+            <div id="access-error" class="alert alert-danger show" style="margin-top: 15px; display: none;">
                 Invalid access key. Please try again.
             </div>
         </div>
@@ -107,15 +107,14 @@
                         </select>
                     </div>
 
-
-<div class="form-group">
-    <label for="edit-paste-visibility">Visibility</label>
-    <select id="edit-paste-visibility" class="form-control">
-        <option value="public">Public</option>
-        <option value="private">Private</option>
-        <option value="unlisted">Unlisted</option>
-    </select>
-</div>
+                    <div class="form-group">
+                        <label for="edit-paste-visibility">Visibility</label>
+                        <select id="edit-paste-visibility" class="form-control">
+                            <option value="public">Public</option>
+                            <option value="private">Private</option>
+                            <option value="unlisted">Unlisted</option>
+                        </select>
+                    </div>
                     
                     <div class="form-group">
                         <label>
@@ -135,7 +134,7 @@
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                 </form>
-                <div id="edit-error" class="alert alert-danger" style="margin-top: 15px; display: none;"></div>
+                <div id="edit-error" class="alert alert-danger show" style="margin-top: 15px; display: none;"></div>
             </div>
             
             <!-- 删除确认 -->
@@ -150,7 +149,7 @@
                     <button type="button" class="btn" id="cancel-delete-btn">Cancel</button>
                     <button type="button" class="btn btn-danger" id="confirm-delete-btn">Confirm Delete</button>
                 </div>
-                <div id="delete-error" class="alert alert-danger" style="margin-top: 15px; display: none;"></div>
+                <div id="delete-error" class="alert alert-danger show" style="margin-top: 15px; display: none;"></div>
             </div>
             
             <!-- 粘贴内容 -->
@@ -183,6 +182,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/encryption.js"></script>
     <script src="js/main.js"></script>
