@@ -352,6 +352,8 @@ label {
 }
 
 .editor-container {
+    position: relative; /* 相对定位容器 */
+    min-height: 400px; /* 确保有足够高度 */
     display: flex;
     background-color: #fff;
     flex-direction: column;
@@ -381,10 +383,11 @@ label {
 .editor-tabs {
     display: flex;
     border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
 }
 
 .editor-tab {
-    padding: 8px 15px;
+    padding: 8px 16px;
     background-color: #f5f5f5;
     border: 1px solid #ddd;
     border-bottom: none;
@@ -395,7 +398,10 @@ label {
 
 .editor-tab.active {
     background-color: #fff;
+    border-color: #ddd;
     border-top: 2px solid #9c27b0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 .editor-content {
@@ -531,83 +537,75 @@ textarea#paste-content {
 
 .code-content {
     display: flex;
+    align-items: stretch; /* 强制子元素高度一致 */
     background-color: #fff !important;
     align-items: flex-start; /* 确保顶部对齐 */
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    gap: 0 !important;
+    overflow: hidden !important;
 }
 
 /* 行号样式 - 强制与代码对齐 */
 .line-numbers {
     background-color: #f9f9f9 !important;
     color: #999 !important;
-    padding: 12px 8px;
-    text-align: right;
-    white-space: nowrap; 
     border-right: 1px solid #ddd !important;
-    /* 统一字体 */
-    font-family: Consolas, Monaco, "Segoe UI Mono", monospace;
-    font-size: 14px;
-    /* 强制行高与代码一致 */
-    line-height: 1.5;
+    font-family: "Consolas", "Monaco", monospace !important;
+    font-size: 14px !important;
+    line-height: 21px !important; /* 固定行高 */
+    padding: 1px 8px 0 12px !important; /* 微调补偿上移 */
+    margin: 0 !important;
+    text-align: right;
     user-select: none;
     flex-shrink: 0;
+    vertical-align: bottom !important;
+    -webkit-font-smoothing: subpixel-antialiased !important;
 }
 
 .line-numbers span {
     display: block;
-    padding-right: 8px;
-    /* 移除固定高度，使用行高自然控制 */
-    line-height: inherit;
+    height: 21px !important; /* 与行高完全一致 */
+    line-height: 21px !important;
+    padding-right: 8px !important;
+    margin: 0 !important;
+    position: relative;
+    top: 1px; /* 行号字符下沉补偿 */
 }
 
 /* 代码块样式 - 强制与行号对齐 */
 .code-block {
     background-color: #fff !important;
     color: #333 !important;
-    white-space: nowrap; 
     border: none !important;
-    padding: 12px 0 !important;
+    padding: 0 !important;
     margin: 0 !important;
     flex: 1;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .code-block code {
     color: #333 !important;
     background-color: transparent !important;
     display: block;
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    padding: 0 12px !important; /* 仅左右内边距 */
     white-space: pre !important;
-    /* 统一字体 */
-    font-family: Consolas, Monaco, "Segoe UI Mono", monospace;
-    font-size: 14px;
-    /* 强制行高与行号一致 */
-    line-height: 1.5;
-    /* 确保无额外间距 */
+    font-family: "Consolas", "Monaco", monospace !important;
+    font-size: 14px !important;
+    line-height: 21px !important; /* 与行号严格一致 */
     margin: 0;
     border: 0;
+    vertical-align: bottom !important;
+    -webkit-font-smoothing: subpixel-antialiased !important;
 }
 
-/* 代码语法高亮 - 适配浅色主题 */
+/* 代码高亮样式 */
 .hljs-comment {
-    color: #6a737d !important;
+    color: hsla(305, 100%, 50%, 0.626) !important;
 }
 
-.hljs-keyword { 
-    color: #d73a49 !important;
-}
-
-.hljs-string { 
-    color: #032f62 !important;
-}
-
-.hljs-number { 
-    color: #005cc5 !important;
-}
-
-.hljs-function { 
-    color: #6f42c1 !important;
-}
 
 /* Markdown 统一样式 */
 .preview-content img,
@@ -748,6 +746,46 @@ textarea#paste-content {
     padding: 0 !important;
 }
 
+/* 编辑器标签切换 */
+#editor-content, #preview-content {
+    width: 100%;
+    position: relative; /* 相对定位，确保切换时不重叠错乱 */
+}
+
+#preview-content {
+    display: none; /* 默认隐藏预览区 */
+    border: 1px solid #ddd; /* 与编辑框保持一致边框 */
+    border-radius: 4px;
+    padding: 10px;
+    min-height: 400px; /* 与编辑区高度一致 */
+    box-sizing: border-box;
+}
+
+#preview-tab.active ~ #preview-content {
+    display: block;
+}
+
+#editor-tab.active ~ #editor-content {
+    display: none;
+}
+
+/* 核心对齐修复：强制盒模型完全一致 */
+.code-content,
+.line-numbers,
+.code-block,
+.line-numbers span,
+.code-block code {
+    box-sizing: border-box !important; /* 确保内边距不影响总高度 */
+    -webkit-box-sizing: border-box !important;
+}
+
+/* 修复可能的继承样式干扰 */
+.code-container * {
+    font-variant-ligatures: none !important; /* 禁用连字 */
+    letter-spacing: 0 !important; /* 固定字间距 */
+    word-spacing: 0 !important; /* 固定词间距 */
+}
+
 /* 加载指示器 */
 .loading-indicator {
     text-align: center;
@@ -834,6 +872,16 @@ textarea#paste-content {
     margin-bottom: 15px;
     border: 1px solid transparent;
     border-radius: 3px;
+    /* 动画基础设置 */
+    opacity: 0; /* 初始透明 */
+    transform: translateY(-20px); /* 初始位置向上偏移 */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* 过渡动画 */
+}
+
+/* 显示状态的动画终点 */
+.alert.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .alert-success {
@@ -852,6 +900,12 @@ textarea#paste-content {
     color: #856404;
     background-color: #fff3cd;
     border-color: #ffeeba;
+}
+
+.alert-info {
+    color: #0084ff;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
 }
 
 /* 管理员页面 */
@@ -1231,102 +1285,4 @@ footer .container {
     margin-bottom: 5px;
     font-family: "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
-}
-
-/* 编辑器标签切换 */
-#preview-tab.active ~ #preview-content {
-    display: block;
-}
-
-#editor-tab.active ~ #editor-content {
-    display: none;
-}
-
-/* 核心对齐修复：仅保留关键样式，其他样式保持不变 */
-
-/* 1. 强制盒模型完全一致 */
-.code-content,
-.line-numbers,
-.code-block,
-.line-numbers span,
-.code-block code {
-    box-sizing: border-box !important; /* 确保内边距不影响总高度 */
-    -webkit-box-sizing: border-box !important;
-}
-
-/* 2. 容器级校准 */
-.code-content {
-    display: flex;
-    align-items: stretch; /* 强制子元素高度一致 */
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    /* 消除flex布局的间隙问题 */
-    gap: 0 !important;
-    overflow: hidden !important;
-}
-
-/* 3. 行号区域：补偿上移偏差 */
-.line-numbers {
-    background-color: #f9f9f9 !important;
-    color: #999 !important;
-    border-right: 1px solid #ddd !important;
-    font-family: "Consolas", "Monaco", monospace !important;
-    font-size: 14px !important;
-    line-height: 21px !important; /* 固定行高 */
-    padding: 0 !important; /* 先清零内边距 */
-    /* 关键：通过padding-top微调补偿上移（根据实际偏移量调整px值） */
-    padding: 1px 8px 0 12px !important; 
-    margin: 0 !important;
-    user-select: none;
-    flex-shrink: 0;
-    /* 强制文本渲染基线 */
-    vertical-align: bottom !important;
-    /* 修复字体渲染偏差 */
-    -webkit-font-smoothing: subpixel-antialiased !important;
-}
-
-/* 4. 单个行号：像素级对齐 */
-.line-numbers span {
-    display: block;
-    height: 21px !important; /* 与行高完全一致 */
-    line-height: 21px !important;
-    padding-right: 8px !important;
-    margin: 0 !important;
-    /* 关键：行号字符下沉1px，补偿上移 */
-    position: relative;
-    top: 1px;
-}
-
-/* 5. 代码区域：精确匹配 */
-.code-block {
-    background-color: #fff !important;
-    margin: 0 !important;
-    padding: 0 !important; /* 先清零内边距 */
-    flex: 1;
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-.code-block code {
-    display: block;
-    font-family: "Consolas", "Monaco", monospace !important;
-    font-size: 14px !important;
-    line-height: 21px !important; /* 与行号严格一致 */
-    color: #333 !important;
-    background: none !important;
-    padding: 0 12px !important; /* 仅左右内边距 */
-    margin: 0 !important;
-    border: 0 !important;
-    /* 强制代码渲染基线与行号匹配 */
-    vertical-align: bottom !important;
-    -webkit-font-smoothing: subpixel-antialiased !important;
-}
-
-/* 6. 修复可能的继承样式干扰 */
-.code-container * {
-    font-variant-ligatures: none !important; /* 禁用连字 */
-    letter-spacing: 0 !important; /* 固定字间距 */
-    word-spacing: 0 !important; /* 固定词间距 */
-
 }
