@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-light.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -43,32 +43,40 @@
                 </div>
                 
                 <div class="editor-container">
-                    <div class="editor-toolbar">
-                        <button type="button" class="btn" data-command="bold" title="Bold (Ctrl+B)"><i class="fas fa-bold"></i></button>
-                        <button type="button" class="btn" data-command="italic" title="Italic (Ctrl+I)"><i class="fas fa-italic"></i></button>
-                        <button type="button" class="btn" data-command="link" title="Link (Ctrl+L)"><i class="fas fa-link"></i></button>
-                        <button type="button" class="btn" data-command="code" title="Code"><i class="fas fa-code"></i></button>
-                        <button type="button" class="btn" data-command="list" title="List"><i class="fas fa-list"></i></button>
-                        <button type="button" class="btn" data-command="heading" title="Heading"><i class="fas fa-heading"></i></button>
-                    </div>
-                    
-                    <div class="editor-tabs">
-                        <div id="editor-tab" class="editor-tab active">Editor</div>
-                        <div id="preview-tab" class="editor-tab">Preview</div>
-                    </div>
-                    
-                    <div id="editor-content" class="editor-content">
-                        <div class="form-group">
-                            <label for="paste-content">Content</label>
-                            <textarea id="paste-content" class="form-control" rows="15" placeholder="Paste your content here..."></textarea>
-                        </div>
-                    </div>
-                    
-                    <div id="preview-content" class="preview-content">
-                        <!-- Preview will be shown here -->
-                    </div>
-                </div>
-                
+    <!-- 加载状态层（初始显示） -->
+    <div id="editor-loading" class="editor-loading">
+        <div class="spinner"></div>
+        <p>Loading editor... Please wait</p>
+    </div>
+
+    <!-- 编辑器内容（默认隐藏，加载完成后显示） -->
+    <div id="editor-content-wrapper" style="display: none;">
+        <div class="editor-toolbar">
+            <button type="button" class="btn" data-command="bold" title="Bold (Ctrl+B)"><i class="fas fa-bold"></i></button>
+            <button type="button" class="btn" data-command="italic" title="Italic (Ctrl+I)"><i class="fas fa-italic"></i></button>
+            <button type="button" class="btn" data-command="link" title="Link (Ctrl+L)"><i class="fas fa-link"></i></button>
+            <button type="button" class="btn" data-command="code" title="Code"><i class="fas fa-code"></i></button>
+            <button type="button" class="btn" data-command="list" title="List"><i class="fas fa-list"></i></button>
+            <button type="button" class="btn" data-command="heading" title="Heading"><i class="fas fa-heading"></i></button>
+        </div>
+        
+        <div class="editor-tabs">
+            <div id="editor-tab" class="editor-tab active">Editor</div>
+            <div id="preview-tab" class="editor-tab">Preview</div>
+        </div>
+        
+        <div id="editor-content" class="editor-content">
+            <div class="form-group">
+                <label for="paste-content">Content</label>
+                <textarea id="paste-content" class="form-control" rows="15" placeholder="Paste your content here..."></textarea>
+            </div>
+        </div>
+        
+        <div id="preview-content" class="preview-content">
+            <!-- Preview will be shown here -->
+        </div>
+    </div>
+</div>
                 <div class="form-group">
                     <label for="paste-language">Language</label>
                     <select id="paste-language" class="form-control">
