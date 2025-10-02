@@ -1303,3 +1303,83 @@ footer .container {
     align-items: center;
     z-index: 100;
 }
+
+/* 基础列表样式 - 恢复符号类型区分，仅调位置 */
+#paste-content ol,
+#paste-content ul,
+#preview-content ol,
+#preview-content ul {
+  margin: 1.5em 0 !important;
+  padding: 0 !important;
+  position: relative !important;
+  font-family: "Segoe UI", sans-serif !important;
+}
+
+/* --------------------------
+   有序列表（1. xxx）- 保留数字.，优化位置
+--------------------------- */
+#paste-content ol,
+#preview-content ol {
+  counter-reset: ol-count !important;
+  padding-left: 2.2em !important; /* 左侧留白（控制整体左移） */
+  list-style: none !important; /* 有序列表仍用计数器确保数字对齐 */
+}
+
+#paste-content ol > li,
+#preview-content ol > li {
+  position: relative !important;
+  margin: 0.8em 0 !important;
+  padding-left: 0.3em !important; /* 数字与内容间距 */
+  line-height: 1.8 !important;
+}
+
+#paste-content ol > li::before,
+#preview-content ol > li::before {
+  content: counter(ol-count) "." !important;
+  counter-increment: ol-count !important;
+  position: absolute !important;
+  left: -2em !important; /* 数字左移位置 */
+  top: 0 !important;
+  width: 1.8em !important; /* 固定宽度适配多位数 */
+  text-align: right !important;
+  color: #333 !important;
+}
+
+/* --------------------------
+   无序列表 - 恢复实心/空心符号区分，优化位置
+   （第一层：实心圆 ●，第二层：空心圆 ○，第三层：方块 □）
+--------------------------- */
+#paste-content ul,
+#preview-content ul {
+  list-style-type: disc !important; /* 第一层：实心圆 */
+  padding-left: 1.8em !important; /* 左侧留白（控制整体左移） */
+}
+
+/* 第二层无序列表：空心圆 */
+#paste-content ul ul,
+#preview-content ul ul {
+  list-style-type: circle !important;
+  padding-left: 1.5em !important; /* 嵌套缩进 */
+}
+
+/* 第三层无序列表：方块 */
+#paste-content ul ul ul,
+#preview-content ul ul ul {
+  list-style-type: square !important;
+  padding-left: 1.5em !important;
+}
+
+/* 无序列表项位置微调（符号与内容间距） */
+#paste-content ul > li,
+#preview-content ul > li {
+  margin: 0.8em 0 !important;
+  padding-left: 0.2em !important; /* 减小符号与内容的间距 */
+  line-height: 1.8 !important;
+  list-style-position: inside !important; /* 符号与内容在同一行内对齐 */
+}
+
+/* 修正嵌套列表的符号位置（避免缩进叠加导致偏移） */
+#paste-content ul ul > li,
+#preview-content ul ul > li {
+  padding-left: 0.1em !important;
+}
