@@ -31,7 +31,7 @@ test('both pages, relative assets, nested CSS and all module imports resolve', (
     for (const [, path] of source.matchAll(pattern)) inspect(new URL(path, url));
   }
   for (const [url, html] of htmlPages) {
-    for (const [, path] of html.matchAll(/(?:src|href)="(\.{1,2}\/[^"#?]+)"/g)) {
+    for (const [, path] of html.matchAll(/(?:src|href)="(\.{1,2}\/[^"#]+)"/g)) {
       const asset = new URL(path, url);
       inspect(asset.pathname.endsWith('/') ? new URL('index.html', asset) : asset);
     }

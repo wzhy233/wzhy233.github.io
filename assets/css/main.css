@@ -1,6 +1,6 @@
 @import "./base.css";
 @import "./layout.css";
 @import "./components.css";
-@import "./github.css";
+@import "./github.css?v=24b6474";
 @import "./motion.css";
 @import "./responsive.css";
