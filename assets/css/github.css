@@ -1,0 +1,535 @@
+html[data-page="github"][data-theme="dark"] {
+  --bg:#080a08;
+  --panel:#0f110f;
+  --surface:#171a17;
+  --line:#292e28;
+  --accent:#76ba82;
+  --fg:#e6eae3;
+  --muted:#a5afa1;
+  --faint:#95a18e
+}
+
+.github-layout {
+  display:grid;
+  grid-template-columns:265px minmax(0,1fr);
+  gap:44px;
+  align-items:start;
+  padding-top:48px
+}
+
+.github-sidebar {
+  position:sticky;
+  top:35px;
+  min-width:0
+}
+
+.github-portrait {
+  display:block;
+  width:100%;
+  aspect-ratio:1;
+  height:auto;
+  object-fit:cover;
+  border-radius:50%;
+  border:4px solid var(--line);
+  margin-bottom:22px
+}
+
+.github-sidebar h2 {
+  font-size:25px;
+  letter-spacing:-.03em;
+  line-height:1.5;
+  margin:0 0 2px;
+  font-weight:600;
+  overflow-wrap:anywhere
+}
+
+.github-handle {
+  font-size:18px;
+  color:var(--muted);
+  margin:0 0 18px
+}
+
+.github-bio {
+  font-size:13px;
+  line-height:1.8
+}
+
+.github-follow {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:6px;
+  font-size:12px;
+  font-weight:500;
+  transition:border-color .3s
+}
+
+.github-follow:hover {
+  border-color:var(--accent)
+}
+
+.profile-tags {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:16px 0 22px
+}
+
+.profile-tags span {
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:1px 8px;
+  font-size:10px;
+  color:var(--muted)
+}
+
+.profile-facts {
+  list-style:none;
+  margin:0;
+  padding:0;
+  font-size:12px;
+  line-height:2;
+  color:var(--muted)
+}
+
+.profile-facts a {
+  overflow-wrap:anywhere
+}
+
+.profile-followers {
+  font-size:11px;
+  color:var(--muted);
+  margin-top:18px
+}
+
+.profile-followers strong {
+  color:var(--fg);
+  font-weight:500
+}
+
+.github-welcome {
+  position:relative;
+  padding:24px 27px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:7px
+}
+
+.github-welcome h1 {
+  font-size:25px;
+  line-height:1.6;
+  margin:0 0 4px;
+  font-weight:600;
+  letter-spacing:-.03em
+}
+
+.github-welcome > p:not(.eyebrow) {
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:0
+}
+
+.github-welcome > .text-button {
+  position:absolute;
+  right:24px;
+  top:18px
+}
+
+.github-welcome .eyebrow {
+  margin-bottom:9px
+}
+
+.github-welcome .data-caption {
+  margin-top:12px;
+  font-size:10px
+}
+
+.github-stats {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin:23px 0 30px
+}
+
+.github-stats > div {
+  padding:21px 12px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:7px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-width:0
+}
+
+.github-stats dd {
+  order:0;
+  margin:0;
+  font-size:31px;
+  line-height:1.4;
+  font-weight:600;
+  letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums
+}
+
+.github-stats dt {
+  order:1;
+  text-align:center;
+  font-size:10px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted)
+}
+
+.github-section {
+  margin-top:29px
+}
+
+.github-section-title {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:14px
+}
+
+.github-section-title h2 {
+  margin:0;
+  font-size:17px;
+  font-weight:500;
+  letter-spacing:-.02em
+}
+
+.github-section-title > span {
+  font-size:11px;
+  color:var(--muted)
+}
+
+.github-section select {
+  color:var(--muted);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:5px;
+  padding:8px 10px;
+  font-size:11px;
+  min-height:40px
+}
+
+.calendar-panel {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:18px 18px 12px
+}
+
+.calendar-scroll {
+  overflow-x:auto;
+  padding:0 0 4px;
+  scrollbar-width:thin
+}
+
+.calendar-months {
+  display:grid;
+  grid-template-columns:repeat(var(--weeks),minmax(9px,1fr));
+  gap:3px;
+  min-width:560px;
+  margin-bottom:7px;
+  font-size:9px;
+  color:var(--faint)
+}
+
+.calendar-months span {
+  white-space:nowrap;
+  grid-row:1;
+  overflow:visible
+}
+
+.contribution-grid {
+  display:grid;
+  grid-template-rows:repeat(7,1fr);
+  grid-template-columns:repeat(var(--weeks),minmax(9px,1fr));
+  grid-auto-flow:column;
+  gap:3px;
+  min-width:560px
+}
+
+.contribution-cell {
+  aspect-ratio:1;
+  padding:0;
+  border:0;
+  border-radius:3px;
+  min-width:0;
+  min-height:0;
+  transition:transform .15s;
+  background:#e0e7dc;
+  cursor:pointer
+}
+
+[data-theme="dark"] .contribution-cell[data-level="0"],[data-theme="dark"] .calendar-legend i[data-level="0"] {
+  background:#19221b
+}
+
+[data-level="1"] {
+  background:#245b34
+}
+
+.contribution-cell[data-level="2"],.calendar-legend [data-level="2"] {
+  background:#37894a
+}
+
+.contribution-cell[data-level="3"],.calendar-legend [data-level="3"] {
+  background:#54b861
+}
+
+.contribution-cell[data-level="4"],.calendar-legend [data-level="4"] {
+  background:#90d67d
+}
+
+.calendar-padding {
+  background:transparent!important;
+  cursor:default
+}
+
+.contribution-cell:hover {
+  transform:scale(1.17);
+  outline:1px solid var(--fg)
+}
+
+.calendar-footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  font-size:10px;
+  color:var(--muted);
+  margin-top:12px
+}
+
+.calendar-legend {
+  display:flex;
+  align-items:center;
+  gap:4px;
+  flex:none
+}
+
+.calendar-legend i {
+  width:10px;
+  height:10px;
+  border-radius:2px;
+  background:#e0e7dc
+}
+
+.calendar-legend i[data-level="1"] {
+  background:#245b34
+}
+
+.calendar-panel .data-caption {
+  margin:9px 0 0;
+  font-size:9px
+}
+
+.language-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px
+}
+
+.language-panel {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:22px;
+  min-width:0
+}
+
+.language-tags {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 9px;
+  margin-top:22px
+}
+
+.language-tags > span {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  padding:3px 10px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:var(--surface)
+}
+
+.language-tags i,.language-chart li > i {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  flex:none
+}
+
+.language-chart {
+  display:flex;
+  align-items:center;
+  gap:22px
+}
+
+.language-donut {
+  width:116px;
+  height:116px;
+  flex:none;
+  border-radius:50%;
+  display:grid;
+  place-items:center
+}
+
+.language-donut > span {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  width:76px;
+  height:76px;
+  background:var(--panel);
+  border-radius:50%;
+  font-size:18px;
+  line-height:1.4
+}
+
+.language-donut small {
+  display:block;
+  font-size:8px;
+  color:var(--faint);
+  max-width:65px;
+  text-align:center
+}
+
+.language-chart ul {
+  list-style:none;
+  padding:0;
+  margin:0;
+  flex:1;
+  min-width:0
+}
+
+.language-chart li {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  margin:7px 0
+}
+
+.language-chart li span {
+  overflow-wrap:anywhere;
+  flex:1
+}
+
+.language-chart li small {
+  display:block;
+  font-size:8px;
+  color:var(--faint)
+}
+
+.language-chart li strong {
+  margin-left:auto;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:400
+}
+
+.repo-toolbar {
+  display:flex;
+  gap:12px;
+  margin:0 0 16px
+}
+
+.repo-toolbar input {
+  width:100%;
+  min-width:0;
+  color:var(--fg);
+  border:1px solid var(--line);
+  background:var(--panel);
+  border-radius:5px;
+  padding:9px 12px;
+  font-size:12px
+}
+
+.repository-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px
+}
+
+.repository-card {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:21px;
+  min-width:0;
+  transition:border-color .3s
+}
+
+.repository-card:hover {
+  border-color:var(--faint)
+}
+
+.repository-card h3 {
+  font-size:14px;
+  line-height:1.7;
+  font-weight:500;
+  letter-spacing:-.02em;
+  margin:0 0 4px;
+  overflow-wrap:anywhere
+}
+
+.repository-card h3 span {
+  font-size:13px;
+  color:var(--faint);
+  margin-left:4px
+}
+
+.repository-kind {
+  font-size:9px;
+  color:var(--faint)
+}
+
+.repository-card > p {
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.9;
+  margin:13px 0 18px;
+  overflow-wrap:anywhere;
+  min-height:42px
+}
+
+.repository-meta {
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px 13px;
+  color:var(--muted);
+  font-size:10px
+}
+
+.repository-meta > span {
+  display:inline-flex;
+  align-items:center;
+  gap:6px
+}
+
+.repository-meta i {
+  width:6px;
+  height:6px;
+  border-radius:50%
+}
+
+.repository-meta time {
+  margin-left:auto;
+  color:var(--faint);
+  font-size:9px
+}

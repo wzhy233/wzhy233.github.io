@@ -1,0 +1,179 @@
+.site-shell {
+  width:min(100% - 96px,1240px);
+  margin:auto
+}
+
+.site-header {
+  display:flex;
+  align-items:center;
+  gap:30px;
+  min-height:90px;
+  border-bottom:1px solid var(--line)
+}
+
+.site-brand {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  white-space:nowrap;
+  font-size:14px;
+  font-weight:500
+}
+
+.brand-mark {
+  font:32px/1 Georgia,serif;
+  color:var(--accent);
+  transform:rotate(-35deg);
+  display:inline-block
+}
+
+.site-brand small {
+  font:10px/1.6 ui-monospace,monospace;
+  color:var(--faint);
+  margin-left:8px
+}
+
+.main-nav {
+  display:flex;
+  gap:26px;
+  margin-left:auto
+}
+
+.main-nav a {
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  font-size:12px;
+  color:var(--muted);
+  position:relative;
+  white-space:nowrap
+}
+
+.main-nav a::after {
+  position:absolute;
+  content:"";
+  height:1px;
+  left:0;
+  right:0;
+  bottom:4px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .3s var(--ease)
+}
+
+.main-nav a:hover,.main-nav a[aria-current] {
+  color:var(--fg)
+}
+
+.main-nav a:hover::after,.main-nav a[aria-current]::after {
+  transform:scaleX(1)
+}
+
+.header-tools {
+  display:flex;
+  align-items:center;
+  gap:13px
+}
+
+.language-control select {
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  height:44px;
+  font-size:11px;
+  width:58px;
+  cursor:pointer
+}
+
+.language-control option {
+  background:var(--bg);
+  color:var(--fg)
+}
+
+.icon-btn {
+  display:inline-flex;
+  position:relative;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+  width:40px;
+  height:40px;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:transparent;
+  color:var(--fg);
+  transition:background .25s,transform .35s var(--ease)
+}
+
+.icon-btn:hover {
+  background:var(--surface);
+  transform:rotate(15deg)
+}
+
+.icon-btn svg {
+  position:absolute;
+  width:17px;
+  height:17px;
+  transition:opacity .3s,transform .5s var(--ease)
+}
+
+[data-theme="dark"] .sun,html:not([data-theme="dark"]) .moon {
+  opacity:0;
+  transform:rotate(-60deg) scale(.5)
+}
+
+.section {
+  margin-top:95px;
+  scroll-margin-top:25px
+}
+
+.section-heading {
+  max-width:670px;
+  margin-bottom:33px
+}
+
+.section-heading h2 {
+  font:500 32px/1.5 "Noto Serif SC","Songti SC",serif;
+  letter-spacing:-.04em;
+  margin:0 0 14px
+}
+
+.section-heading > p:last-child,.section-heading div > p:last-child {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.9;
+  margin-bottom:0
+}
+
+.heading-row {
+  max-width:none;
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:25px
+}
+
+.site-footer {
+  margin:85px 0 0;
+  padding:27px 0 35px;
+  border-top:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  color:var(--muted);
+  font-size:11px
+}
+
+.site-footer a {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-height:44px
+}
+
+.site-footer small {
+  color:var(--faint);
+  font:10px/1.6 ui-monospace,monospace
+}

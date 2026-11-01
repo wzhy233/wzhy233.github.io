@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-11-01T15:17:34.066554+00:00",
+  "accounts": {
+    "bilibili": {
+      "status": "ok",
+      "updatedAt": "2026-11-01T15:17:11.942529+00:00",
+      "source": "https://space.bilibili.com/3537123286190803",
+      "data": {
+        "name": "wzhy233",
+        "avatar": "https://i1.hdslb.com/bfs/face/0887f2b530ee8a56676022c4fc4ab8c1e2436147.jpg",
+        "followers": 71,
+        "following": 55,
+        "videos": 19,
+        "likes": 254,
+        "level": 5,
+        "bio": ""
+      }
+    },
+    "steam": {
+      "status": "ok",
+      "updatedAt": "2026-11-01T15:17:11.944017+00:00",
+      "source": "https://steamcommunity.com/profiles/76561199375918969/",
+      "data": {
+        "name": "mevrik",
+        "avatar": "https://avatars.fastly.steamstatic.com/515594b0a667e39467dace55c3a831fecae7b9e1_full.jpg",
+        "privacy": "friendsonly"
+      }
+    },
+    "minecraft": {
+      "status": "ok",
+      "updatedAt": "2026-11-01T15:17:11.944387+00:00",
+      "source": "https://www.minecraft.net/",
+      "data": {
+        "name": "minecraftmc33",
+        "uuid": "ea279239e57b4132b0b8f56fb1888429",
+        "skin": "https://textures.minecraft.net/texture/96007cf9fbabf14bc167a012e882a4583ef3cd8121eb4be5df7856cd2d712030"
+      }
+    },
+    "youtube": {
+      "status": "ok",
+      "updatedAt": "2026-11-01T15:17:11.945050+00:00",
+      "source": "https://www.youtube.com/channel/UC_rU0HaEOHTBpAmn1bfrlwQ",
+      "data": {
+        "name": "wzhy233",
+        "videos": [
+          {
+            "id": "OXio914usB0",
+            "title": "BuG Island Full Gameplay Walkthrough (feat.Haedus)",
+            "published": "2026-02-17T09:18:06+00:00",
+            "url": "https://www.youtube.com/watch?v=OXio914usB0",
+            "thumbnail": "https://i.ytimg.com/vi/OXio914usB0/hqdefault.jpg"
+          }
+        ]
+      }
+    },
+    "articles": {
+      "status": "ok",
+      "updatedAt": "2026-11-01T15:17:11.945493+00:00",
+      "source": "https://www.bilibili.com/",
+      "data": [
+        {
+          "id": 26022768,
+          "title": "信奥初学者必须会的归并排序(二分)",
+          "author": "wzhy233",
+          "url": "https://www.bilibili.com/read/cv26022768",
+          "image": "https://i0.hdslb.com/bfs/article/banner/bf1f1deb21eaa1a811cf0e7d33e202c009698024.png",
+          "views": 48
+        }
+      ]
+    }
+  }
+}

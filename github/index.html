@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page="github">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="referrer" content="no-referrer" />
+  <title>冷月疏光 · GitHub</title>
+  <meta name="description" content="冷月疏光的个人主页：Minecraft、CS2、影像、文章、软件项目与开源。" />
+  <meta name="theme-color" content="#f6f5f0" />
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&display=swap" />
+  <script src="../assets/js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <script type="module" src="../assets/js/main.js"></script>
+</head>
+<body data-page="github">
+  <a class="skip-link" href="#main" data-i18n="skip">跳至主要内容</a>
+  <aside id="local-preview" class="preview-note" hidden data-i18n="localPreview">请通过 HTTP 预览或 GitHub Pages 打开。</aside>
+  <div class="site-shell" id="top">
+    <header class="site-header">
+      <a class="site-brand" href="../" data-internal><span class="brand-mark" aria-hidden="true">◒</span><span data-i18n="name">冷月疏光</span><small>wzhy233</small></a>
+      <nav class="main-nav" aria-label="Main navigation" data-i18n="navigation" data-i18n-attr="aria-label">
+        <a href="../" data-internal data-i18n="home" >首页</a>
+        <a href="../#games" data-internal data-i18n="games">游戏</a>
+        <a href="../#journal" data-internal data-i18n="journal">影像与记录</a>
+        <a href="./" data-internal aria-current="page">GitHub</a>
+      </nav>
+      <div class="header-tools">
+        <label class="language-control"><span class="sr-only" data-i18n="language">语言</span><select id="language" aria-label="Language" data-i18n="language" data-i18n-attr="aria-label"><option value="zh-CN">简中</option><option value="zh-TW">繁中</option><option value="en">EN</option></select></label>
+        <button class="icon-btn theme" type="button" aria-label="切换主题"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"/></svg></button>
+      </div>
+    </header>
+    <main id="main" class="github-layout">
+      <aside class="github-sidebar" id="github-profile" aria-live="polite"><p data-i18n="loading">正在读取…</p></aside>
+      <div class="github-content">
+        <section class="github-welcome"><p class="eyebrow">GITHUB / WZHY233</p><h1 data-i18n="githubTitle">我的开源一面。</h1><p data-i18n="githubIntro"></p><button class="text-button" type="button" id="refresh-github" data-i18n="refresh">刷新数据</button><p id="github-sync" class="data-caption" role="status"></p></section>
+        <dl class="github-stats" id="github-stats"><div><dt data-i18n="repos">公开仓库</dt><dd id="stat-repos">—</dd></div><div><dt data-i18n="stars">获得的星标</dt><dd id="stat-stars">—</dd></div><div><dt data-i18n="followers">关注者</dt><dd id="stat-followers">—</dd></div><div><dt data-i18n="years">注册年数</dt><dd id="stat-years">—</dd></div></dl>
+        <section class="github-section"><div class="github-section-title"><h2 data-i18n="contribution">贡献日历</h2><span id="contribution-total"></span></div><div id="contribution-calendar" class="calendar-panel" aria-live="polite"><p data-i18n="loading">正在读取…</p></div></section>
+        <section class="github-section"><div class="github-section-title"><h2 data-i18n="languages">技术与语言</h2></div><div class="language-grid" id="language-stats" aria-live="polite"></div><p class="data-caption" data-i18n="languageNote"></p></section>
+        <section class="github-section"><div class="github-section-title"><h2 data-i18n="notable">公开项目</h2><select id="repo-sort" aria-label="Sort repositories" data-i18n="sorting" data-i18n-attr="aria-label"><option value="stars" data-i18n="mostStars">最多星标</option><option value="updated" data-i18n="recentlyUpdated">最近更新</option><option value="name" data-i18n="nameSort">名称排序</option></select></div><div class="repo-toolbar"><input type="search" id="repo-search" data-i18n="searchRepos" data-i18n-attr="placeholder aria-label" placeholder="搜索项目名称或简介" aria-label="Search repositories" /><select id="repo-type" aria-label="Repository type" data-i18n="repoType" data-i18n-attr="aria-label"><option value="all" data-i18n="allRepos">全部仓库</option><option value="original" data-i18n="original">原创</option><option value="fork" data-i18n="forks">Fork</option></select></div><div id="github-repos" class="repository-grid" aria-live="polite"></div></section>
+        <section class="github-section"><div class="github-section-title"><h2 data-i18n="activity">最近活动</h2></div><ul class="activity" id="github-activity"></ul></section>
+      </div>
+    </main>
+    <footer class="site-footer"><a href="../" data-internal>◒ <span data-i18n="name">冷月疏光</span> <small>© <span id="year">2026</span></small></a><span data-i18n="footer">我的一小块互联网。</span><a href="#top" data-i18n="backTop">回到顶部</a></footer>
+  </div>
+  <p id="toast" class="toast" role="status" hidden></p>
+  <noscript><p class="preview-note">JavaScript is required for live account data. <a href="https://github.com/wzhy233">GitHub</a> · <a href="https://space.bilibili.com/3537123286190803">Bilibili</a> · <a href="https://steamcommunity.com/profiles/76561199375918969/">Steam</a></p></noscript>
+</body>
+</html>
