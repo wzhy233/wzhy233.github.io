@@ -9,8 +9,5 @@ export function initMotion() {
       }
     }
   }, { threshold: 0.04 });
-  sections.forEach(section => {
-    section.classList.add('reveal-ready');
-    observer.observe(section);
-  });
+  sections.forEach(section => observer.observe(section));
 }

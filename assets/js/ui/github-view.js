@@ -16,6 +16,8 @@ export function calendarHtml(data) {
   const { cells, weeks } = calendarLayout(data.days);
   const labels = [];
   const firstDay = cells.findIndex(Boolean);
+  let lastDay = cells.length - 1;
+  while (lastDay >= 0 && !cells[lastDay]) lastDay--;
   const month = new Intl.DateTimeFormat(getLanguage(), { month: 'short', timeZone: 'UTC' });
   cells.forEach((day, index) => {
     if (day && (index === firstDay || day.date.endsWith('-01'))) labels.push(`<span style="grid-column:${Math.floor(index / 7) + 1}">${h(month.format(new Date(`${day.date}T00:00:00Z`)))}</span>`);
@@ -24,7 +26,7 @@ export function calendarHtml(data) {
     <div class="contribution-grid" role="group" aria-label="${h(t('contribution'))}" style="--weeks:${weeks}">${cells.map((day, index) => {
       if (!day) return '<span class="contribution-cell calendar-padding" aria-hidden="true"></span>';
       const label = `${dateLabel(day.date)} · ${day.count} ${t('contributions')}`;
-      return `<button type="button" class="contribution-cell" data-level="${day.level}" data-cell="${index}" data-label="${h(label)}" tabindex="${index === cells.findLastIndex(Boolean) ? '0' : '-1'}" title="${h(label)}" aria-label="${h(label)}"></button>`;
+      return `<button type="button" class="contribution-cell" data-level="${day.level}" data-cell="${index}" data-label="${h(label)}" tabindex="${index === lastDay ? '0' : '-1'}" title="${h(label)}" aria-label="${h(label)}"></button>`;
     }).join('')}</div></div>
     <div class="calendar-footer"><span id="contribution-detail" role="status">${t('lastYear')}: ${data.total} ${t('contributions')}</span><div class="calendar-legend"><span>${t('less')}</span>${[0, 1, 2, 3, 4].map(level => `<i data-level="${level}"></i>`).join('')}<span>${t('more')}</span></div></div>
     <p class="data-caption">${t('contributionNote')} · <a href="https://github.com/grubersjoe/github-contributions-api" target="_blank" rel="noopener noreferrer">${t('source')} ↗</a></p>`;

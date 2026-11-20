@@ -1,5 +1,7 @@
 export const languages = ['zh-CN', 'zh-TW', 'en'];
 export const messages = {
+  startupError: ['页面脚本加载失败，请刷新重试。', '頁面指令碼載入失敗，請重新整理。', 'The page could not start. Try refreshing.'],
+  openGithubRepos: ['在 GitHub 查看仓库', '在 GitHub 查看儲存庫', 'View repositories on GitHub'],
   home: ['首页', '首頁', 'Home'], games: ['游戏', '遊戲', 'Games'], journal: ['视频与文章', '影片與文章', 'Videos & articles'], projects: ['项目', '專案', 'Projects'], contact: ['联系', '聯絡', 'Contact'],
   skip: ['跳至主要内容', '跳至主要內容', 'Skip to content'], language: ['语言', '語言', 'Language'], light: ['切换为浅色主题', '切換為淺色主題', 'Switch to light theme'], dark: ['切换为深色主题', '切換為深色主題', 'Switch to dark theme'],
   name: ['冷月疏光', '冷月疏光', 'Lengyue Shuguang'],
