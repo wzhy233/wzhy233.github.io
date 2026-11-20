@@ -17,7 +17,8 @@ export function initGithub() {
     return item?.error ? `<p class="data-empty load-error">${h(t(item.error))}</p>` : item?.value ? renderer(item.value) : `<p class="data-empty">${t('loading')}</p>`;
   }
   function renderRepos() {
-    byId('github-repos').innerHTML = content('repos', repos => repositoriesHtml(filterRepositories(repos, { query: byId('repo-search').value, sort: byId('repo-sort').value, type: byId('repo-type').value })));
+    const fallback = state.repos?.error ? `<a class="plain-link" href="https://github.com/${githubUser}?tab=repositories">${t('openGithubRepos')} ↗</a>` : '';
+    byId('github-repos').innerHTML = content('repos', repos => repositoriesHtml(filterRepositories(repos, { query: byId('repo-search').value, sort: byId('repo-sort').value, type: byId('repo-type').value }))) + fallback;
   }
   function render() {
     byId('github-profile').innerHTML = content('profile', profileHtml);

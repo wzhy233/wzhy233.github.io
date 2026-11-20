@@ -164,7 +164,28 @@ test('published account feed validates timestamps and isolates unavailable sourc
   assert.equal((await getAccounts(ok(payload))).accounts.steam.status, 'cached');
   assert.match(gameCards(payload.accounts), /mevrik[\s\S]*上次同步的资料/);
   assert.match(gameCards(null, true), /minecraft-card[\s\S]*steam-card/);
+  payload.accounts.youtube = { status: 'ok', updatedAt: payload.generatedAt, data: {} };
+  const validated = await getAccounts(ok(payload));
+  assert.equal(validated.accounts.youtube, undefined);
+  assert.equal(validated.accounts.steam.data.name, 'mevrik');
   await assert.rejects(getAccounts(ok({ accounts: {} })), /invalidData/);
+});
+
+test('account and GitHub requests work without AbortSignal.timeout', async () => {
+  const descriptor = Object.getOwnPropertyDescriptor(AbortSignal, 'timeout');
+  Object.defineProperty(AbortSignal, 'timeout', { value: undefined, configurable: true });
+  try {
+    const payload = { generatedAt: '2026-11-01T00:00:00Z', accounts: {} };
+    const request = data => async (_, { signal }) => {
+      assert.ok(signal instanceof AbortSignal);
+      return { ok: true, json: async () => data };
+    };
+    assert.equal((await getAccounts(request(payload))).generatedAt, payload.generatedAt);
+    assert.equal((await api.getRepositories('wzhy233', request([repository])))[0].name, 'Example');
+  } finally {
+    if (descriptor) Object.defineProperty(AbortSignal, 'timeout', descriptor);
+    else delete AbortSignal.timeout;
+  }
 });
 
 test('public repository lists exclude private repositories and project details reject missing repositories', async () => {

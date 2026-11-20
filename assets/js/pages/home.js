@@ -83,8 +83,13 @@ export function initHome() {
     byId('game-accounts').innerHTML = gameCards(accounts, Boolean(accountError));
     byId('journal-entries').innerHTML = journalCards(accounts, filter);
     byId('bili-profile').innerHTML = channelCard(accounts?.bilibili);
-    if (accountError) {
-      byId('journal-entries').innerHTML = `<p class="load-error">${h(t(accountError))}</p>`;
+    const status = byId('account-sync');
+    if (status) {
+      status.hidden = !accountError;
+      status.textContent = accountError ? t(accountError) : '';
+    }
+    if (accountError && !accounts) {
+      byId('journal-entries').innerHTML = `<a class="plain-link" href="https://www.youtube.com/@wzhy233">${t('watchExternal')} ↗</a>`;
     }
     const links = [
       ['Bilibili', 'clips', 'https://space.bilibili.com/3537123286190803'],
@@ -103,7 +108,7 @@ export function initHome() {
     button.disabled = true;
     accountError = null;
     try { accounts = (await getAccounts()).accounts; }
-    catch (error) { accounts = null; accountError = error.message; }
+    catch (error) { accountError = error.message; }
     finally { button.disabled = false; render(); }
   }
   async function loadProjects() {

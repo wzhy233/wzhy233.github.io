@@ -12,19 +12,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&display=swap" />
   <script src="./assets/js/theme-boot.js?v=2"></script>
-  <link rel="stylesheet" href="./assets/css/main.css?v=20261120b" />
+  <link rel="stylesheet" href="./assets/css/main.css?v=20261120c" />
   <script type="module" src="./assets/js/main.js"></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main" data-i18n="skip">跳至主要内容</a>
   <aside id="local-preview" class="preview-note" hidden data-i18n="localPreview">请通过 HTTP 预览或 GitHub Pages 打开。</aside>
+  <p id="startup-error" class="preview-note" role="status" data-i18n="startupError" hidden>页面脚本加载失败，请刷新重试。</p>
   <div class="site-shell" id="top">
     <header class="site-header">
       <a class="site-brand" href="./" data-internal><span class="brand-mark" aria-hidden="true">◒</span><span data-i18n="name">冷月疏光</span><small>wzhy233</small></a>
       <nav class="main-nav" aria-label="Main navigation" data-i18n="navigation" data-i18n-attr="aria-label">
         <a href="./" data-internal data-i18n="home" aria-current="page">首页</a>
-        <a href="./#games" data-internal data-i18n="games">游戏</a>
-        <a href="./#journal" data-internal data-i18n="journal">视频与文章</a>
+        <a href="#games" data-i18n="games">游戏</a>
+        <a href="#journal" data-i18n="journal">视频与文章</a>
         <a href="./github/" data-internal >GitHub</a>
       </nav>
       <div class="header-tools">
@@ -53,12 +54,13 @@
       </section>
       <section class="section" id="games">
         <div class="section-heading"><h2 data-i18n="games">游戏</h2></div>
-        <div class="game-grid" id="game-accounts" aria-live="polite"><p data-i18n="loading">正在读取…</p></div>
+        <div class="game-grid" id="game-accounts" aria-live="polite"><p>Minecraft · minecraftmc33</p><a class="plain-link" href="https://steamcommunity.com/profiles/76561199375918969/">Steam ↗</a></div>
       </section>
       <section class="section" id="journal">
         <div class="section-heading"><h2 data-i18n="journal">视频与文章</h2></div>
         <div class="journal-toolbar"><div class="filter-tabs" role="group" aria-label="Content filter" data-i18n="filter" data-i18n-attr="aria-label"><button type="button" data-filter="all" aria-pressed="true" data-i18n="all">全部</button><button type="button" data-filter="videos" aria-pressed="false" data-i18n="videos">视频</button><button type="button" data-filter="writing" aria-pressed="false" data-i18n="writing">文章</button></div><button type="button" class="text-button" data-refresh-accounts data-i18n="refresh">刷新数据</button></div>
-        <div class="journal-content"><div id="journal-entries" class="journal-cards" aria-live="polite"></div><aside id="bili-profile" class="channel-panel"></aside></div>
+        <p id="account-sync" class="load-error" role="status" hidden></p>
+        <div class="journal-content"><div id="journal-entries" class="journal-cards" aria-live="polite"><a class="plain-link" href="https://www.youtube.com/@wzhy233">YouTube ↗</a></div><aside id="bili-profile" class="channel-panel"><a class="plain-link" href="https://space.bilibili.com/3537123286190803">Bilibili ↗</a></aside></div>
       </section>
       <section class="section" id="projects">
         <div class="section-heading heading-row"><h2 data-i18n="projects">项目</h2><a class="plain-link" href="./github/" data-internal><span data-i18n="allGithub">查看所有仓库</span> ↗</a></div>

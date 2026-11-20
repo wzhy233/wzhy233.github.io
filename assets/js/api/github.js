@@ -1,15 +1,15 @@
 import { safeUrl } from '../utils/format.js';
+import { fetchWithTimeout } from './request.js';
 
 const validRepo = /^[\w.-]+\/[\w.-]+$/;
 const count = value => Number.isSafeInteger(value) && value >= 0;
 const validDate = value => typeof value === 'string' && Number.isFinite(Date.parse(value));
 
-export async function request(path, fetcher = globalThis.fetch) {
+export async function request(path, fetcher) {
   let response;
   try {
-    response = await fetcher(`https://api.github.com/${path}`, {
+    response = await fetchWithTimeout(fetcher, `https://api.github.com/${path}`, {
       headers: { Accept: 'application/vnd.github+json' },
-      signal: AbortSignal.timeout(10000),
       cache: 'no-cache',
     });
   } catch {
@@ -118,10 +118,10 @@ export async function getRepositories(user, fetcher) {
   }
 }
 
-export async function getContributions(user, fetcher = globalThis.fetch) {
+export async function getContributions(user, fetcher) {
   let response;
   try {
-    response = await fetcher(`https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(user)}?y=last`, { signal: AbortSignal.timeout(15000) });
+    response = await fetchWithTimeout(fetcher, `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(user)}?y=last`, {}, 15000);
   } catch { throw new Error('network'); }
   if (!response.ok) throw new Error(response.status === 429 ? 'rateLimit' : 'network');
   let data;

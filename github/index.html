@@ -12,12 +12,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&display=swap" />
   <script src="../assets/js/theme-boot.js"></script>
-  <link rel="stylesheet" href="../assets/css/main.css?v=20261120b" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=20261120c" />
   <script type="module" src="../assets/js/main.js"></script>
 </head>
 <body data-page="github">
   <a class="skip-link" href="#main" data-i18n="skip">跳至主要内容</a>
   <aside id="local-preview" class="preview-note" hidden data-i18n="localPreview">请通过 HTTP 预览或 GitHub Pages 打开。</aside>
+  <p id="startup-error" class="preview-note" role="status" data-i18n="startupError" hidden>页面脚本加载失败，请刷新重试。</p>
   <div class="site-shell" id="top">
     <header class="site-header">
       <a class="site-brand" href="../" data-internal><span class="brand-mark" aria-hidden="true">◒</span><span data-i18n="name">冷月疏光</span><small>wzhy233</small></a>
@@ -39,7 +40,7 @@
         <dl class="github-stats" id="github-stats"><div><dt data-i18n="repos">公开仓库</dt><dd id="stat-repos">—</dd></div><div><dt data-i18n="stars">获得的星标</dt><dd id="stat-stars">—</dd></div><div><dt data-i18n="followers">关注者</dt><dd id="stat-followers">—</dd></div><div><dt data-i18n="years">注册年数</dt><dd id="stat-years">—</dd></div></dl>
         <section class="github-section"><div class="github-section-title"><h2 data-i18n="contribution">贡献日历</h2><span id="contribution-total"></span></div><div id="contribution-calendar" class="calendar-panel" aria-live="polite"><p data-i18n="loading">正在读取…</p></div></section>
         <section class="github-section"><div class="github-section-title"><h2 data-i18n="languages">语言</h2></div><div class="language-grid" id="language-stats" aria-live="polite"></div><p class="data-caption" data-i18n="languageNote"></p></section>
-        <section class="github-section"><div class="github-section-title"><h2 data-i18n="notable">公开项目</h2><select id="repo-sort" aria-label="Sort repositories" data-i18n="sorting" data-i18n-attr="aria-label"><option value="stars" data-i18n="mostStars">最多星标</option><option value="updated" data-i18n="recentlyUpdated">最近更新</option><option value="name" data-i18n="nameSort">名称排序</option></select></div><div class="repo-toolbar"><input type="search" id="repo-search" data-i18n="searchRepos" data-i18n-attr="placeholder aria-label" placeholder="搜索项目名称或简介" aria-label="Search repositories" /><select id="repo-type" aria-label="Repository type" data-i18n="repoType" data-i18n-attr="aria-label"><option value="all" data-i18n="allRepos">全部仓库</option><option value="original" data-i18n="original">原创</option><option value="fork" data-i18n="forks">Fork</option></select></div><div id="github-repos" class="repository-grid" aria-live="polite"></div></section>
+        <section class="github-section"><div class="github-section-title"><h2 data-i18n="notable">公开项目</h2><select id="repo-sort" aria-label="Sort repositories" data-i18n="sorting" data-i18n-attr="aria-label"><option value="stars" data-i18n="mostStars">最多星标</option><option value="updated" data-i18n="recentlyUpdated">最近更新</option><option value="name" data-i18n="nameSort">名称排序</option></select></div><div class="repo-toolbar"><input type="search" id="repo-search" data-i18n="searchRepos" data-i18n-attr="placeholder aria-label" placeholder="搜索项目名称或简介" aria-label="Search repositories" /><select id="repo-type" aria-label="Repository type" data-i18n="repoType" data-i18n-attr="aria-label"><option value="all" data-i18n="allRepos">全部仓库</option><option value="original" data-i18n="original">原创</option><option value="fork" data-i18n="forks">Fork</option></select></div><div id="github-repos" class="repository-grid" aria-live="polite"><a class="plain-link" href="https://github.com/wzhy233?tab=repositories" data-i18n="openGithubRepos">在 GitHub 查看仓库</a></div></section>
         <section class="github-section"><div class="github-section-title"><h2 data-i18n="activity">最近活动</h2></div><ul class="activity" id="github-activity"></ul></section>
       </div>
     </main>
