@@ -5,31 +5,37 @@ import { projectHtml } from '../ui/render.js';
 import { t, getLanguage } from '../i18n.js';
 import { escapeHtml as h, safeUrl, dateLabel } from '../utils/format.js';
 import { filterRepositories } from '../utils/github-stats.js';
+import { initVideoDialog } from '../ui/video.js';
 
 const byId = id => document.getElementById(id);
-const stamp = record => `<p class="data-caption${Date.now() - Date.parse(record.updatedAt) > 7200000 ? ' stale' : ''}">${t('updated')} ${h(new Date(record.updatedAt).toLocaleString(getLanguage(), { timeZone: 'Asia/Shanghai' }))}${Date.now() - Date.parse(record.updatedAt) > 7200000 ? ` · ${t('stale')}` : ''}</p>`;
+function stamp(record) {
+  const cached = record.status === 'cached';
+  const stale = Date.now() - Date.parse(record.updatedAt) > 7200000;
+  return `<p class="data-caption${cached || stale ? ' stale' : ''}">${t(cached ? 'cachedGame' : 'updated')} ${h(new Date(record.updatedAt).toLocaleString(getLanguage(), { timeZone: 'Asia/Shanghai' }))}${stale && !cached ? ` · ${t('stale')}` : ''}</p>`;
+}
 const image = (url, className = '') => safeUrl(url) ? `<img src="${h(safeUrl(url))}" class="${className}" alt="" loading="lazy" referrerpolicy="no-referrer" />` : '';
 const metric = (value, label) => `<div><strong>${h(value ?? '—')}</strong><span>${t(label)}</span></div>`;
 
-export function gameCards(accounts) {
+export function gameCards(accounts, failed = false) {
   const mc = accounts?.minecraft;
   const steam = accounts?.steam;
-  const m = mc?.status === 'ok' ? mc.data : null;
-  const s = steam?.status === 'ok' ? steam.data : null;
+  const m = mc?.data;
+  const s = steam?.data;
+  const unavailable = accounts || failed ? 'unavailable' : 'loading';
   const skin = safeUrl(m?.skin, 'textures.minecraft.net');
   return `<article class="game-card minecraft-card">
     <div class="game-art minecraft-art"><span class="game-wordmark">MINECRAFT</span>${skin ? `<div class="skin-head"><img src="${h(skin)}" alt="${h(t('skin'))}" /></div>` : '<span class="game-pixel" aria-hidden="true">▦</span>'}<span class="game-edition">JAVA EDITION</span></div>
-    <div class="game-body"><h3>${h(m?.name ?? 'minecraftmc33')}</h3>
-      <p>${t(m ? 'verified' : accounts ? 'unavailable' : 'loading')}</p>
-      ${m ? `<code class="uuid">${h(m.uuid)}</code><button class="text-button" type="button" data-copy="${h(m.name)}">${t('copy')} ID ↗</button>` : ''}
+    <div class="game-body"><p class="eyebrow">MINECRAFT</p><h3>${h(m?.name ?? 'minecraftmc33')}</h3>
+      <p>${t(m ? 'verified' : unavailable)}</p>
+      ${m ? `<code class="uuid">${h(m.uuid)}</code>` : ''}<button class="text-button" type="button" data-copy="${h(m?.name ?? 'minecraftmc33')}">${t('copy')} ID ↗</button>
       ${mc ? stamp(mc) : ''}
     </div>
   </article>
   <article class="game-card steam-card">
     <div class="game-art cs-art"><span class="game-wordmark">COUNTER-STRIKE 2</span><span class="cs-numeral" aria-hidden="true">2</span><span class="game-edition">STEAM</span></div>
-    <div class="game-body"><div class="game-identity">${image(s?.avatar, 'account-avatar')}<h3>${h(s?.name ?? 'Steam')}</h3></div>
-      <p>${t(s ? s.privacy === 'public' ? 'public' : 'private' : accounts ? 'unavailable' : 'loading')}</p>
-      ${s?.privacy !== 'public' && s ? `<p class="privacy-note">${t('privateDetail')}</p>` : ''}
+    <div class="game-body"><p class="eyebrow">CS2 / STEAM</p><div class="game-identity">${image(s?.avatar, 'account-avatar')}<h3>${h(s?.name ?? 'Steam')}</h3></div>
+      ${steam?.status === 'ok' && s ? `<p>${t(s.privacy === 'public' ? 'public' : 'private')}</p>` : s ? '' : `<p>${t(unavailable)}</p>`}
+      ${steam?.status === 'ok' && s && s.privacy !== 'public' ? `<p class="privacy-note">${t('privateDetail')}</p>` : ''}
       <a class="plain-link" href="https://steamcommunity.com/profiles/76561199375918969/" target="_blank" rel="noopener noreferrer">${t('openProfile')} ↗</a>
       ${steam ? stamp(steam) : ''}
     </div>
@@ -74,11 +80,10 @@ export function initHome() {
     byId('home-projects').innerHTML = rows + status;
   }
   function render() {
-    byId('game-accounts').innerHTML = gameCards(accounts);
+    byId('game-accounts').innerHTML = gameCards(accounts, Boolean(accountError));
     byId('journal-entries').innerHTML = journalCards(accounts, filter);
     byId('bili-profile').innerHTML = channelCard(accounts?.bilibili);
     if (accountError) {
-      byId('game-accounts').innerHTML = `<p class="load-error">${h(t(accountError))}</p>`;
       byId('journal-entries').innerHTML = `<p class="load-error">${h(t(accountError))}</p>`;
     }
     const links = [
@@ -118,9 +123,7 @@ export function initHome() {
     renderProjects();
   }
   function clock() { byId('local-clock').textContent = new Date().toLocaleTimeString(getLanguage(), { timeZone: 'Asia/Shanghai', hour12: false }); }
-  const dialog = byId('video-dialog');
-  const frame = byId('video-frame');
-  dialog.addEventListener('close', () => { if (!dialog.open) frame.removeAttribute('src'); });
+  const openVideo = initVideoDialog();
   document.addEventListener('click', async event => {
     const button = event.target.closest('button');
     if (!button) return;
@@ -135,14 +138,8 @@ export function initHome() {
     }
     if (button.dataset.video && /^[\w-]{11}$/.test(button.dataset.video)) {
       const video = accounts?.youtube?.data?.videos.find(item => item.id === button.dataset.video);
-      if (!video) return;
-      byId('video-title').textContent = video.title;
-      byId('video-external').href = `https://www.youtube.com/watch?v=${video.id}`;
-      dialog.showModal();
-      frame.title = video.title;
-      frame.src = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`;
+      if (video) openVideo(video);
     }
-    if (button.hasAttribute('data-close-video')) dialog.close();
     if (button.hasAttribute('data-retry-projects')) void loadProjects();
   });
   document.addEventListener('languagechange', () => { render(); renderProjects(); clock(); });

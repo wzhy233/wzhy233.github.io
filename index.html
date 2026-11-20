@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="referrer" content="no-referrer" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>冷月疏光 · 个人主页</title>
   <meta name="description" content="冷月疏光的个人主页，收录软件项目、游戏视频和文章。" />
   <meta name="theme-color" content="#f6f5f0" />
@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&display=swap" />
-  <script src="./assets/js/theme-boot.js"></script>
-  <link rel="stylesheet" href="./assets/css/main.css?v=20261120" />
+  <script src="./assets/js/theme-boot.js?v=2"></script>
+  <link rel="stylesheet" href="./assets/css/main.css?v=20261120b" />
   <script type="module" src="./assets/js/main.js"></script>
 </head>
 <body data-page="home">
@@ -33,16 +33,23 @@
       </div>
     </header>
     <main id="main">
-      <section class="personal-hero" id="about">
+      <section class="personal-hero">
         <div class="hero-intro">
-          <h1 data-i18n="name">冷月疏光</h1>
-          <p class="hero-statement" data-i18n="intro">平时玩 Minecraft 和 CS2，也做过翻译工具和音乐播放器。</p>
-          <div class="hero-actions"><a class="solid-button" href="#projects" data-i18n="projects">项目</a><a class="plain-link" href="https://space.bilibili.com/3537123286190803" target="_blank" rel="noopener noreferrer">Bilibili ↗</a></div>
-          <p class="local-clock"><span class="status-dot" aria-hidden="true"></span><span>UTC+8</span><time id="local-clock">—</time></p>
+          <p class="hero-hello" data-i18n="hello">你好，我是</p>
+          <h1 data-profile-name data-i18n="name">冷月疏光</h1>
+          <p class="hero-statement" data-i18n="intro">平时玩 Minecraft 和 CS2。</p>
+          <p class="hero-description" data-i18n="introDetail">做过翻译工具和音乐播放器。</p>
+          <div class="hero-actions"><a class="solid-button" href="#about" data-i18n="explore">关于我</a><a class="plain-link" href="https://space.bilibili.com/3537123286190803" target="_blank" rel="noopener noreferrer"><span data-i18n="visitBili">Bilibili</span> ↗</a></div>
+          <p class="local-clock"><span class="status-dot" aria-hidden="true"></span><span data-i18n="localTime">UTC+8 · 本地时间</span><time id="local-clock">—</time></p>
         </div>
         <div class="personal-board">
-          <div class="portrait-note"><img class="hero-avatar" src="./assets/images/avatar.jpg" alt="" width="300" height="300" data-github-avatar /><div class="portrait-caption"><strong>@wzhy233</strong></div></div>
+          <div class="portrait-note"><img class="hero-avatar" src="./assets/images/avatar.jpg" alt="" width="300" height="300" data-github-avatar /><div class="portrait-caption"><strong>@wzhy233</strong></div><span class="portrait-stamp" aria-hidden="true">冷<br>月<br>疏<br>光</span></div>
+          <a href="#games" class="board-foot"><span>Minecraft / CS2</span><span aria-hidden="true">↓</span></a>
         </div>
+      </section>
+      <section class="section about-section" id="about">
+        <div class="section-heading"><h2 data-i18n="aboutTitle">关于我</h2></div>
+        <div class="interest-grid"><article><span class="interest-symbol" aria-hidden="true">⌘</span><h3 data-i18n="software">软件</h3><p data-i18n="softwareText"></p><a href="#projects" class="plain-link"><span data-i18n="projects">作品</span> ↘</a></article><article><span class="interest-symbol pixel-symbol" aria-hidden="true">▦</span><h3 data-i18n="games">游戏</h3><p data-i18n="gamingText"></p><a href="#games" class="plain-link"><span data-i18n="games">游戏</span> ↘</a></article><article><span class="interest-symbol" aria-hidden="true">▷</span><h3 data-i18n="journal">视频与文章</h3><p data-i18n="recordingText"></p><a href="#journal" class="plain-link"><span data-i18n="journal">影像与记录</span> ↘</a></article></div>
       </section>
       <section class="section" id="games">
         <div class="section-heading"><h2 data-i18n="games">游戏</h2></div>
@@ -61,7 +68,8 @@
     </main>
     <dialog id="video-dialog" aria-labelledby="video-title">
       <div class="video-dialog-heading"><h2 id="video-title"></h2><button type="button" class="text-button" data-close-video data-i18n="close">关闭</button></div>
-      <iframe id="video-frame" title="YouTube video player" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <div id="video-player"></div>
+      <p id="video-status" role="status" hidden></p>
       <a id="video-external" class="plain-link" target="_blank" rel="noopener noreferrer" data-i18n="watchExternal">在 YouTube 播放</a>
     </dialog>
     <footer class="site-footer"><a href="./" data-internal>◒ <span data-i18n="name">冷月疏光</span> <small>© <span id="year">2026</span></small></a><a href="#top" data-i18n="backTop">回到顶部</a></footer>

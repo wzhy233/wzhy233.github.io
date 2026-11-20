@@ -18,7 +18,7 @@
     },
     "steam": {
       "status": "ok",
-      "updatedAt": "2026-11-01T15:17:11.944017+00:00",
+      "updatedAt": "2026-11-20T03:10:38.658165+00:00",
       "source": "https://steamcommunity.com/profiles/76561199375918969/",
       "data": {
         "name": "mevrik",
@@ -28,7 +28,7 @@
     },
     "minecraft": {
       "status": "ok",
-      "updatedAt": "2026-11-01T15:17:11.944387+00:00",
+      "updatedAt": "2026-11-20T03:10:38.658549+00:00",
       "source": "https://www.minecraft.net/",
       "data": {
         "name": "minecraftmc33",

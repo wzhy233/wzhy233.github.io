@@ -53,6 +53,23 @@ class PublicDataTests(unittest.TestCase):
         self.assertIsNone(module.https_url("javascript:alert(1)"))
         self.assertIsNone(module.https_url("https://username:secret@example.com/"))
 
+    def test_game_cache_preserves_identity_and_original_timestamp_only(self):
+        config = {"bilibili": "1", "steam": "123", "minecraft": "test", "youtube": "1", "articles": []}
+        def fail(*args):
+            raise OSError("offline")
+        result = module.collect(config, fail)
+        timestamp = "2026-11-20T03:00:00+00:00"
+        source = result["accounts"]["steam"]["source"]
+        steam = {"source": source, "status": "ok", "updatedAt": timestamp,
+                 "data": {"name": "Steam account", "privacy": "public", "games": ["test"]}}
+        minecraft = {"source": "https://www.minecraft.net/", "status": "ok", "updatedAt": timestamp,
+                     "data": {"name": "test", "uuid": "a" * 32, "skin": "https://textures.minecraft.net/texture/test"}}
+        module.restore_game_profiles(result, config, {"accounts": {"steam": steam, "minecraft": minecraft}})
+        self.assertEqual(result["accounts"]["steam"], {"source": source, "status": "cached", "updatedAt": timestamp,
+                                                       "data": {"name": "Steam account", "avatar": None}})
+        self.assertEqual(result["accounts"]["minecraft"]["status"], "cached")
+        self.assertEqual(result["accounts"]["youtube"]["status"], "error")
+
 
 if __name__ == "__main__":
     unittest.main()

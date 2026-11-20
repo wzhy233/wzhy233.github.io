@@ -150,7 +150,8 @@ test('journal displays only returned uploads and curated public articles', () =>
   const accounts = { youtube: { status: 'ok', data: { videos: [{ id: 'abcdefghijk', title: 'Real video', thumbnail: 'https://example.com/a.jpg', url: 'https://youtube.com/watch?v=abcdefghijk', published: '2026-01-01' }] } }, articles: { status: 'ok', data: [{ title: 'Real article', url: 'https://example.com/article' }] } };
   assert.match(journalCards(accounts, 'all'), /Real video/);
   assert.equal((journalCards(accounts, 'videos').match(/data-video="abcdefghijk" aria-haspopup="dialog"/g) ?? []).length, 2);
-  assert.match(htmlPages[0][1], /<iframe id="video-frame"[^>]*referrerpolicy="strict-origin-when-cross-origin"/);
+  assert.match(htmlPages[0][1], /name="referrer" content="strict-origin-when-cross-origin"/);
+  assert.match(htmlPages[0][1], /id="video-external"/);
   assert.doesNotMatch(journalCards(accounts, 'writing'), /Real video/);
   assert.doesNotMatch(journalCards(accounts, 'videos'), /Real article/);
   assert.doesNotMatch(journalCards({ youtube: { status: 'error' } }, 'all'), /data-video=/);
@@ -159,6 +160,10 @@ test('journal displays only returned uploads and curated public articles', () =>
 test('published account feed validates timestamps and isolates unavailable source records', async () => {
   const payload = { generatedAt: '2026-11-01T00:00:00Z', accounts: { steam: { status: 'error', updatedAt: '2026-11-01T00:00:00Z', data: null } } };
   assert.equal((await getAccounts(ok(payload))).accounts.steam.status, 'error');
+  payload.accounts.steam = { status: 'cached', updatedAt: payload.generatedAt, data: { name: 'mevrik' } };
+  assert.equal((await getAccounts(ok(payload))).accounts.steam.status, 'cached');
+  assert.match(gameCards(payload.accounts), /mevrik[\s\S]*上次同步的资料/);
+  assert.match(gameCards(null, true), /minecraft-card[\s\S]*steam-card/);
   await assert.rejects(getAccounts(ok({ accounts: {} })), /invalidData/);
 });
 

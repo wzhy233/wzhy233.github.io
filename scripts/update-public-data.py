@@ -3,6 +3,7 @@ import base64
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 import re
 import urllib.request
@@ -64,7 +65,10 @@ def steam_data(xml):
 
 
 def minecraft(name, reader=read):
-    data = reader(f"https://api.mojang.com/users/profiles/minecraft/{name}")
+    try:
+        data = reader(f"https://api.minecraftservices.com/minecraft/profile/lookup/name/{name}")
+    except (urllib.error.URLError, ValueError, TimeoutError):
+        data = reader(f"https://api.mojang.com/users/profiles/minecraft/{name}")
     uuid = data["id"]
     if not re.fullmatch(r"[a-fA-F0-9]{32}", uuid):
         raise ValueError("Invalid Minecraft UUID")
@@ -121,7 +125,6 @@ def collect(config, reader=read):
         try:
             return key, {"status": "ok", "updatedAt": at, "source": source, "data": callback()}
         except Exception as error:
-            # Never carry forward an old success after a failed refresh.
             print(f"{key}: public data unavailable ({type(error).__name__})")
             return key, {"status": "error", "updatedAt": at, "source": source, "data": None}
 
@@ -130,10 +133,51 @@ def collect(config, reader=read):
     return {"generatedAt": datetime.now(timezone.utc).isoformat(), "accounts": accounts}
 
 
+def restore_game_profiles(result, config, *snapshots):
+    for key in ("minecraft", "steam"):
+        current = result["accounts"][key]
+        if current["status"] != "error":
+            continue
+        for snapshot in snapshots:
+            accounts = snapshot.get("accounts") if isinstance(snapshot, dict) else None
+            previous = accounts.get(key) if isinstance(accounts, dict) else None
+            if not isinstance(previous, dict) or previous.get("status") not in ("ok", "cached") or previous.get("source") != current["source"]:
+                continue
+            data = previous.get("data")
+            if not isinstance(data, dict):
+                continue
+            try:
+                updated = datetime.fromisoformat(previous.get("updatedAt", ""))
+            except (TypeError, ValueError):
+                continue
+            name = data.get("name")
+            if updated.tzinfo is None or not isinstance(name, str) or not name:
+                continue
+            if key == "minecraft":
+                skin = https_url(data.get("skin"))
+                uuid = data.get("uuid", "")
+                if name.casefold() != config[key].casefold() or not isinstance(uuid, str) or not re.fullmatch(r"[a-fA-F0-9]{32}", uuid) or not skin or urlparse(skin).hostname != "textures.minecraft.net":
+                    continue
+                identity = {"name": name, "uuid": uuid, "skin": skin}
+            else:
+                identity = {"name": name, "avatar": https_url(data.get("avatar"))}
+            result["accounts"][key] = {**current, "status": "cached", "updatedAt": previous["updatedAt"], "data": identity}
+            break
+
+
 if __name__ == "__main__":
     config = json.loads((ROOT / "config/accounts.json").read_text(encoding="utf-8"))
     result = collect(config)
     destination = ROOT / "data/accounts.json"
+    if any(result["accounts"][name]["status"] == "error" for name in ("minecraft", "steam")):
+        published = {}
+        if os.environ.get("PUBLISHED_ACCOUNTS_URL"):
+            try:
+                published = read(os.environ["PUBLISHED_ACCOUNTS_URL"])
+            except (urllib.error.URLError, TimeoutError, ValueError):
+                print("Previous Pages snapshot unavailable")
+        checked_in = json.loads(destination.read_text(encoding="utf-8")) if destination.is_file() else {}
+        restore_game_profiles(result, config, published, checked_in)
     destination.parent.mkdir(exist_ok=True)
     temporary = destination.with_suffix(".tmp")
     temporary.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
