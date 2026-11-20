@@ -49,20 +49,6 @@ class PublicDataTests(unittest.TestCase):
         self.assertEqual(result["accounts"]["articles"]["status"], "ok")
         self.assertIn("generatedAt", result)
 
-    def test_github_collects_pagination_and_selected_repositories(self):
-        requested = []
-        def reader(url):
-            requested.append(url)
-            if "page=1" in url:
-                return [{}] * 100
-            if "page=2" in url:
-                return []
-            return {"source": "actual response"}
-        result = module.collect_github({"github": "test"}, ["test/project"], reader)
-        self.assertTrue(any("page=2" in url for url in requested))
-        self.assertIn("https://api.github.com/repos/test/project", result["responses"])
-        self.assertTrue(all(record["status"] == "ok" for record in result["responses"].values()))
-
     def test_private_or_script_urls_cannot_become_public_links(self):
         self.assertIsNone(module.https_url("javascript:alert(1)"))
         self.assertIsNone(module.https_url("https://username:secret@example.com/"))

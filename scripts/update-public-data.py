@@ -3,7 +3,6 @@ import base64
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import json
-import os
 from pathlib import Path
 import re
 import urllib.request
@@ -17,8 +16,6 @@ ROOT = SOURCE_ROOT / "github-pages" if (SOURCE_ROOT / "github-pages").is_dir() e
 
 def read(url, json_body=True):
     headers = {"User-Agent": "Mozilla/5.0 (compatible; PersonalHomepage/1.0)"}
-    if urlparse(url).hostname == "api.github.com" and os.environ.get("GITHUB_TOKEN"):
-        headers["Authorization"] = "Bearer " + os.environ["GITHUB_TOKEN"]
     if urlparse(url).hostname == "api.bilibili.com":
         headers["Referer"] = "https://space.bilibili.com/"
     for attempt in range(2):
@@ -133,45 +130,13 @@ def collect(config, reader=read):
     return {"generatedAt": datetime.now(timezone.utc).isoformat(), "accounts": accounts}
 
 
-def collect_github(config, selected, reader=read):
-    api = "https://api.github.com/"
-    user = config["github"]
-    urls = [api + f"users/{user}", api + f"users/{user}/events/public?per_page=30",
-            f"https://github-contributions-api.jogruber.de/v4/{user}?y=last"]
-    urls.extend(api + f"repos/{repo}" for repo in selected)
-    responses = {}
-
-    def get(url):
-        try:
-            return url, {"status": "ok", "data": reader(url)}
-        except Exception as error:
-            print(f"GitHub source unavailable: {type(error).__name__}")
-            return url, {"status": "error", "data": None}
-
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        responses.update(pool.map(get, urls))
-    # Follow every owned-repository page, so totals never silently truncate at 100.
-    page = 1
-    while page <= 100:
-        url = api + f"users/{user}/repos?type=owner&per_page=100&page={page}"
-        key, result = get(url)
-        responses[key] = result
-        if result["status"] != "ok" or not isinstance(result["data"], list) or len(result["data"]) < 100:
-            break
-        page += 1
-    return {"generatedAt": datetime.now(timezone.utc).isoformat(), "responses": responses}
-
-
 if __name__ == "__main__":
     config = json.loads((ROOT / "config/accounts.json").read_text(encoding="utf-8"))
     result = collect(config)
-    selected = json.loads((ROOT / "config/projects.json").read_text(encoding="utf-8"))
-    github = collect_github(config, selected)
-    for name, data in [("accounts", result), ("github", github)]:
-        destination = ROOT / f"data/{name}.json"
-        destination.parent.mkdir(exist_ok=True)
-        temporary = destination.with_suffix(".tmp")
-        temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-        temporary.replace(destination)
+    destination = ROOT / "data/accounts.json"
+    destination.parent.mkdir(exist_ok=True)
+    temporary = destination.with_suffix(".tmp")
+    temporary.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    temporary.replace(destination)
     for account, value in result["accounts"].items():
         print(f"{account}: {value['status']}")

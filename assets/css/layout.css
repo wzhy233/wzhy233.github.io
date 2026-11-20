@@ -149,9 +149,13 @@
 .heading-row {
   max-width:none;
   display:flex;
-  align-items:end;
+  align-items:center;
   justify-content:space-between;
   gap:25px
+}
+
+.heading-row h2 {
+  margin-bottom:0
 }
 
 .site-footer {

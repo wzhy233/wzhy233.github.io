@@ -5,7 +5,6 @@ import vm from 'node:vm';
 
 const root = existsSync(new URL('../github-pages/index.html', import.meta.url)) ? new URL('../github-pages/', import.meta.url) : new URL('../', import.meta.url);
 const api = await import(new URL('assets/js/api/github.js', root));
-const { getPublishedGithub } = await import(new URL('assets/js/api/published-github.js', root));
 const { getAccounts } = await import(new URL('assets/js/api/accounts.js', root));
 const { messages, languages, t, initLanguage } = await import(new URL('assets/js/i18n.js', root));
 const { projectHtml, activityHtml } = await import(new URL('assets/js/ui/render.js', root));
@@ -150,6 +149,8 @@ test('Steam privacy suppresses presence and hours rather than inventing offline 
 test('journal displays only returned uploads and curated public articles', () => {
   const accounts = { youtube: { status: 'ok', data: { videos: [{ id: 'abcdefghijk', title: 'Real video', thumbnail: 'https://example.com/a.jpg', url: 'https://youtube.com/watch?v=abcdefghijk', published: '2026-01-01' }] } }, articles: { status: 'ok', data: [{ title: 'Real article', url: 'https://example.com/article' }] } };
   assert.match(journalCards(accounts, 'all'), /Real video/);
+  assert.equal((journalCards(accounts, 'videos').match(/data-video="abcdefghijk" aria-haspopup="dialog"/g) ?? []).length, 2);
+  assert.match(htmlPages[0][1], /<iframe id="video-frame"[^>]*referrerpolicy="strict-origin-when-cross-origin"/);
   assert.doesNotMatch(journalCards(accounts, 'writing'), /Real video/);
   assert.doesNotMatch(journalCards(accounts, 'videos'), /Real article/);
   assert.doesNotMatch(journalCards({ youtube: { status: 'error' } }, 'all'), /data-video=/);
@@ -161,18 +162,20 @@ test('published account feed validates timestamps and isolates unavailable sourc
   await assert.rejects(getAccounts(ok({ accounts: {} })), /invalidData/);
 });
 
-test('published GitHub transport reuses API validators and keeps source timestamp', async () => {
-  const data = { generatedAt: '2026-11-01T00:00:00Z', responses: { 'https://api.github.com/repos/wzhy233/Example': { status: 'ok', data: repository } } };
-  const published = await getPublishedGithub(ok(data));
-  assert.equal(published.updatedAt, data.generatedAt);
-  assert.equal((await api.getRepository('wzhy233/Example', published.fetcher)).stars, 4);
-  await assert.rejects(api.getProfile('wzhy233', published.fetcher), /network/);
+test('public repository lists exclude private repositories and project details reject missing repositories', async () => {
+  const privateRepo = { ...repository, full_name: 'wzhy233/Private', private: true };
+  const internalRepo = { ...repository, full_name: 'wzhy233/Internal', visibility: 'internal' };
+  const repos = await api.getRepositories('wzhy233', ok([repository, privateRepo, internalRepo]));
+  assert.deepEqual(repos.map(repo => repo.fullName), ['wzhy233/Example']);
+  assert.equal(repos[0].license, 'MIT');
+  await assert.rejects(api.getRepository('wzhy233/Private', ok(privateRepo)), /notFound/);
+  await assert.rejects(api.getRepository('wzhy233/Deleted', async () => ({ ok: false, status: 404 })), /notFound/);
 });
 
 test('untrusted source content is escaped, while invalid external URLs are rejected', async () => {
   const repo = await api.getRepository('wzhy233/Example', ok({ ...repository, description: '<img src=x onerror=alert(1)>', homepage: 'javascript:alert(1)' }));
   assert.equal(repo.homepage, null);
-  const output = projectHtml('wzhy233/Example', 0, repo, null, '2026-11-01T00:00:00Z');
+  const output = projectHtml(repo);
   assert.match(output, /&lt;img/);
   assert.doesNotMatch(output, /<img src=x/);
   assert.equal(safeUrl('https://github.com.evil.test/a', 'github.com'), null);

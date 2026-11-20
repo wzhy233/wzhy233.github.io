@@ -1,10 +1,10 @@
-import { projects, githubUser } from '../../../config/site.js';
+import { githubUser, relatedProject } from '../../../config/site.js';
 import { getAccounts } from '../api/accounts.js';
-import { getProfile, getRepository } from '../api/github.js';
-import { getPublishedGithub } from '../api/published-github.js';
+import { getProfile, getRepositories, getRepository } from '../api/github.js';
 import { projectHtml } from '../ui/render.js';
 import { t, getLanguage } from '../i18n.js';
 import { escapeHtml as h, safeUrl, dateLabel } from '../utils/format.js';
+import { filterRepositories } from '../utils/github-stats.js';
 
 const byId = id => document.getElementById(id);
 const stamp = record => `<p class="data-caption${Date.now() - Date.parse(record.updatedAt) > 7200000 ? ' stale' : ''}">${t('updated')} ${h(new Date(record.updatedAt).toLocaleString(getLanguage(), { timeZone: 'Asia/Shanghai' }))}${Date.now() - Date.parse(record.updatedAt) > 7200000 ? ` · ${t('stale')}` : ''}</p>`;
@@ -19,7 +19,7 @@ export function gameCards(accounts) {
   const skin = safeUrl(m?.skin, 'textures.minecraft.net');
   return `<article class="game-card minecraft-card">
     <div class="game-art minecraft-art"><span class="game-wordmark">MINECRAFT</span>${skin ? `<div class="skin-head"><img src="${h(skin)}" alt="${h(t('skin'))}" /></div>` : '<span class="game-pixel" aria-hidden="true">▦</span>'}<span class="game-edition">JAVA EDITION</span></div>
-    <div class="game-body"><p class="eyebrow">MINECRAFT</p><h3>${h(m?.name ?? 'minecraftmc33')}</h3>
+    <div class="game-body"><h3>${h(m?.name ?? 'minecraftmc33')}</h3>
       <p>${t(m ? 'verified' : accounts ? 'unavailable' : 'loading')}</p>
       ${m ? `<code class="uuid">${h(m.uuid)}</code><button class="text-button" type="button" data-copy="${h(m.name)}">${t('copy')} ID ↗</button>` : ''}
       ${mc ? stamp(mc) : ''}
@@ -27,7 +27,7 @@ export function gameCards(accounts) {
   </article>
   <article class="game-card steam-card">
     <div class="game-art cs-art"><span class="game-wordmark">COUNTER-STRIKE 2</span><span class="cs-numeral" aria-hidden="true">2</span><span class="game-edition">STEAM</span></div>
-    <div class="game-body"><p class="eyebrow">CS2 / STEAM</p><div class="game-identity">${image(s?.avatar, 'account-avatar')}<h3>${h(s?.name ?? 'Steam')}</h3></div>
+    <div class="game-body"><div class="game-identity">${image(s?.avatar, 'account-avatar')}<h3>${h(s?.name ?? 'Steam')}</h3></div>
       <p>${t(s ? s.privacy === 'public' ? 'public' : 'private' : accounts ? 'unavailable' : 'loading')}</p>
       ${s?.privacy !== 'public' && s ? `<p class="privacy-note">${t('privateDetail')}</p>` : ''}
       <a class="plain-link" href="https://steamcommunity.com/profiles/76561199375918969/" target="_blank" rel="noopener noreferrer">${t('openProfile')} ↗</a>
@@ -42,8 +42,8 @@ export function journalCards(accounts, filter) {
   let html = '';
   if (filter !== 'writing' && youtube?.status === 'ok') {
     html += youtube.data.videos.map(video => `<article class="journal-card video-card">
-      <button type="button" class="video-cover" data-video="${h(video.id)}" aria-label="${h(t('watch'))}: ${h(video.title)}">${image(video.thumbnail)}<span class="play-icon" aria-hidden="true">▶</span></button>
-      <div class="journal-card-body"><p class="eyebrow">YOUTUBE / ${h(dateLabel(video.published))}</p><h3>${h(video.title)}</h3><a class="plain-link" href="${h(safeUrl(video.url) ?? youtube.source)}" target="_blank" rel="noopener noreferrer">${t('watch')} ↗</a></div>
+      <button type="button" class="video-cover" data-video="${h(video.id)}" aria-haspopup="dialog" aria-label="${h(t('watch'))}: ${h(video.title)}">${image(video.thumbnail)}<span class="play-icon" aria-hidden="true">▶</span></button>
+      <div class="journal-card-body"><p class="eyebrow">YouTube · ${h(dateLabel(video.published))}</p><h3>${h(video.title)}</h3><button type="button" class="text-button" data-video="${h(video.id)}" aria-haspopup="dialog">${t('watch')}</button></div>
     </article>`).join('');
   }
   if (filter !== 'videos' && writing?.status === 'ok') {
@@ -55,15 +55,24 @@ export function journalCards(accounts, filter) {
 
 function channelCard(account) {
   const data = account?.status === 'ok' ? account.data : null;
-  return `<p class="eyebrow">BILIBILI</p>${image(data?.avatar, 'channel-avatar')}<h3>${h(data?.name ?? 'Bilibili')}</h3><p>${h(data?.bio || t(data ? 'recordingText' : account ? 'unavailable' : 'loading'))}</p><div class="channel-stats">${metric(data?.followers, 'followers')}${metric(data?.videos, 'uploads')}${metric(data?.likes, 'likes')}</div><a class="solid-button" href="${h(safeUrl(account?.source) ?? 'https://space.bilibili.com/3537123286190803')}" target="_blank" rel="noopener noreferrer">${t('channel')} ↗</a>${account ? stamp(account) : ''}`;
+  return `<p class="eyebrow">Bilibili</p>${image(data?.avatar, 'channel-avatar')}<h3>${h(data?.name ?? 'Bilibili')}</h3>${data?.bio ? `<p>${h(data.bio)}</p>` : ''}${data ? `<div class="channel-stats">${metric(data.followers, 'followers')}${metric(data.videos, 'uploads')}${metric(data.likes, 'likes')}</div>` : `<p>${t(account ? 'unavailable' : 'loading')}</p>`}<a class="solid-button" href="${h(safeUrl(account?.source) ?? 'https://space.bilibili.com/3537123286190803')}" target="_blank" rel="noopener noreferrer">${t('channel')} ↗</a>${account ? stamp(account) : ''}`;
 }
 
 export function initHome() {
   let accounts = null;
   let accountError = null;
   let filter = 'all';
-  const repos = projects.map(() => ({ loading: true }));
-  let github = null;
+  let projects = [];
+  let projectsLoading;
+  let projectError;
+  function renderProjects() {
+    const rows = projects.map(repo => `<li>${projectHtml(repo)}</li>`).join('');
+    let status = '';
+    if (projectsLoading) status = `<li class="data-empty">${t('loading')}</li>`;
+    else if (projectError) status = `<li class="data-empty load-error">${h(t(projectError))} <button type="button" class="text-button" data-retry-projects>${t('retry')}</button></li>`;
+    else if (!rows) status = `<li class="data-empty">${t('emptyPublicProjects')}</li>`;
+    byId('home-projects').innerHTML = rows + status;
+  }
   function render() {
     byId('game-accounts').innerHTML = gameCards(accounts);
     byId('journal-entries').innerHTML = journalCards(accounts, filter);
@@ -72,7 +81,6 @@ export function initHome() {
       byId('game-accounts').innerHTML = `<p class="load-error">${h(t(accountError))}</p>`;
       byId('journal-entries').innerHTML = `<p class="load-error">${h(t(accountError))}</p>`;
     }
-    byId('home-projects').innerHTML = repos.map((item, index) => `<li>${projectHtml(projects[index], index, item.value, item.error ? t(item.error) : null, item.at)}</li>`).join('');
     const links = [
       ['Bilibili', 'clips', 'https://space.bilibili.com/3537123286190803'],
       ['YouTube', 'clips', 'https://www.youtube.com/@wzhy233'],
@@ -93,19 +101,26 @@ export function initHome() {
     catch (error) { accounts = null; accountError = error.message; }
     finally { button.disabled = false; render(); }
   }
-  async function loadProject(index) {
-    if (!repos[index] || repos[index].pending) return;
-    repos[index] = { loading: true, pending: true };
-    try {
-      if (!github) github = await getPublishedGithub();
-      repos[index] = { value: await getRepository(projects[index], github.fetcher), at: github.updatedAt };
+  async function loadProjects() {
+    projectsLoading = true;
+    projectError = null;
+    projects = [];
+    renderProjects();
+    const [owned, related] = await Promise.allSettled([getRepositories(githubUser), getRepository(relatedProject)]);
+    if (owned.status === 'fulfilled') {
+      const personalRepos = owned.value.filter(repo => !repo.archived && ![githubUser, `${githubUser}.github.io`].includes(repo.name.toLowerCase()));
+      projects = filterRepositories(personalRepos, { type: 'original', sort: 'updated' }).slice(0, 4);
+    } else {
+      projectError = owned.reason.message;
     }
-    catch (error) { repos[index] = { error: error.message }; }
-    render();
+    if (related.status === 'fulfilled' && !projects.some(repo => repo.fullName === related.value.fullName)) projects.push(related.value);
+    projectsLoading = false;
+    renderProjects();
   }
   function clock() { byId('local-clock').textContent = new Date().toLocaleTimeString(getLanguage(), { timeZone: 'Asia/Shanghai', hour12: false }); }
   const dialog = byId('video-dialog');
-  dialog.addEventListener('close', () => byId('video-frame').removeAttribute('src'));
+  const frame = byId('video-frame');
+  dialog.addEventListener('close', () => { if (!dialog.open) frame.removeAttribute('src'); });
   document.addEventListener('click', async event => {
     const button = event.target.closest('button');
     if (!button) return;
@@ -122,26 +137,21 @@ export function initHome() {
       const video = accounts?.youtube?.data?.videos.find(item => item.id === button.dataset.video);
       if (!video) return;
       byId('video-title').textContent = video.title;
-      byId('video-frame').src = `https://www.youtube-nocookie.com/embed/${video.id}?rel=0`;
-      byId('video-external').href = video.url;
+      byId('video-external').href = `https://www.youtube.com/watch?v=${video.id}`;
       dialog.showModal();
+      frame.title = video.title;
+      frame.src = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`;
     }
     if (button.hasAttribute('data-close-video')) dialog.close();
-    if (/^project-\d+$/.test(button.dataset.reload ?? '')) void loadProject(Number(button.dataset.reload.slice(8)));
+    if (button.hasAttribute('data-retry-projects')) void loadProjects();
   });
-  document.addEventListener('languagechange', () => { render(); clock(); });
+  document.addEventListener('languagechange', () => { render(); renderProjects(); clock(); });
   render();
   clock();
   setInterval(clock, 1000);
   void loadAccounts();
-  getPublishedGithub().then(data => {
-    github = data;
-    projects.forEach((_, index) => void loadProject(index));
-    return getProfile(githubUser, github.fetcher);
-  }).then(profile => {
+  void loadProjects();
+  getProfile(githubUser).then(profile => {
     document.querySelectorAll('[data-github-avatar]').forEach(img => { if (profile.avatar) img.src = profile.avatar; });
-  }).catch(error => {
-    repos.forEach((_, index) => { if (repos[index].loading) repos[index] = { error: error.message }; });
-    render();
-  });
+  }).catch(() => { /* Keep the local avatar if GitHub is unavailable. */ });
 }

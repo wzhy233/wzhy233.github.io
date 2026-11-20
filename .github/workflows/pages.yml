@@ -42,8 +42,6 @@ jobs:
         run: node --test scripts/github-pages.test.mjs
       - name: Read public account sources
         run: python scripts/update-public-data.py
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
       - name: Package website and preserve legacy routes
         run: python scripts/prepare-pages.py
       - uses: actions/upload-pages-artifact@v3

@@ -1,45 +1,34 @@
 import { t, getLanguage } from '../i18n.js';
-import { escapeHtml as h, dateLabel, readTime, when } from '../utils/format.js';
+import { escapeHtml as h, dateLabel, when } from '../utils/format.js';
 
-export function projectHtml(fullName, index, repo, error, at) {
-  const [owner, name] = fullName.split('/');
-  const title = repo?.name ?? name;
-  const message = error || (repo ? repo.description || t('noDescription') : t('loading'));
-  const metadata = repo ? `
-    <span class="language">${h(repo.language || t('unspecified'))}</span>
-    <span aria-label="${repo.stars} ${t('stars')}">☆ ${repo.stars}</span>
-    <span aria-label="${repo.forks} Forks">⑂ ${repo.forks}</span>
-  ` : `<span>${t(error ? 'unavailable' : 'loading')}</span>`;
-  const detail = repo ? `
-    <dl class="project-facts">
-      <div><dt>${t('recentlyUpdated')}</dt><dd>${h(dateLabel(repo.updated))}</dd></div>
-      <div><dt>${t('license')}</dt><dd>${h(repo.license || t('unspecified'))}</dd></div>
-      <div><dt>${t('issues')}</dt><dd>${repo.issues}</dd></div>
-      <div><dt>${t('public')}</dt><dd>${t(repo.archived ? 'archived' : 'public')}</dd></div>
-    </dl>
-    <nav class="project-links" aria-label="${h(title)} links">
-      <a href="${h(repo.url)}" target="_blank" rel="noopener noreferrer">${t('codeLink')} ↗</a>
-      <a href="${h(repo.url)}/releases" target="_blank" rel="noopener noreferrer">${t('releases')} ↗</a>
-      ${repo.homepage ? `<a href="${h(repo.homepage)}" target="_blank" rel="noopener noreferrer">${t('website')} ↗</a>` : ''}
-    </nav>
-    <p class="data-caption">${t('source')}: GitHub · ${t('updated')} <time datetime="${h(at)}">${h(readTime(at))}</time></p>
-  ` : `
-    <p>${h(error || t('loading'))}</p>
-    <a href="https://github.com/${h(fullName)}" target="_blank" rel="noopener noreferrer">${t('codeLink')} ↗</a>
-    ${error ? `<button type="button" class="text-button" data-reload="project-${index}">${t('retry')}</button>` : ''}
-  `;
+export function projectHtml(repo) {
   return `<details class="project">
     <summary class="work">
-      <span class="work-index">${String(index + 1).padStart(2, '0')}</span>
       <div>
-        <h3>${h(title)}</h3>
-        <div class="work-owner">${h(repo?.owner ?? owner)}</div>
-        <p class="work-desc${error ? ' load-error' : ''}">${h(message)}</p>
+        <h3>${h(repo.name)}</h3>
+        <div class="work-owner">${h(repo.owner)}</div>
+        ${repo.description ? `<p class="work-desc">${h(repo.description)}</p>` : ''}
       </div>
-      <div class="work-meta">${metadata}</div>
+      <div class="work-meta">
+        ${repo.language ? `<span class="language">${h(repo.language)}</span>` : ''}
+        <span aria-label="${repo.stars} ${t('stars')}">☆ ${repo.stars}</span>
+        ${repo.forks !== null ? `<span aria-label="${repo.forks} Forks">⑂ ${repo.forks}</span>` : ''}
+      </div>
       <span class="work-arrow" aria-hidden="true">+</span>
     </summary>
-    <div class="project-detail">${detail}</div>
+    <div class="project-detail">
+      <dl class="project-facts">
+        <div><dt>${t('recentlyUpdated')}</dt><dd>${h(dateLabel(repo.updated))}</dd></div>
+        ${repo.license ? `<div><dt>${t('license')}</dt><dd>${h(repo.license)}</dd></div>` : ''}
+        ${repo.issues !== null ? `<div><dt>${t('issues')}</dt><dd>${repo.issues}</dd></div>` : ''}
+        ${repo.archived ? `<div><dt>${t('repoType')}</dt><dd>${t('archived')}</dd></div>` : ''}
+      </dl>
+      <nav class="project-links" aria-label="${h(repo.name)}">
+        <a href="${h(repo.url)}" target="_blank" rel="noopener noreferrer">${t('codeLink')} ↗</a>
+        <a href="${h(repo.url)}/releases" target="_blank" rel="noopener noreferrer">${t('releases')} ↗</a>
+        ${repo.homepage ? `<a href="${h(repo.homepage)}" target="_blank" rel="noopener noreferrer">${t('website')} ↗</a>` : ''}
+      </nav>
+    </div>
   </details>`;
 }
 

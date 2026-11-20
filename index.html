@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="referrer" content="no-referrer" />
   <title>冷月疏光 · 个人主页</title>
-  <meta name="description" content="冷月疏光的个人主页：Minecraft、CS2、影像、文章、软件项目与开源。" />
+  <meta name="description" content="冷月疏光的个人主页，收录软件项目、游戏视频和文章。" />
   <meta name="theme-color" content="#f6f5f0" />
   <link rel="icon" href="./assets/images/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&display=swap" />
   <script src="./assets/js/theme-boot.js"></script>
-  <link rel="stylesheet" href="./assets/css/main.css?v=24b6474" />
+  <link rel="stylesheet" href="./assets/css/main.css?v=20261120" />
   <script type="module" src="./assets/js/main.js"></script>
 </head>
 <body data-page="home">
@@ -24,7 +24,7 @@
       <nav class="main-nav" aria-label="Main navigation" data-i18n="navigation" data-i18n-attr="aria-label">
         <a href="./" data-internal data-i18n="home" aria-current="page">首页</a>
         <a href="./#games" data-internal data-i18n="games">游戏</a>
-        <a href="./#journal" data-internal data-i18n="journal">影像与记录</a>
+        <a href="./#journal" data-internal data-i18n="journal">视频与文章</a>
         <a href="./github/" data-internal >GitHub</a>
       </nav>
       <div class="header-tools">
@@ -33,43 +33,38 @@
       </div>
     </header>
     <main id="main">
-      <section class="personal-hero">
+      <section class="personal-hero" id="about">
         <div class="hero-intro">
-          <p class="eyebrow">MINECRAFT · CS2 · CODE · VIDEO</p>
-          <p class="hero-hello" data-i18n="hello">你好，我是</p>
-          <h1 data-profile-name data-i18n="name">冷月疏光</h1>
-          <p class="hero-statement" data-i18n="intro">写代码，玩游戏，也留下一些记录。</p>
-          <p class="hero-description" data-i18n="introDetail">平时玩 Minecraft 和 CS2，也做翻译工具、播放器和客户端。</p>
-          <div class="hero-actions"><a class="solid-button" href="#about" data-i18n="explore">认识我一点</a><a class="plain-link" href="https://space.bilibili.com/3537123286190803" target="_blank" rel="noopener noreferrer"><span data-i18n="visitBili">去 Bilibili 看看</span> ↗</a></div>
-          <p class="local-clock"><span class="status-dot" aria-hidden="true"></span><span data-i18n="localTime">UTC+8 · 本地时间</span><time id="local-clock">—</time></p>
+          <h1 data-i18n="name">冷月疏光</h1>
+          <p class="hero-statement" data-i18n="intro">平时玩 Minecraft 和 CS2，也做过翻译工具和音乐播放器。</p>
+          <div class="hero-actions"><a class="solid-button" href="#projects" data-i18n="projects">项目</a><a class="plain-link" href="https://space.bilibili.com/3537123286190803" target="_blank" rel="noopener noreferrer">Bilibili ↗</a></div>
+          <p class="local-clock"><span class="status-dot" aria-hidden="true"></span><span>UTC+8</span><time id="local-clock">—</time></p>
         </div>
         <div class="personal-board">
-          <div class="portrait-note"><img class="hero-avatar" src="./assets/images/avatar.jpg" alt="" width="300" height="300" data-github-avatar /><div class="portrait-caption"><strong>@wzhy233</strong><span data-i18n="footer">我的一小块互联网。</span></div><span class="portrait-stamp" aria-hidden="true">冷<br>月<br>疏<br>光</span></div>
-          <a href="#games" class="board-foot"><span>Minecraft / CS2</span><span aria-hidden="true">↓</span></a>
+          <div class="portrait-note"><img class="hero-avatar" src="./assets/images/avatar.jpg" alt="" width="300" height="300" data-github-avatar /><div class="portrait-caption"><strong>@wzhy233</strong></div></div>
         </div>
       </section>
-      <section class="section about-section" id="about">
-        <div class="section-heading"><p class="eyebrow">01 / ABOUT</p><h2 data-i18n="aboutTitle">不只在代码里。</h2><p data-i18n="aboutText">我的网上生活大致分成几块：做软件、玩游戏、发视频。</p></div>
-        <div class="interest-grid"><article><span class="interest-symbol" aria-hidden="true">⌘</span><h3 data-i18n="software">做些实用的东西</h3><p data-i18n="softwareText"></p><a href="#projects" class="plain-link"><span data-i18n="projects">作品</span> ↘</a></article><article><span class="interest-symbol pixel-symbol" aria-hidden="true">▦</span><h3 data-i18n="gaming">游戏里的我</h3><p data-i18n="gamingText"></p><a href="#games" class="plain-link"><span data-i18n="games">游戏</span> ↘</a></article><article><span class="interest-symbol" aria-hidden="true">▷</span><h3 data-i18n="recording">拍下来，也写下来</h3><p data-i18n="recordingText"></p><a href="#journal" class="plain-link"><span data-i18n="journal">影像与记录</span> ↘</a></article></div>
-      </section>
       <section class="section" id="games">
-        <div class="section-heading"><p class="eyebrow">02 / IN GAME</p><h2 data-i18n="gamesTitle">下次，游戏里见。</h2><p data-i18n="gamesIntro"></p></div>
+        <div class="section-heading"><h2 data-i18n="games">游戏</h2></div>
         <div class="game-grid" id="game-accounts" aria-live="polite"><p data-i18n="loading">正在读取…</p></div>
-        <p class="data-caption" data-i18n="feedNote"></p>
       </section>
       <section class="section" id="journal">
-        <div class="section-heading"><p class="eyebrow">03 / JOURNAL</p><h2 data-i18n="journalTitle">玩过、做过、记录过。</h2><p data-i18n="journalIntro"></p></div>
+        <div class="section-heading"><h2 data-i18n="journal">视频与文章</h2></div>
         <div class="journal-toolbar"><div class="filter-tabs" role="group" aria-label="Content filter" data-i18n="filter" data-i18n-attr="aria-label"><button type="button" data-filter="all" aria-pressed="true" data-i18n="all">全部</button><button type="button" data-filter="videos" aria-pressed="false" data-i18n="videos">视频</button><button type="button" data-filter="writing" aria-pressed="false" data-i18n="writing">文章</button></div><button type="button" class="text-button" data-refresh-accounts data-i18n="refresh">刷新数据</button></div>
         <div class="journal-content"><div id="journal-entries" class="journal-cards" aria-live="polite"></div><aside id="bili-profile" class="channel-panel"></aside></div>
       </section>
       <section class="section" id="projects">
-        <div class="section-heading heading-row"><div><p class="eyebrow">04 / PROJECTS</p><h2 data-i18n="workTitle">正在做的东西。</h2><p data-i18n="workIntro"></p></div><a class="plain-link" href="./github/" data-internal><span data-i18n="allGithub">完整 GitHub 档案</span> ↗</a></div>
-        <ol class="works" id="home-projects"></ol>
+        <div class="section-heading heading-row"><h2 data-i18n="projects">项目</h2><a class="plain-link" href="./github/" data-internal><span data-i18n="allGithub">查看所有仓库</span> ↗</a></div>
+        <ul class="works" id="home-projects" aria-live="polite"><li class="data-empty" data-i18n="loading">正在读取…</li></ul>
       </section>
-      <section class="section contact-block" id="contact"><div class="section-heading"><p class="eyebrow">05 / ELSEWHERE</p><h2 data-i18n="contactTitle">在其他地方找到我。</h2><p data-i18n="contactIntro"></p><a class="solid-button" href="https://message.bilibili.com/#/whisper/mid3537123286190803" target="_blank" rel="noopener noreferrer" data-i18n="messageBili">在 Bilibili 发消息</a></div><nav class="social-directory" id="social-directory" aria-label="Social profiles" data-i18n="socialProfiles" data-i18n-attr="aria-label"></nav></section>
+      <section class="section contact-block" id="contact"><div class="section-heading"><h2 data-i18n="contact">联系</h2><a class="solid-button" href="https://message.bilibili.com/#/whisper/mid3537123286190803" target="_blank" rel="noopener noreferrer" data-i18n="messageBili">在 Bilibili 发消息</a></div><nav class="social-directory" id="social-directory" aria-label="Social profiles" data-i18n="socialProfiles" data-i18n-attr="aria-label"></nav></section>
     </main>
-    <dialog id="video-dialog" aria-labelledby="video-title"><div class="video-dialog-heading"><h2 id="video-title"></h2><button type="button" class="text-button" data-close-video data-i18n="close">关闭</button></div><iframe id="video-frame" title="YouTube video player" allow="fullscreen; picture-in-picture" allowfullscreen></iframe><a id="video-external" class="plain-link" target="_blank" rel="noopener noreferrer" data-i18n="watch">观看视频</a></dialog>
-    <footer class="site-footer"><a href="./" data-internal>◒ <span data-i18n="name">冷月疏光</span> <small>© <span id="year">2026</span></small></a><span data-i18n="footer">我的一小块互联网。</span><a href="#top" data-i18n="backTop">回到顶部</a></footer>
+    <dialog id="video-dialog" aria-labelledby="video-title">
+      <div class="video-dialog-heading"><h2 id="video-title"></h2><button type="button" class="text-button" data-close-video data-i18n="close">关闭</button></div>
+      <iframe id="video-frame" title="YouTube video player" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <a id="video-external" class="plain-link" target="_blank" rel="noopener noreferrer" data-i18n="watchExternal">在 YouTube 播放</a>
+    </dialog>
+    <footer class="site-footer"><a href="./" data-internal>◒ <span data-i18n="name">冷月疏光</span> <small>© <span id="year">2026</span></small></a><a href="#top" data-i18n="backTop">回到顶部</a></footer>
   </div>
   <p id="toast" class="toast" role="status" hidden></p>
   <noscript><p class="preview-note">JavaScript is required for live account data. <a href="https://github.com/wzhy233">GitHub</a> · <a href="https://space.bilibili.com/3537123286190803">Bilibili</a> · <a href="https://steamcommunity.com/profiles/76561199375918969/">Steam</a></p></noscript>

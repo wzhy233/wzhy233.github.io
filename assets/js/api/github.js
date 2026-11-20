@@ -39,17 +39,27 @@ export async function getProfile(user, fetcher) {
 export async function getRepository(fullName, fetcher) {
   if (!validRepo.test(fullName)) throw new Error('invalidData');
   const data = await request(`repos/${fullName}`, fetcher);
-  if (!data || typeof data.full_name !== 'string' || !validRepo.test(data.full_name) || !count(data.stargazers_count) || !count(data.forks_count) || !count(data.open_issues_count) || !validDate(data.updated_at)) throw new Error('invalidData');
+  if (isNonPublic(data)) throw new Error('notFound');
+  return toRepository(data);
+}
+
+function isNonPublic(repo) {
+  return repo?.private === true || (typeof repo?.visibility === 'string' && repo.visibility !== 'public');
+}
+
+function toRepository(data) {
+  if (!data || typeof data.full_name !== 'string' || !validRepo.test(data.full_name) || !count(data.stargazers_count) || !validDate(data.updated_at)) throw new Error('invalidData');
   const [owner, name] = data.full_name.split('/');
   return {
     owner, name, fullName: data.full_name,
     url: `https://github.com/${data.full_name}`,
     description: typeof data.description === 'string' ? data.description : '',
     language: typeof data.language === 'string' ? data.language : null,
-    stars: data.stargazers_count, forks: data.forks_count, issues: data.open_issues_count,
+    stars: data.stargazers_count, forks: count(data.forks_count) ? data.forks_count : null,
+    issues: count(data.open_issues_count) ? data.open_issues_count : null,
     updated: data.updated_at,
     license: typeof data.license?.name === 'string' ? data.license.name : null,
-    homepage: safeUrl(data.homepage), archived: data.archived === true,
+    homepage: safeUrl(data.homepage), archived: data.archived === true, fork: data.fork === true,
   };
 }
 
@@ -100,12 +110,7 @@ export async function getRepositories(user, fetcher) {
     const data = await request(`users/${encodeURIComponent(user)}/repos?type=owner&per_page=100&page=${page}`, fetcher);
     if (!Array.isArray(data)) throw new Error('invalidData');
     for (const repo of data) {
-      if (typeof repo.full_name !== 'string' || !validRepo.test(repo.full_name) || !count(repo.stargazers_count) || !validDate(repo.updated_at)) throw new Error('invalidData');
-      repos.push({ name: repo.full_name.split('/')[1], fullName: repo.full_name, url: `https://github.com/${repo.full_name}`,
-        description: typeof repo.description === 'string' ? repo.description : '',
-        language: typeof repo.language === 'string' ? repo.language : null,
-        stars: repo.stargazers_count, forks: count(repo.forks_count) ? repo.forks_count : null,
-        fork: repo.fork === true, archived: repo.archived === true, updated: repo.updated_at });
+      if (!isNonPublic(repo)) repos.push(toRepository(repo));
     }
     if (data.length < 100) return repos;
     page++;

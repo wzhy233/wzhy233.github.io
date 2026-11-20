@@ -31,7 +31,3 @@ export function dateLabel(iso) {
   const date = new Date(iso);
   return Number.isFinite(date.getTime()) ? date.toLocaleDateString(getLanguage(), { timeZone: 'Asia/Shanghai', year: 'numeric', month: 'short', day: 'numeric' }) : '—';
 }
-
-export function readTime(iso) {
-  return new Date(iso).toLocaleTimeString(getLanguage(), { timeZone: 'Asia/Shanghai', hour12: false });
-}

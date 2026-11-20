@@ -1,6 +1,5 @@
 import { githubUser } from '../../../config/site.js';
 import { getProfile, getRepositories, getContributions, getActivity } from '../api/github.js';
-import { getPublishedGithub } from '../api/published-github.js';
 import { profileHtml, calendarHtml, languagesHtml, repositoriesHtml } from '../ui/github-view.js';
 import { activityHtml } from '../ui/render.js';
 import { filterRepositories } from '../utils/github-stats.js';
@@ -12,7 +11,7 @@ const byId = id => document.getElementById(id);
 export function initGithub() {
   const state = {};
   let loading = false;
-  let readAt = null;
+  let readAt;
   function content(key, renderer) {
     const item = state[key];
     return item?.error ? `<p class="data-empty load-error">${h(t(item.error))}</p>` : item?.value ? renderer(item.value) : `<p class="data-empty">${t('loading')}</p>`;
@@ -31,32 +30,24 @@ export function initGithub() {
     byId('contribution-total').textContent = state.calendar?.value ? `${state.calendar.value.total} ${t('contributions')}` : '';
     byId('language-stats').innerHTML = content('repos', languagesHtml);
     byId('github-activity').innerHTML = state.activity?.error ? `<li class="data-empty load-error">${h(t(state.activity.error))}</li>` : state.activity?.value ? activityHtml(state.activity.value) : `<li class="data-empty">${t('loading')}</li>`;
-    const anySuccess = Object.values(state).some(item => item.value);
-    const stale = readAt && Date.now() - Date.parse(readAt) > 7200000;
-    byId('github-sync').textContent = loading ? t('loading') : anySuccess ? `${t('source')}: GitHub · ${t('updated')} ${new Date(readAt).toLocaleString(getLanguage(), { timeZone: 'Asia/Shanghai' })}${stale ? ` · ${t('stale')}` : ''}` : t('unavailable');
+    byId('github-sync').textContent = loading ? t('loading') : readAt ? `${t('updated')} ${readAt.toLocaleString(getLanguage(), { timeZone: 'Asia/Shanghai' })}` : t('unavailable');
     renderRepos();
   }
   async function load() {
     if (loading) return;
     loading = true;
+    readAt = null;
     byId('refresh-github').disabled = true;
     for (const key of ['profile', 'repos', 'calendar', 'activity']) state[key] = {};
     render();
-    let published;
-    try { published = await getPublishedGithub(); }
-    catch (error) {
-      for (const key of ['profile', 'repos', 'calendar', 'activity']) state[key] = { error: error.message };
-      loading = false;
-      byId('refresh-github').disabled = false;
-      render();
-      return;
-    }
-    readAt = published.updatedAt;
-    await Promise.allSettled([
-      ['profile', () => getProfile(githubUser, published.fetcher)], ['repos', () => getRepositories(githubUser, published.fetcher)],
-      ['calendar', () => getContributions(githubUser, published.fetcher)], ['activity', () => getActivity(githubUser, published.fetcher)],
+    await Promise.all([
+      ['profile', getProfile], ['repos', getRepositories],
+      ['calendar', getContributions], ['activity', getActivity],
     ].map(async ([key, loader]) => {
-      try { state[key] = { value: await loader() }; }
+      try {
+        state[key] = { value: await loader(githubUser) };
+        if (key !== 'calendar') readAt = new Date();
+      }
       catch (error) { state[key] = { error: error.message }; }
       render();
     }));
